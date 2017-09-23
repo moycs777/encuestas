@@ -2,16 +2,18 @@
 <html lang="es">
 
 <head>
-    @include('admin/layouts/head')
+    @include('admin.layouts.head')
 </head>
 
-<body scroll-spy="" id="top" class=" theme-template-dark theme-pink alert-open alert-with-mat-grow-top-right">
+<body class="hold-transition skin-blue sidebar-mini">
 
-    @include('admin/layouts/header')
+    @include('admin.layouts.header')
+   	@include('admin.layouts.sidebar')
+
         @section('main-content')
             @show
 
-    @include('admin/layouts/footer')
+    @include('admin.layouts.footer')
 
 </body>
 

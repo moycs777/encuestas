@@ -16,16 +16,16 @@ Route::get('/', function () {
 });
 
 
-Route::get('rutahola', 'IndexController@hola');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['namespace' => 'Admin'],function(){
-	Route::resource('admin/user','UserController');
+	Route::resource('admin/admins','AdminController');
+	Route::resource('admin/polls','PollsController');
 	// Admin Auth Routes
-	Route::get('admin/home','AdminController@home')->name('admin');
+	Route::get('admin/home','IndexController@home')->name('admin.index');
 	Route::get('admin/login', 'Auth\LoginController@showLoginForm')->name('admin.login');
 	Route::post('admin/login', 'Auth\LoginController@login')->name('admin.login.post');
 	Route::post('admin/logout', 'Auth\LoginController@logout')->name('admin.logout');

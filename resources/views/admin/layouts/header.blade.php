@@ -1,92 +1,264 @@
-<aside class="sidebar fixed" style="width: 260px; left: 0px; ">
-  <div class="brand-logo">
-    <div id="logo">
-      <div class="foot1"></div>
-      <div class="foot2"></div>
-      <div class="foot3"></div>
-      <div class="foot4"></div>
-    </div> Poll </div>
-  <div class="user-logged-in">
-    <div class="content">
-      <div class="user-name">
-        @if (Auth::guest())
-          Moises 
-         @else
-          {{ Auth::user()->name }}
-         @endif
+<header class="main-header">
+    <!-- Logo -->
+    <a href="{{ route('admin.index') }}" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>A</b>LT</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>Encuestas</b></span>
+    </a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top">
+      <!-- Sidebar toggle button-->
+      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+        <span class="sr-only">Toggle navigation</span>
+      </a>
 
-        <span class="text-muted f9">admin</span>
+      <div class="navbar-custom-menu">
+        <ul class="nav navbar-nav">
+          <!-- Messages: style can be found in dropdown.less-->
+          <li class="dropdown messages-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-envelope-o"></i>
+              <span class="label label-success">4</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have 4 messages</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                  <li><!-- start message -->
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        Support Team
+                        <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                      </h4>
+                      <p>Why not buy a new awesome theme?</p>
+                    </a>
+                  </li>
+                  <!-- end message -->
+                  <li>
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        AdminLTE Design Team
+                        <small><i class="fa fa-clock-o"></i> 2 hours</small>
+                      </h4>
+                      <p>Why not buy a new awesome theme?</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        Developers
+                        <small><i class="fa fa-clock-o"></i> Today</small>
+                      </h4>
+                      <p>Why not buy a new awesome theme?</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        Sales Department
+                        <small><i class="fa fa-clock-o"></i> Yesterday</small>
+                      </h4>
+                      <p>Why not buy a new awesome theme?</p>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <div class="pull-left">
+                        <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image">
+                      </div>
+                      <h4>
+                        Reviewers
+                        <small><i class="fa fa-clock-o"></i> 2 days</small>
+                      </h4>
+                      <p>Why not buy a new awesome theme?</p>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a href="#">See All Messages</a></li>
+            </ul>
+          </li>
+          <!-- Notifications: style can be found in dropdown.less -->
+          <li class="dropdown notifications-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-bell-o"></i>
+              <span class="label label-warning">10</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have 10 notifications</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-warning text-yellow"></i> Very long description here that may not fit into the
+                      page and may cause design problems
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-users text-red"></i> 5 new members joined
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <i class="fa fa-user text-red"></i> You changed your username
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="footer"><a href="#">View all</a></li>
+            </ul>
+          </li>
+          <!-- Tasks: style can be found in dropdown.less -->
+          <li class="dropdown tasks-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-flag-o"></i>
+              <span class="label label-danger">9</span>
+            </a>
+            <ul class="dropdown-menu">
+              <li class="header">You have 9 tasks</li>
+              <li>
+                <!-- inner menu: contains the actual data -->
+                <ul class="menu">
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <h3>
+                        Design some buttons
+                        <small class="pull-right">20%</small>
+                      </h3>
+                      <div class="progress xs">
+                        <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">20% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <h3>
+                        Create a nice theme
+                        <small class="pull-right">40%</small>
+                      </h3>
+                      <div class="progress xs">
+                        <div class="progress-bar progress-bar-green" style="width: 40%" role="progressbar"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">40% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <h3>
+                        Some task I need to do
+                        <small class="pull-right">60%</small>
+                      </h3>
+                      <div class="progress xs">
+                        <div class="progress-bar progress-bar-red" style="width: 60%" role="progressbar"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">60% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                  <li><!-- Task item -->
+                    <a href="#">
+                      <h3>
+                        Make beautiful transitions
+                        <small class="pull-right">80%</small>
+                      </h3>
+                      <div class="progress xs">
+                        <div class="progress-bar progress-bar-yellow" style="width: 80%" role="progressbar"
+                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                          <span class="sr-only">80% Complete</span>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                  <!-- end task item -->
+                </ul>
+              </li>
+              <li class="footer">
+                <a href="#">View all tasks</a>
+              </li>
+            </ul>
+          </li>
+          <!-- User Account: style can be found in dropdown.less -->
+          <li class="dropdown user user-menu">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+              <span class="hidden-xs">Alexander Pierce</span>
+            </a>
+            <ul class="dropdown-menu">
+              <!-- User image -->
+              <li class="user-header">
+                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+
+                <p>
+                  Alexander Pierce - Web Developer
+                  <small>Member since Nov. 2012</small>
+                </p>
+              </li>
+              <!-- Menu Body -->
+              <li class="user-body">
+                <div class="row">
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Followers</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Sales</a>
+                  </div>
+                  <div class="col-xs-4 text-center">
+                    <a href="#">Friends</a>
+                  </div>
+                </div>
+                <!-- /.row -->
+              </li>
+              <!-- Menu Footer-->
+              <li class="user-footer">
+                <div class="pull-left">
+                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                </div>
+                <div class="pull-right">
+                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                </div>
+              </li>
+            </ul>
+          </li>
+          <!-- Control Sidebar Toggle Button -->
+          <li>
+            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          </li>
+        </ul>
       </div>
-      <div class="user-email">last@samurai.jp</div>
-      <div class="user-actions"> 
-        <a class="m-r-5" href="#">settings</a> 
-        {{-- <a href="#">logout</a>  --}}
-        <a href="{{ route('logout') }}"
-            onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> Salir
-        </a>
-        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" style="display: none;">{{ csrf_field() }}
-        </form>
-      </div>
-    </div>
-  </div>
-  <ul class="menu-links">
-    <li icon="md md-blur-on"> <a href="index-2.html"><i class="md md-blur-on"></i>&nbsp;<span>Dashboard</span></a></li>
-    <li> <a href="#" data-toggle="collapse" data-target="#APPS" aria-expanded="false" aria-controls="APPS" class="collapsible-header waves-effect"><i class="md md-camera"></i>&nbsp;APPS</a>
-      <ul id="APPS" class="collapse">
-        <li name="Todo">
-          <a href="apps-todo.html"> <span id="todosCount" class="pull-right badge z-depth-0">2</span><span>        Todo      </span></a>
-        </li>
-        <li name="Crud">
-          <a href="apps-crud.html"> <span class="pull-right badge theme-primary-bg z-depth-0">9</span><span>        Crud      </span></a>
-        </li>
-      </ul>
-    </li>
-    <li> <a href="#" data-toggle="collapse" data-target="#Forms" aria-expanded="false" aria-controls="Forms" class="collapsible-header waves-effect"><i class="md md-input"></i>&nbsp;Encuestas</a>
-      <ul id="Forms" class="collapse">
-        <li> <a href="forms-basic.html"><span>Basic forms</span></a></li>
-        <li> <a href="forms-advanced.html"><span>Advanced elements</span></a></li>
-        <li> <a href="forms-validation.html"><span>Validation</span></a></li>
-      </ul>
-    </li>
-    <li> <a href="#" data-toggle="collapse" data-target="#UIelements" aria-expanded="false" aria-controls="UIelements" class="collapsible-header waves-effect"><i class="md md-photo"></i>&nbsp;UI elements</a>
-      <ul id="UIelements" class="collapse">
-        <li> <a href="ui-elements-cards.html"><span>Cards</span></a></li>
-        <li> <a href="ui-elements-colors.html"><span>Color</span></a></li>
-        <li> <a href="ui-elements-grid.html"><span>Grid</span></a></li>
-        <li> <a href="ui-elements-icons.html"><span>Icons material design</span></a></li>
-        <li> <a href="ui-elements-weather-icons.html"><span>Icons weather</span></a></li>
-        <li> <a href="ui-elements-lists.html"><span>Lists</span></a></li>
-        <li> <a href="ui-elements-typography.html"><span>Typography</span></a></li>
-        <li> <a href="ui-elements-messages.html"><span>Messages &amp; Notifications</span></a></li>
-        <li> <a href="ui-elements-buttons.html"><span>Buttons</span></a></li>
-      </ul>
-    </li>
-    <li> <a href="#" data-toggle="collapse" data-target="#Forms" aria-expanded="false" aria-controls="Forms" class="collapsible-header waves-effect"><i class="md md-input"></i>&nbsp;Forms</a>
-      <ul id="Forms" class="collapse">
-        <li> <a href="forms-basic.html"><span>Basic forms</span></a></li>
-        <li> <a href="forms-advanced.html"><span>Advanced elements</span></a></li>
-        <li> <a href="forms-validation.html"><span>Validation</span></a></li>
-      </ul>
-    </li>
-    <li> <a href="#" data-toggle="collapse" data-target="#Tables" aria-expanded="false" aria-controls="Tables" class="collapsible-header waves-effect"><i class="md md-list"></i>&nbsp;Tables</a>
-      <ul id="Tables" class="collapse">
-        <li> <a href="tables-basic.html"><span>Basic tables</span></a></li>
-        <li> <a href="tables-data.html"><span>Data tables</span></a></li>
-      </ul>
-    </li>
-    <li> <a href="#" data-toggle="collapse" data-target="#Maps" aria-expanded="false" aria-controls="Maps" class="collapsible-header waves-effect"><i class="md md-place"></i>&nbsp;Maps</a>
-      <ul id="Maps" class="collapse">
-        <li> <a href="maps-full-map.html"><span>Full map</span></a></li>
-        <li> <a href="maps-map-widgets.html"><span>Map widgets</span></a></li>
-        <li> <a href="maps-vector-map.html"><span>Vector map</span></a></li>
-      </ul>
-    </li>
-    <li icon="md md-insert-chart"> <a href="charts.html"><i class="md md-insert-chart"></i>&nbsp;<span>Charts</span></a></li>
-    <li> <a href="#" data-toggle="collapse" data-target="#Extrapages" aria-expanded="false" aria-controls="Extrapages" class="collapsible-header waves-effect"><i class="md md-favorite-outline"></i>&nbsp;Extra pages</a>
-      <ul id="Extrapages" class="collapse"> 
-      <a target="_blank" href="{{ route('admin.login') }}">Login</a> 
-      <a target="_blank" href="pages-404.html">404</a> 
-      <a target="_blank" href="pages-500.html">500</a> <a target="_blank" href="pages-material-bird.html">Easter Egg</a> </ul>
-    </li>
-  </ul>
-</aside>
+    </nav>
+  </header>
