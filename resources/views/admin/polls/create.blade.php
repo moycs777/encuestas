@@ -6,8 +6,8 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Crear usuario
-      <small>Administrador</small>
+      Crear Encuesta
+      <small>Encuesta</small>
     </h1>
      @include('includes.messages')
     
@@ -16,7 +16,7 @@
   <!-- Main content -->
   <section class="content">
     <div class="row">
-      <div class="col-sm-12">
+      <div class="col-md-12">
       {{-- {{Auth::user()->id}} --}}
         <!-- general form elements -->
         <div class="box box-primary">
@@ -26,7 +26,7 @@
           <!-- /.box-header -->
           
           <!-- form start -->
-          <form role="form" action="{{ route('admins.store') }}" method="post" >
+          <form role="form" action="{{ route('polls.store') }}" method="post" >
             {{ csrf_field() }}
             <div class="box-body">
             <div class="col-lg-6">

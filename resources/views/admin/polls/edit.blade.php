@@ -7,7 +7,7 @@
   <section class="content-header">
     <h1>
       Crear usuario
-      <small>Administrador</small>
+      <small>Administradpor, Agente, Vendedor</small>
     </h1>
      @include('includes.messages')
     
@@ -16,8 +16,8 @@
   <!-- Main content -->
   <section class="content">
     <div class="row">
-      <div class="col-sm-12">
-      {{-- {{Auth::user()->id}} --}}
+      <div class="col-md-12">
+      
         <!-- general form elements -->
         <div class="box box-primary">
           <div class="box-header with-border">
@@ -26,18 +26,19 @@
           <!-- /.box-header -->
           
           <!-- form start -->
-          <form role="form" action="{{ route('admins.store') }}" method="post" >
+          <form role="form" action="{{ route('user.update', $user->id) }}" method="post" >
             {{ csrf_field() }}
+            {{ method_field('PATCH') }}
             <div class="box-body">
             <div class="col-lg-6">
               <div class="form-group">
                 <label for="title">nombre</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="name"  value="{{ old('name') }}" >
+                <input type="text" class="form-control" id="name" name="name" placeholder="name"  value="{{ $user->name }}" >
               </div>
 
               <div class="form-group">
                 <label for="subtitle">email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="email" required value="{{ old('email') }}">
+                <input type="email" class="form-control" id="email" name="email" placeholder="email" required value="{{ $user->email }}">
               </div>
 
               <div class="form-group">
@@ -51,10 +52,10 @@
               </div>
             	
             </div>
-			{{-- div class="col-lg-6">
+			<div class="col-lg-6">
           <div class="form-group">
             <label for="subtitle">Telefono</label>
-            <input type="phone" class="form-control" id="phone" name="phone" placeholder="Telefono"  value="{{ old('phone') }}" required>
+            <input type="phone" class="form-control" id="phone" name="phone" placeholder="Telefono"  value="{{ $user->phone }}" required>
           </div>    
 				<br>
               <div class="form-group">
@@ -68,33 +69,45 @@
               <div class="form-group">
                 <label for="cargo">Cargo</label>
                 <br>
-                  <input type="radio" name="level" value="1" required="required"> Administrador<br>
-                  <input type="radio" name="level" value="2">Delegado <br>
-                
+                <input type="hidden" name="level" value="{{$user->level}}">
+                @if($user->level ==1)
+                  <p>Administrador</p>
+                @endif
+                @if($user->level == 2 )
+                  <p>Delegado</p>
+                @endif 
+                @if($user->level == 3 )
+                  <p>Agente</p>
+                @endif
               </div>
 				
-			</div> --}}
-      
-      {{-- <div class="col-lg-6">
+			</div>
+
+
+      <div class="col-lg-6">
         
         <div class="form-group">
           <label for="subtitle">Provincia</label>
-          <input type="state" class="form-control" id="state" name="state" placeholder="Provincia"  value="{{ old('state') }}" required>
+          <input type="state" class="form-control" id="state" name="state" placeholder="Provincia"  value="{{ $user->state }}" required>
         </div>
 
         <div class="form-group">
           <label for="subtitle">Ciudad</label>
-          <input type="city" class="form-control" id="city" name="city" placeholder="Ciudad"  value="{{ old('city') }}" required>
+          <input type="city" class="form-control" id="city" name="city" placeholder="Ciudad"  value="{{ $user->city }}" required>
         </div>
 
         <div class="form-group">
           <label for="subtitle">Direccion</label>
-          <input type="address" class="form-control" id="address" name="address" placeholder="Direccion"  value="{{ old('address') }}" required>
+          <input type="address" class="form-control" id="address" name="address" placeholder="Direccion"  value="{{ $user->address }}}" required>
         </div>
 
-      </div> --}}
+      </div>
+      
             </div>
             <!-- /.box-body -->
+			
+		
+
             <div class="box-footer">
               <button type="submit" class="btn btn-primary">Grabar</button>
             </div>
