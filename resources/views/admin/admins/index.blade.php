@@ -1,103 +1,127 @@
-@extends('admin/layouts/app')
+@extends('admin.layouts.app')
 
-@section('title','Poll!')
+@section('headSection')
+<link rel="stylesheet" href="{{ asset('admin/plugins/datatables/dataTables.bootstrap.css') }}">
+@endsection
 
 @section('main-content')
-  {{-- lista de administardores --}}
-  <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <section class="content-header">
-        <h1>
-          Data Tables
-          <small>advanced tables</small>
-        </h1>
-        <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li><a href="#">Tables</a></li>
-          <li class="active">Data tables</li>
-        </ol>
-      </section>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Modulo de Usuarios
+    </h1>
+    
+  </section>
 
-      <!-- Main content -->
-      <section class="content">
-        <div class="row">
-          <div class="col-xs-12">
-            <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">Hover Data Table</h3>
-              </div>
-              
-            </div>
+  <!-- Main content -->
+  <section class="content">
 
-            <div class="box">
-              <div class="box-header">
-                <h3 class="box-title">Data Table With Full Features</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr>
-                    <td>Trident</td>
-                    <td>Internet  Explorer 4.0  </td>
-                    <td>Win 95+</td>
-                    <td> 4</td>
-                    <td>X</td>
-                  </tr>
-                  </tbody>
-                  <tfoot>
-                  <tr>
-                    <th>Rendering engine</th>
-                    <th>Browser</th>
-                    <th>Platform(s)</th>
-                    <th>Engine version</th>
-                    <th>CSS grade</th>
-                  </tr>
-                  </tfoot>
-                </table>
-              </div>
-              <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-          </div>
-          <!-- /.col -->
+    <!-- Default box -->
+    <div class="box">
+      <div class="box-header with-border">
+          <a class='col-lg-offset-5 btn btn-success' href="{{ route('admins.create') }}">Crear nuevo Administrador</a>
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+            <i class="fa fa-minus"></i></button>
+          <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+            <i class="fa fa-times"></i></button>
         </div>
-        <!-- /.row -->
-      </section>
-      <!-- /.content -->
+      </div>
+      <div class="box-body">
+        <div class="box">
+          <div class="box-header">
+            <h3 class="box-title">Usuarios administradores</h3>
+          </div>
+          <!-- /.box-header -->
+          <div class="box-body">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead>
+              <tr>
+                <th>S.No</th>
+                <th>Nombre</th>
+                <th>email</th>
+                <th>Cargo</th>
+                <th>Creado</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+              </tr>
+              </thead>
+              <tbody>
+              @if (!empty($admins))
+              @foreach ($admins as $admin)
+                <tr>
+                  <td>{{ $loop->index + 1 }}</td>
+                  <td>{{ $admin->name }}</td>
+                  <td>{{ $admin->email }}</td>
+                  <td>
+                    @if ($admin->level == 1)
+                      Administrador
+                    @endif
+                    @if ($admin->level == 2)
+                      Delegado
+                    @endif
+                    @if ($admin->level == 3)
+                      Comercial
+                    @endif
+                  </td>
+                  <td>{{ $admin->created_at }}</td>
+                  <td><a href="{{ route('admins.edit',$admin->id) }}"><span class="glyphicon glyphicon-edit"></span></a></td>
+                  <td>
+                    <form id="delete-form-{{ $admin->id }}" method="post" action="{{ route('admins.destroy',$admin->id) }}" style="display: none">
+                      {{ csrf_field() }}
+                      {{ method_field('DELETE') }}
+                    </form>
+                    <a href="" onclick="
+                    if(confirm('Are you sure, You Want to delete this?'))
+                        {
+                          event.preventDefault();
+                          document.getElementById('delete-form-{{ $admin->id }}').submit();
+                        }
+                        else{
+                          event.preventDefault();
+                        }" ><span class="glyphicon glyphicon-trash"></span></a>
+                  </td>
+                </tr>
+              @endforeach
+              @endif
+              </tbody>
+              <tfoot>
+              <tr>
+                <th>S.No</th>
+                <th>Title</th>
+                <th>Sub Title</th>
+                <th>Slug</th>
+                <th>Creatd At</th>
+                <th>Edit</th>
+                <th>Delete</th>
+              </tr>
+              </tfoot>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        Footer
+      </div>
+      <!-- /.box-footer-->
     </div>
-    <!-- /.content-wrapper -->
-  
-  
+    <!-- /.box -->
+
+  </section>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 @endsection
 @section('footerSection')
-
-<script>
-  console.log("Administradores index");
-</script>
+<script src="{{ asset('admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
 <script>
   $(function () {
-    /*$('#example1').DataTable()*/
-    $('#example1').DataTable({
-      'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
-      'ordering'    : true,
-      'info'        : true,
-      'autoWidth'   : false
-    })
-  })
+    $("#example1").DataTable();
+  });
 </script>
 @endsection
-
-    
