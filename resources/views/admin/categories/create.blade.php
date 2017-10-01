@@ -6,7 +6,7 @@
 	  <!-- Content Header (Page header) -->
 	  <section class="content-header">
 	    <h1>
-	      Editar Categoria
+	      Categorias
 	      <small>para las encuestas</small>
 	    </h1>
 	    <ol class="breadcrumb">
@@ -25,28 +25,20 @@
 	    	@include('includes.messages')      
 	          <!-- /.box-header -->
 	          <!-- form start -->
-	          <form role="form" action="{{ route('categories.update', $category->id) }}" method="post">
+	          <form role="form" action="{{ route('categories.store') }}" method="post">
 	          {{ csrf_field() }}
-              {{ method_field('PUT') }}
-
-
 	            <div class="box-body">
 	            <div class="col-lg-offset-3 col-lg-2">
 	              <div class="form-group">
 	                <label for="name">Nombre de la categoria</label>
-	                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la categoria" value="{{$category->name}}">
+	                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la categoria">
 	              </div>
 
 	              <div class="form-group">
 	                <label for="slug">Es pausable la encuesta?</label>
 	                <br>
-	                @if ($category->pausable == 1)
-	                	<input type="radio" name="pausable" value="1" checked="checked" > Si<br>
-	                	<input type="radio" name="pausable" value="0"> No<br>
-	                @else
-	                	<input type="radio" name="pausable" value="1"  > Si<br>
-	                	<input type="radio" name="pausable" value="0" checked="checked"> No<br>
-	                @endif
+	                <input type="radio" name="pausable" value="1" checked="checked" > Si<br>
+	                 <input type="radio" name="pausable" value="0"> No<br>
 	              </div>
 
 	            <div class="form-group">

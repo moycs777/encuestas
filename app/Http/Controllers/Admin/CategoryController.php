@@ -8,25 +8,26 @@ use Carbon\Carbon;
 use Session;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use App\Poll;
+
 use App\Category;
 
-class PollsController extends Controller
+class CategoryController extends Controller
 {
+   
     public function index()
     {
-        $polls = Poll::all();
-        return view('admin.polls.index',compact('polls'));
+        $categories = Category::all();
+        return view('admin.categories.index',compact('categories'));
     }
 
-    
+   
     public function create()
     {
-        $categories = Category::all();
-        return view('admin.polls.create', compact('categories'));        
+        return view('admin.categories.create');
+        
     }
 
-    
+   
     public function store(Request $request)
     {
         $this->validate($request, ['name' => 'required', 'pausable' => 'required' ]);
@@ -40,7 +41,7 @@ class PollsController extends Controller
 
     }
 
-    
+  
     public function show($id)
     {
         //
@@ -69,7 +70,7 @@ class PollsController extends Controller
         return redirect('admin/categories');
     }
 
-    
+   
     public function destroy($id)
     {
         $categories = Category::findOrFail($id);

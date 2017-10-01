@@ -10,7 +10,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-     Encuestas
+     Categorias
     </h1>    
   </section>
   <!-- Main content -->
@@ -22,23 +22,23 @@
       <div class="box-body">
         <div class="box">
           <div class="box-header">
-            <h1>Encuestas <a href="{{ url('admin/polls/create') }}" class="btn btn-primary pull-right btn-sm">Crear Encuesta</a></h1>
+            <h1>Categorias <a href="{{ url('admin/categories/create') }}" class="btn btn-primary pull-right btn-sm">Crear Categoria</a></h1>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>ID</th><th>Nombre de la encuesta</th><th>Hora</th><th>Minutos</th><th>Segundos</th><th>Acciones</th>
+                <th>ID</th><th>Nombre de la categoria</th><th>Es pausable</th><th>Acciones</th>
               </tr>
               </thead>
               <tbody>
-              @if (!empty($polss))
-                @foreach ($polss as $item)
+              @if (!empty($categories))
+                @foreach ($categories as $item)
                   <tr>
                       <td>{{ $item->id }}</td>
                       <td>
-                        <a href="{{ url('admin/polls', $item->id . '/edit' ) }}">{{ $item->name }}</a>{{ $item->nif_cif }}
+                        <a href="{{ url('admin/categories', $item->id . '/edit' ) }}">{{ $item->name }}</a>{{ $item->nif_cif }}
                       </td>
                       
                       <td> 
@@ -48,13 +48,11 @@
                           No
                         @endif
                       </td>
-                      <td></td>
-                      <td></td>
                       
 
                       <td>
-                          <a href="{{ url('admin/polls/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Actualizar</a> 
-                          <form action="{{ route('polls.destroy',  $item->id) }}" method="post" style="display:inline">
+                          <a href="{{ url('admin/categories/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Actualizar</a> 
+                          <form action="{{ route('categories.destroy',  $item->id) }}" method="post" style="display:inline">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             

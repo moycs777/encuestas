@@ -29,6 +29,7 @@
         <li class="active treeview">
           <li class=""><a href="{{ route('admins.index') }}"><i class="fa fa-circle-o"></i> Administradores</a></li>
 
+          <li class=""><a href="{{ route('categories.index') }}"><i class="fa fa-circle-o"></i> Categorias</a></li>
           <li class=""><a href="{{ route('polls.index') }}"><i class="fa fa-circle-o"></i> Encuestas</a></li>
 
            {{--  @if(Auth::user()->level < 5)
