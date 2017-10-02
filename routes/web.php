@@ -27,6 +27,8 @@ Route::group(['namespace' => 'Admin'],function(){
 	Route::resource('admin/admins','AdminController');
 	Route::resource('admin/polls','PollsController');
 	Route::resource('admin/categories','CategoryController');
+	Route::resource('admin/questions','QuestionController');
+	Route::get('admin/questions/createquestions/{id}','QuestionController@createquestions');
 	// Admin Auth Routes
 	Route::get('admin/login', 'Auth\LoginController@showLoginForm')->name('admin.login');
 	Route::post('admin/login', 'Auth\LoginController@login')->name('admin.login.post');

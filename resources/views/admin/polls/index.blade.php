@@ -26,30 +26,27 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
+            @include('includes.messages')
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>ID</th><th>Nombre de la encuesta</th><th>Hora</th><th>Minutos</th><th>Segundos</th><th>Acciones</th>
+                <th>ID</th><th>Nombre de la encuesta</th><th>Categoria</th><th>Hora</th><th>Minutos</th><th>Segundos</th><th>Acciones</th>
               </tr>
               </thead>
               <tbody>
-              @if (!empty($polss))
-                @foreach ($polss as $item)
+              @if (!empty($polls))
+                @foreach ($polls as $item)
                   <tr>
                       <td>{{ $item->id }}</td>
                       <td>
                         <a href="{{ url('admin/polls', $item->id . '/edit' ) }}">{{ $item->name }}</a>{{ $item->nif_cif }}
                       </td>
-                      
+                      <td>{{ $item->category->name }}</td>
                       <td> 
-                        @if ($item->pausable == 1)
-                          Si
-                        @else
-                          No
-                        @endif
+                        {{ $item->hour }}
                       </td>
-                      <td></td>
-                      <td></td>
+                      <td>  {{ $item->minutes }} </td>
+                      <td> {{ $item->seconds }}</td>
                       
 
                       <td>

@@ -28,7 +28,7 @@
 	          <form role="form" action="{{ route('categories.store') }}" method="post">
 	          {{ csrf_field() }}
 	            <div class="box-body">
-	            <div class="col-lg-offset-3 col-lg-2">
+	            <div class="col-lg-offset-3 col-lg-4">
 	              <div class="form-group">
 	                <label for="name">Nombre de la categoria</label>
 	                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la categoria">

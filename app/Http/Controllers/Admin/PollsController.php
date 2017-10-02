@@ -29,14 +29,14 @@ class PollsController extends Controller
     
     public function store(Request $request)
     {
-        $this->validate($request, ['name' => 'required', 'pausable' => 'required' ]);
+        $this->validate($request, ['name' => 'required' ]);
 
-        $store = Category::create($request->all());
+        $poll = Poll::create($request->all());
 
-        Session::flash('message', 'Category added!');
+        Session::flash('message', 'poll added!');
         Session::flash('status', 'success');
 
-        return redirect('admin/categories');
+        return redirect('admin/polls');
 
     }
 
@@ -49,36 +49,35 @@ class PollsController extends Controller
     
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
-        return view('admin.categories.edit',compact('category'));
-
-
+        $categories = Category::all();
+        $poll = Poll::findOrFail($id);
+        return view('admin.polls.edit',compact('poll', 'categories'));
     }
 
     
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['name' => 'required', 'pausable' => 'required' ]);
+        $this->validate($request, ['name' => 'required' ]);
 
-        $categories = Category::findOrFail($id);
-        $categories->update($request->all());
+        $polls = Poll::findOrFail($id);
+        $polls->update($request->all());
 
-        Session::flash('message', 'Category updated!');
+        Session::flash('message', 'Poll updated!');
         Session::flash('status', 'success');
 
-        return redirect('admin/categories');
+        return redirect('admin/polls');
     }
 
     
     public function destroy($id)
     {
-        $categories = Category::findOrFail($id);
+        $polls = Poll::findOrFail($id);
 
-        $categories->delete();
+        $polls->delete();
 
-        Session::flash('message', 'category deleted!');
+        Session::flash('message', 'Poll deleted!');
         Session::flash('status', 'success');
 
-        return redirect('admin/categories');
+        return redirect('admin/polls');
     }
 }
