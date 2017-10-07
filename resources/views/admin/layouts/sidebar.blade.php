@@ -31,7 +31,7 @@
 
           <li class=""><a href="{{ route('categories.index') }}"><i class="fa fa-circle-o"></i> Categorias</a></li>
           <li class=""><a href="{{ route('polls.index') }}"><i class="fa fa-circle-o"></i> Encuestas</a></li>
-          <li class=""><a href="{{ route('questions.index') }}"><i class="fa fa-circle-o"></i> Preguntas</a></li>
+          {{-- <li class=""><a href="{{ route('questions.index') }}"><i class="fa fa-circle-o"></i> Preguntas</a></li> --}}
 
 
            {{--  @if(Auth::user()->level < 5)

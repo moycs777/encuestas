@@ -50,7 +50,8 @@
                       
 
                       <td>
-                          <a href="{{ url('admin/polls/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Actualizar</a> 
+                          <a href="{{ url('admin/polls/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Actualizar</a>
+                          <a href="{{ url('admin/questions/showquestions/' . $item->id ) }}" class="btn btn-success btn-xs">Preguntas</a> 
                           <form action="{{ route('polls.destroy',  $item->id) }}" method="post" style="display:inline">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}

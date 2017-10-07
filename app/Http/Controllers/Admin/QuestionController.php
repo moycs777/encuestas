@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Poll;
+use App\Question;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Input;
 
 class QuestionController extends Controller
 {
@@ -29,18 +32,43 @@ class QuestionController extends Controller
         //
     }
 
-    public function createquestions($id)
+    public function showquestions($id)
     {
         //return $id;
+        $encuesta = Poll::find($id);
+        $preguntas = Question::where('poll_id', '=', $encuesta->id)
+            ->get();
+        //dd($encuesta);
+        //dd($preguntas->count());
+        //Este se cumple cuando una encuesta ya tiene preguntas
+       /* if ($preguntas->count()>=1) {
+            
+        }*/
+        //Cuando la encuesta no tiene preguntas
+        return view('admin.questions.create', compact('encuesta', 'preguntas'));
         
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    public function createquestion(Request $request){
+        //dd( $request->all());
+        $rules = array (
+                    'name' => 'required'
+            );
+        $validator = Validator::make ( Input::all (), $rules );
+        if ($validator->fails ())
+            return Response::json ( array (
+                        
+                    'errors' => $validator->getMessageBag ()->toArray ()
+            ) );
+        else {
+            $data = new Question ();
+            $data->name = $request->name;
+            $data->poll_id = $request->poll_id;
+            $data->save ();
+            return response ()->json ( $data );
+        }
+    }
+
     public function store(Request $request)
     {
         //
