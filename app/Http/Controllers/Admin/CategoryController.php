@@ -59,6 +59,7 @@ class CategoryController extends Controller
     
     public function update(Request $request, $id)
     {
+        //dd($request->all());
         $this->validate($request, ['name' => 'required', 'pausable' => 'required' ]);
 
         $categories = Category::findOrFail($id);

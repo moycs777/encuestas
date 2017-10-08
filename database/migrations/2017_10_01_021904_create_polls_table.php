@@ -16,9 +16,6 @@ class CreatePollsTable extends Migration
         Schema::create('polls', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('hour')->nullable();
-            $table->integer('minutes')->nullable();
-            $table->integer('seconds')->nullable();
             $table->boolean('status')->default(1);
             $table->integer('category_id');
             $table->timestamps();

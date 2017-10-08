@@ -50,6 +50,7 @@ class QuestionController extends Controller
     }
 
     public function createquestion(Request $request){
+        //return $request->all();
         //dd( $request->all());
         $rules = array (
                     'name' => 'required'
@@ -57,8 +58,7 @@ class QuestionController extends Controller
         $validator = Validator::make ( Input::all (), $rules );
         if ($validator->fails ())
             return Response::json ( array (
-                        
-                    'errors' => $validator->getMessageBag ()->toArray ()
+                'errors' => $validator->getMessageBag ()->toArray ()
             ) );
         else {
             $data = new Question ();

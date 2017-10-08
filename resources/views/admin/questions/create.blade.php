@@ -2,6 +2,8 @@
 
 @section('headSection')
 <link rel="stylesheet" href="{{ asset('admin/plugins/datatables/dataTables.bootstrap.css') }}">
+<link rel="stylesheet" href="{{ url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css') }}">
+{{-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> --}}
 @endsection
 
 @section('main-content')
@@ -10,7 +12,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-     {{ $encuesta->name }}
+     Encuesta: {{ $encuesta->name }}
     </h1>    
   </section>
   <!-- Main content -->
@@ -28,87 +30,55 @@
             <div class="form-group row add">
                 <div class="col-md-8">
                 	{{ csrf_field() }}
-                    <input type="text" class="form-control" id="name" name="name"
-                        placeholder="Pregunta" required>
-                     
-                    <p class="error text-center alert alert-danger hidden"></p>
+                  <h1>Preguntas</h1><a href="#" id="addQuestion" data-toggle="modal" data-target="#questionModal" class="" data-toggle="tooltip" title="Añdir pregunta!"><i class="fa fa-plus" aria-hidden="true" class="pull-right"></i></a>
                 </div>
-                <div class="col-md-4">
-                    <button class="btn btn-primary" type="submit" id="add">
-                        <span class="glyphicon glyphicon-plus"></span> ADD
-                    </button>
-                </div>
+                
             </div>
-          </div>
+          </div>          
 
-          {{-- <div class="table-responsive text-center">
-              <table class="table table-borderless" id="table">
-                  <thead>
-                      <tr>
-                          <th class="text-center">#</th>
-                          <th class="text-center">Pregunta</th>
-                          <th class="text-center">Acciones</th>
-                      </tr>
-                  </thead>
-                  @foreach($preguntas as $item)
-                  <tr class="item{{$item->id}}">
-                      <td>{{$item->id}}</td>
-                      <td>{{$item->name}}</td>
-                      <td><button class="edit-modal btn btn-info" data-id="{{$item->id}}"
-                              data-name="{{$item->name}}">
-                              <span class="glyphicon glyphicon-edit"></span> Editar
-                          </button>
-                          <button class="delete-modal btn btn-danger" data-id="{{$item->id}}"
-                              data-name="{{$item->name}}">
-                              <span class="glyphicon glyphicon-trash"></span> Eliminar
-                          </button></td>
-                  </tr>
-                  @endforeach
-              </table>
-          </div> --}}
-         
+          <div id="myDiv">
       		@if (!empty($preguntas))
-     		@foreach($preguntas as $item)
-
+     		  @foreach($preguntas as $item)
            <div class="box-body">
             <table class="table table-bordered">
-             <tr>
+             <tr >
                <th style="width: 10px">{{ $loop->iteration }}</th>
-               <th>{{ $item->name }}</th>
+               <th class="question" id="{{ $item->id }}" data-toggle="modal" data-target="#questionModal">{{ $item->name }} </th>
+               {{-- <th><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" aria-hidden="true" class="pull-right"></i></a></th> --}}
                {{-- <th>Easd</th> --}}
+               <th style="width: 20px"><a href="#" data-toggle="modal" data-target="#answerModal" data-toggle="tooltip" title="Añadir respuestas!"><i class="fa fa-plus" ></i></a></th>
                <th style="width: 20px">Puntos</th>
                <th style="width: 10px">Acciones</th>
              </tr>
-             	@if (!empty($item->answers))
-     			  @foreach($item->answers as $answer)
+             	{{-- @if (!empty($item->answers))
+     			    @foreach($item->answers as $answer)
 		             <tr>
 		               <td>{{ $loop->iteration }}</td>
 		               <td>{{ $answer->name }}</td>
-		               {{-- <td>
-		                 <div class="progress progress-xs">
-		                   <div class="progress-bar progress-bar-primary" style="width: 55%"></div>
-		                 </div>
-		               </td> --}}
+                   td
 		               <td><span class="badge bg-light-blue">{{ $answer->value }}</span></td>
 		               <td>
 		               		<button class="edit-modal btn btn-info" data-id="{{$answer->id}}"
                                data-name="{{$answer->name}}">
                                <span class="glyphicon glyphicon-edit"></span> Edit
                            </button>
-                           <button class="delete-modal btn btn-danger" data-id="{{$answer->id}}"
-                               data-name="{{$answer->name}}">
-                               <span class="glyphicon glyphicon-trash"></span> Delete
-                           </button>
+                     <button class="delete-modal btn btn-danger" data-id="{{$answer->id}}"
+                         data-name="{{$answer->name}}">
+                         <span class="glyphicon glyphicon-trash"></span> Delete
+                     </button>
 		               </td>
 		             </tr>
-		           @endforeach
-		        @endif
-		        
+		          @endforeach
+		          @endif --}}		        
             </table>
             </div>
            <!-- /.box-body -->
+
+           
+
      		@endforeach
 	      @endif
+        </div>
 
         </div>
       </div>
@@ -117,128 +87,128 @@
       </div>
       <!-- /.box-footer-->
     </div>
-    <!-- /.box -->
-    
-
+    <!-- /.box --> 
   </section>
   <!-- /.content -->
+</div>
 
-</div>
-<!-- /.content-wrapper -->
-<div id="myModal" class="modal fade" role="dialog">
-<div class="modal-dialog">
-  <!-- Modal content-->
-  <div class="modal-content">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal">×</button>
-      <h4 class="modal-title"></h4>
-    </div>
-    <div class="modal-body">
-      <form class="form-horizontal" role="form">
-        <div class="form-group">
-          <label class="control-label col-sm-2" for="id">ID:</label>
-          <div class="col-sm-10">
-            <input type="text" class="form-control" id="fid" disabled>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label col-sm-2" for="name">Name:</label>
-          <div class="col-sm-10">
-            <input type="name" class="form-control" id="n">
-          </div>
-        </div>
-      </form>
-    </div>
-      <div class="deleteContent">
-        Are you Sure you want to delete <span class="dname"></span> ? <span
-          class="hidden did"></span>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn actionBtn" data-dismiss="modal">
-          <span id="footer_action_button" class='glyphicon'> </span>
-        </button>
-        <button type="button" class="btn btn-warning" data-dismiss="modal">
-          <span class='glyphicon glyphicon-remove'></span> Close
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+{{-- Qustion modal --}}
+<div class="modal fade" id="questionModal" tabindex="-1" role="dialog">
+ <div class="modal-dialog" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       <h4 class="modal-title" id="title">Pregunta</h4>
+     </div>
+     <div class="modal-body">
+       <input type="text" id="question" name="question" placeholder="Pregunta??" class="form-control">
+     </div>
+     <div class="modal-footer">
+       {{-- <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span></button> --}}
+       <button type="button" id="delete" style="display: none" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-trash"></span></button>
+       <button type="button" id="saveChanges" style="display: none" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+       <button type="button" id="add" style="display: none" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+     </div>
+   </div><!-- /.modal-content -->
+ </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+{{-- Qustion modal 2--}}
+<div class="modal fade" id="questionModal2" tabindex="-1" role="dialog">
+ <div class="modal-dialog" role="document">
+   <div class="modal-content">
+     <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       <h4 class="modal-title" id="title2"></h4>
+     </div>
+     <div class="modal-body">
+       <input type="text" id="question2" name="question2" placeholder="" class="form-control">
+     </div>
+     <div class="modal-footer">
+       {{-- <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span></button> --}}
+       <button type="button" id="delete2"  class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-trash"></span></button>
+       <button type="button" id="saveChanges2"  class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+     </div>
+   </div><!-- /.modal-content -->
+ </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
 @endsection
 @section('footerSection')
 <script src="{{ asset('admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-
-<script>
-	
+<script>	
 
 $(function () {
 	/*$("#example1").DataTable();*/
 	$("#example1").DataTable( {
 	  "pageLength": 100
 	});
+  console.log("pagina para editar las preguntas y respuestas");
+  
+  var url = '{{ route('pregunta.anadir') }}';
+  var poll_id = {{ $encuesta->id }}
+  console.log("poll_id " + poll_id)
+  $('.question').click(function(){
+    console.log("se clickeo un elemento de pregunta");
+  });
 
-	$( '.edit-modal').on('click', function() {
-		console.log("editar");
-        $('#footer_action_button').text(" Update");
-        $('#footer_action_button').addClass('glyphicon-check');
-        $('#footer_action_button').removeClass('glyphicon-trash');
-        $('.actionBtn').addClass('btn-success');
-        $('.actionBtn').removeClass('btn-danger');
-        $('.actionBtn').addClass('edit');
-        $('.modal-title').text('Edit');
-        $('.deleteContent').hide();
-        $('.form-horizontal').show();
-        $('#fid').val($(this).data('id'));
-        $('#n').val($(this).data('name'));
-        $('#myModal').modal('show');
+  $(document).on('click', '.question', function(event) {
+    //Modal editar una pregunta
+      console.log('editar con modal');
+      $('#question').val($(this).text());
+      $('#title').text('Editar Pregunta');
+      $('#delete').show('400');
+      $('#saveChanges').show('400');
+      $('#add').hide('400'); 
+
+      var question_id = $(this).attr('id');
+      var question = $(this).text();
+      console.log("id de pregunta: " + question_id + ' , pregunta: ' + question);
+  });
+
+  //Modal Añadir pregunta
+  $(document).on('click', '#addQuestion', function(event) {
+    console.log('modal añadir');
+    $('#question').val('');
+    $('#add').show('400'); 
+    $('#title').text('Añadir Pregunta');
+    $('#delete').hide('400');
+    $('#saveChanges').hide('400');
+    $('#question').val('');
+
+    var question_id = $(this).attr('id');
+    var question = $(this).text();
+    console.log("id de pregunta: " + question_id);
+    $('#question').val(question);   
+  });
+
+  //Crear
+  $('#add').click(function(event){
+    var question = $('#question').val();
+    var ope = "c";
+    console.log("nombre de pregunta: " + question);
+    console.log("id  de la encuesta: " + poll_id);
+    $.post(url, 
+      {'name' : question, 
+      'poll_id' : poll_id, 
+      'ope' : ope, 
+      '_token' : $('input[name=_token]').val() }, function(data) {
+      /*optional stuff to do after success */
+      $('#question').val('');
+      /*location.reload();*/
+      $('#myDiv').load(location.href + ' #myDiv' );
     });
 
-	$("#add").click(function() {
-		//alert(" ");
-	 	var url = '{{ route('pregunta.anadir') }}';
-	 	var poll_id = {{ $encuesta->id }}
-	 	console.log("pregunta " + $('input[name=name]').val() + " , " + "poll_id " + poll_id)
+  }); 
 
-	    $.ajax({
-	        type: 'post',
-	        url: url,
-	        data: {
-	            '_token': $('input[name=_token]').val(),
-	            'name': $('input[name=name]').val(),
-	            'poll_id': poll_id
-	        },
-	        success: function(data) {
-	            if ((data.errors)) {
-	                $('.error').removeClass('hidden');
-	                $('.error').text(data.errors.name);
-	            } else {
-	                $('.error').remove();
-	                $('#table').append("<tr class='item" + data.id + "'><td>" + data.id + "</td><td>" + data.name + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-name='" + data.name + "'><span class='glyphicon glyphicon-trash'></span> Delete</button></td></tr>");
-	            }
-	        },
-	    });
-	    $('#name').val('');
-    });
-
-    $('.modal-footer').on('click', '.edit', function() {
-
-        $.ajax({
-            type: 'post',
-            url: '/editItem',
-            data: {
-                '_token': $('input[name=_token]').val(),
-                'id': $("#fid").val(),
-                'name': $('#n').val()
-            },
-            success: function(data) {
-                $('.item' + data.id).replaceWith("<tr class='item" + data.id + "'><td>" + data.id + "</td><td>" + data.name + "</td><td><button class='edit-modal btn btn-info' data-id='" + data.id + "' data-name='" + data.name + "'><span class='glyphicon glyphicon-edit'></span> Edit</button> <button class='delete-modal btn btn-danger' data-id='" + data.id + "' data-name='" + data.name + "' ><span class='glyphicon glyphicon-trash'></span> Delete</button></td></tr>");
-            }
-        });
-    });
+    
 
 });
 </script>
 
 @endsection
 
+.

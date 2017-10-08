@@ -37,17 +37,45 @@
 	                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la categoria" value="{{$category->name}}">
 	              </div>
 
+                  <div class="form-group">
+	                <label for="name">Horas</label>
+	                <input type="text" class="form-control" id="hour" name="hour" placeholder="Hora" value="{{$category->hour}}">
+                  </div>
+
+                  <div class="form-group">
+	                <label for="name">Minutos</label>
+	                <input type="text" class="form-control" id="minutes" name="minutes" placeholder="Minutos" value="{{$category->minutes}}">
+                  </div>
+
+                  <div class="form-group">
+	                <label for="name">Segundos</label>
+	                <input type="text" class="form-control" id="seconds" name="seconds" placeholder="Segundos" value="{{$category->seconds}}">
+                  </div>
+
 	              <div class="form-group">
 	                <label for="slug">Es pausable la encuesta?</label>
 	                <br>
 	                @if ($category->pausable == 1)
-	                	<input type="radio" name="pausable" value="1" checked="checked" > Si<br>
+	                	<input type="radio" name="pausable" value="1" checked="checked"> Si<br>
 	                	<input type="radio" name="pausable" value="0"> No<br>
 	                @else
-	                	<input type="radio" name="pausable" value="1"  > Si<br>
+	                	<input type="radio" name="pausable" value="1"> Si<br>
 	                	<input type="radio" name="pausable" value="0" checked="checked"> No<br>
 	                @endif
 	              </div>
+                  
+
+                  <div class="form-group">
+  					<label for="slug">Activo</label>
+  					<br>
+  					@if ($category->status == 1)
+  						<input type="radio" name="status" id="status" value="1" checked="checked"> Si<br>
+  						<input type="radio" name="status" id="status" value="0"> No<br>
+  					@else
+  						<input type="radio" name="status" id="status" value="1"> Si<br>
+  						<input type="radio" name="status" id="status" value="0" checked="checked"> No<br>
+  					@endif
+				  </div>
 
 	            <div class="form-group">
 	              <button type="submit" class="btn btn-primary">Guardar</button>

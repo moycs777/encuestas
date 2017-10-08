@@ -16,7 +16,11 @@ class CreateCategoriesTable extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->boolean('pausable');
+            $table->integer('hour')->nullable();
+            $table->integer('minutes')->nullable();
+            $table->integer('seconds')->nullable();
+            $table->boolean('pausable')->default(1);
+            $table->boolean('status')->default(1);
             $table->timestamps();
         });
     }

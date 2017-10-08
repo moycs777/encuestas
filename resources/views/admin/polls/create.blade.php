@@ -43,25 +43,6 @@
 	                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la encuesta">
 	              </div>
 
-	              <div class="form-group">
-	                <label for="hora">hora</label>
-	                <br>
-	                <input type="number" name="hour" value="0" min="0" max="23"  > <br>
-	              </div>
-
-	              <div class="form-group">
-	                <label for="minutes">Minutos</label>
-	                <br>
-	                <input type="number" name="minutes" value="1" min="0" max="60"  > <br>
-	              </div>
-
-	              <div class="form-group">
-	                <label for="seconds">Segundos</label>
-	                <br>
-	                <input type="seconds" name="seconds" value="1" min="0" max="60"  > <br>
-	              </div>
-
-	              
 
 	            <div class="form-group">
 	              <button type="submit" class="btn btn-primary">Guardar</button>
