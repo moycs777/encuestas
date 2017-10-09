@@ -43,7 +43,9 @@
             <table class="table table-bordered">
              <tr >
                <th style="width: 10px">{{ $loop->iteration }}</th>
-               <th class="question" id="{{ $item->id }}" data-toggle="modal" data-target="#questionModal">{{ $item->name }} </th>
+               <th class="question" id="{{ $item->id }}" data-toggle="modal" data-target="#questionModal">{{ $item->name }} 
+                <input type="hidden" id="question_id" value="{{ $item->id }}">
+               </th>
                {{-- <th><a href="#" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus" aria-hidden="true" class="pull-right"></i></a></th> --}}
                {{-- <th>Easd</th> --}}
                <th style="width: 20px"><a href="#" data-toggle="modal" data-target="#answerModal" data-toggle="tooltip" title="Añadir respuestas!"><i class="fa fa-plus" ></i></a></th>
@@ -102,38 +104,17 @@
      </div>
      <div class="modal-body">
        <input type="text" id="question" name="question" placeholder="Pregunta??" class="form-control">
+       <input type="hidden" id="id">
      </div>
      <div class="modal-footer">
        {{-- <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span></button> --}}
        <button type="button" id="delete" style="display: none" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-trash"></span></button>
-       <button type="button" id="saveChanges" style="display: none" class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span></button>
+       <button type="button" id="saveChanges" style="display: none" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk"></span></button>
        <button type="button" id="add" style="display: none" class="btn btn-primary" data-dismiss="modal"><span class="glyphicon glyphicon-floppy-disk"></span></button>
      </div>
    </div><!-- /.modal-content -->
  </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
-{{-- Qustion modal 2--}}
-<div class="modal fade" id="questionModal2" tabindex="-1" role="dialog">
- <div class="modal-dialog" role="document">
-   <div class="modal-content">
-     <div class="modal-header">
-       <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-       <h4 class="modal-title" id="title2"></h4>
-     </div>
-     <div class="modal-body">
-       <input type="text" id="question2" name="question2" placeholder="" class="form-control">
-     </div>
-     <div class="modal-footer">
-       {{-- <button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove-sign"></span></button> --}}
-       <button type="button" id="delete2"  class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-trash"></span></button>
-       <button type="button" id="saveChanges2"  class="btn btn-primary"><span class="glyphicon glyphicon-floppy-disk"></span></button>
-     </div>
-   </div><!-- /.modal-content -->
- </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
 
 @endsection
 @section('footerSection')
@@ -149,6 +130,8 @@ $(function () {
   console.log("pagina para editar las preguntas y respuestas");
   
   var url = '{{ route('pregunta.anadir') }}';
+  var url_delete = '{{ route('pregunta.eliminar') }}';
+  var url_update = '{{ route('pregunta.actualizar') }}';
   var poll_id = {{ $encuesta->id }}
   console.log("poll_id " + poll_id)
   $('.question').click(function(){
@@ -158,15 +141,18 @@ $(function () {
   $(document).on('click', '.question', function(event) {
     //Modal editar una pregunta
       console.log('editar con modal');
-      $('#question').val($(this).text());
+      var id = $(this).find('#question_id').val();
+      var question_id = $(this).attr('id');
+      var question = $(this).text();
+      var question = $.trim(question);
+      $('#question').val(question);
       $('#title').text('Editar Pregunta');
       $('#delete').show('400');
       $('#saveChanges').show('400');
       $('#add').hide('400'); 
+      $('#id').val(question_id); 
 
-      var question_id = $(this).attr('id');
-      var question = $(this).text();
-      console.log("id de pregunta: " + question_id + ' , pregunta: ' + question);
+      console.log("id de pregunta: " + question_id + ' , pregunta: ' + question + ' , el id es: ' + id);
   });
 
   //Modal Añadir pregunta
@@ -204,11 +190,36 @@ $(function () {
 
   }); 
 
+  //Borrar
+  $('#delete').click(function(event){
+    var id = $('#id').val();
+    console.log(id);
+    $.post(url_delete, {'id': id,
+      'poll_id' : poll_id, 
+      '_token' : $('input[name=_token]').val() }, function(data) {
+      console.log('eliminado el id:' + id + ' ' + data);
+      $('#myDiv').load(location.href + ' #myDiv' );
+    });
+  }); 
+
+  //Actualizar
+  $('#saveChanges').click(function(event){
+    var id = $('#id').val();
+    var question_name = $.trim(($('input[name=question]').val())) ;
+    console.log(id + question_name);
+    $.post(url_update, {'id': id,
+      'name' : question_name,
+      '_token' : $('input[name=_token]').val()
+      }, function(data) {
+      /*optional stuff to do after success */
+      $('#myDiv').load(location.href + ' #myDiv' );
+    });
+    
+  }); 
+
     
 
 });
 </script>
 
 @endsection
-
-.

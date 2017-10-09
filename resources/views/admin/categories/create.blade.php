@@ -56,15 +56,12 @@
 	                <input type="radio" name="pausable" value="0"> No<br>
 	              </div>
 
-	            <div class="form-group">
-	              <button type="submit" class="btn btn-primary">Guardar</button>
-	              <a href='{{ route('categories.index') }}' class="btn btn-warning">Regresar</a>
+	              <div class="form-group">
+	                <button type="submit" class="btn btn-primary">Guardar</button>
+	                <a href='{{ route('categories.index') }}' class="btn btn-warning">Regresar</a>
+	              </div>
 	            </div>
-	            	
-	            </div>
-					
 				</div>
-
 	          </form>
 	        </div>
 	        <!-- /.box -->
@@ -90,18 +87,15 @@
     //           alert('Seleccionado');
     //       }
 
-          $( '#chk' ).on( 'click', function() {
-          	if( $(this).is(':checked') ){
-            	 // Hacer algo si el checkbox ha sido seleccionado
-              	alert("El checkbox con valor " + $(this).val() + " ha sido seleccionado");
-          	} else {
-            	// Hacer algo si el checkbox ha sido deseleccionado
-              	alert("El checkbox con valor " + $(this).val() + " ha sido deseleccionado");
-              	
-         	}
-});
+            $('#chk').on( 'click', function() {
+          	   if( $(this).is(':checked') ){
+             	 // Hacer algo si el checkbox ha sido seleccionado
+               	 alert("El checkbox con valor " + $(this).val() + " ha sido seleccionado");
+          	   } else {
+            	 // Hacer algo si el checkbox ha sido deseleccionado
+              	 alert("El checkbox con valor " + $(this).val() + " ha sido deseleccionado");
+               }
+			});
 		});
-
-	
 	</script>
 @endsection

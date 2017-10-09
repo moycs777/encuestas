@@ -69,9 +69,19 @@ class QuestionController extends Controller
         }
     }
 
-    public function store(Request $request)
+    public function deletequestion(Request $request)
     {
-        //
+        Question::where('id', $request->id)->delete();
+        return $request->all();
+    }
+
+    public function updatequestion(Request $request)
+    {
+        $question = Question::find($request->id);
+        $question->name = $request->name;
+        $question->save();
+        
+        return $request->all();
     }
 
     /**
