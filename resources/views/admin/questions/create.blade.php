@@ -221,5 +221,6 @@ $(function () {
 
 });
 </script>
+<script src="{{ asset('admin/custom/question/answer.js') }}"></script>
 
 @endsection
