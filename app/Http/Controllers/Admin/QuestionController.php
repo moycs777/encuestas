@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Poll;
 use App\Question;
+use App\Answer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 
@@ -83,47 +84,63 @@ class QuestionController extends Controller
         
         return $request->all();
     }
+    
+    
+    
+    public function createanswer(Request $request){
+        //return $request->all();
+        //dd( $request->all());
+        $rules = array (
+                    'name' => 'required',
+                    'value' => 'required'
+            );
+        $validator = Validator::make ( Input::all (), $rules );
+        if ($validator->fails ())
+            return Response::json ( array (
+                'errors' => $validator->getMessageBag ()->toArray ()
+            ) );
+        else {
+            $data = new Answer ();
+            $data->name = $request->name;
+            $data->value = $request->value;
+            $data->question_id = $request->question_id;
+            $data->save ();
+            return response ()->json ( $data );
+        }
+    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function deleteanswer(Request $request)
+    {
+        Question::where('id', $request->id)->delete();
+        return $request->all();
+    }
+
+    public function updateanswer(Request $request)
+    {
+        $question = Question::find($request->id);
+        $question->name = $request->name;
+        $question->save();
+        
+        return $request->all();
+    }
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit($id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+   
     public function update(Request $request, $id)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function destroy($id)
     {
         //

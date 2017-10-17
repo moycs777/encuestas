@@ -32,6 +32,10 @@ Route::group(['namespace' => 'Admin'],function(){
 	Route::post('admin/questions/createquestion', 'QuestionController@createquestion')->name('pregunta.anadir');
 	Route::post('admin/questions/deletequestion', 'QuestionController@deletequestion')->name('pregunta.eliminar');
 	Route::post('admin/questions/updatequestion', 'QuestionController@updatequestion')->name('pregunta.actualizar');
+	// Answer
+	Route::post('admin/questions/createanswer', 'QuestionController@createanswer')->name('respuesta.anadir');
+	Route::post('admin/questions/deleteanswer', 'QuestionController@deleteanswer')->name('respuesta.eliminar');
+	Route::post('admin/questions/updateanswer', 'QuestionController@updateanswer')->name('respuesta.actualizar');
 	// Admin Auth Routes
 	Route::get('admin/login', 'Auth\LoginController@showLoginForm')->name('admin.login');
 	Route::post('admin/login', 'Auth\LoginController@login')->name('admin.login.post');
