@@ -122,7 +122,9 @@
      </div>
      <div class="modal-body">
        <input type="text" id="answer" name="answer" placeholder="answer" class="form-control">
-       <input type="number" id="points" name="points" placeholder="points" class="form-control" min=0>
+       <div class="col-xs-2">        
+       <input  type="number" id="points" name="points" placeholder="puntos" class="form-control" min=0>
+      </div>
        <input type="hidden" id="id">
        <input type="hidden" id="id_question">
      </div>
