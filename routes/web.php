@@ -43,3 +43,11 @@ Route::group(['namespace' => 'Admin'],function(){
 	
 	// Stores controller
 });
+
+Route::group(['namespace' => 'User'],function(){
+	Route::resource('user/encuestas','EncuestasController');
+	
+	
+	
+	// Stores controller
+});

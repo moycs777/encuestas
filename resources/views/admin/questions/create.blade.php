@@ -63,13 +63,13 @@
              @if (!empty($item->answers))
      			    @foreach($item->answers as $answer)
 		             <tr>
-		               <td>{{ $loop->iteration }}</td>
-		               <td class="answer" id="{{ $answer->id }}" data-toggle="modal" data-target="#answerModal">Re: {{ $answer->name }}</td>                   
+		               <td>-</td>
+		               <td class="answer" id="{{ $answer->id }}" data-toggle="modal" data-target="#answerModal">{{ $answer->name }}</td>                   
 		               <td></td>		               
                    <td><span class="badge bg-light-blue">{{ $answer->value }}</span></td>		              
 		             </tr>
 		          @endforeach
-		          @endif      
+		        @endif      
             </table>
             </div>
            <!-- /.box-body -->           
