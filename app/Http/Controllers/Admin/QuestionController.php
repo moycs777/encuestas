@@ -104,6 +104,7 @@ class QuestionController extends Controller
             $data->name = $request->name;
             $data->value = $request->value;
             $data->question_id = $request->question_id;
+            $data->poll_id = $request->poll_id;
             $data->save ();
             return response ()->json ( $data );
         }

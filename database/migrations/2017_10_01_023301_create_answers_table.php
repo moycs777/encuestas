@@ -18,6 +18,7 @@ class CreateAnswersTable extends Migration
             $table->string('name');
             $table->integer('value');
             $table->integer('question_id');
+            $table->integer('poll_id');
             $table->timestamps();
         });
     }

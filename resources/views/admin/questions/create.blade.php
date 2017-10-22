@@ -285,6 +285,7 @@ $(function () {
       $.post(url_answer, 
         {'name' : answer, 
         'question_id' : id,
+        'poll_id' : poll_id,
         'value' : points, 
         'ope' : ope, 
         '_token' : $('input[name=_token]').val() }, function(data) {        
