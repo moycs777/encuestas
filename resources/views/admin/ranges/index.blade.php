@@ -10,7 +10,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-     Encuestas
+     Rangos de Encuestas
     </h1>    
   </section>
   <!-- Main content -->
@@ -21,16 +21,16 @@
       </div>
       <div class="box-body">
         <div class="box">
-          <div class="box-header">
+          {{-- <div class="box-header">
             <h1>Encuestas <a href="{{ url('admin/polls/create') }}" class="btn btn-primary pull-right btn-sm">Crear Encuesta</a></h1>
-          </div>
+          </div> --}}
           <!-- /.box-header -->
           <div class="box-body">
             @include('includes.messages')
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>ID</th><th>Nombre de la encuesta</th><th>Categoria</th><th>Hora</th><th>Minutos</th><th>Segundos</th><th>Acciones</th>
+                <th>ID</th><th>Nombre de la encuesta</th>{{-- <th>Categoria</th><th>Hora</th><th>Minutos</th><th>Segundos</th> --}}
               </tr>
               </thead>
               <tbody>
@@ -39,28 +39,17 @@
                   <tr>
                       <td>{{ $item->id }}</td>
                       <td>
-                        <a href="{{ url('admin/polls', $item->id . '/edit' ) }}">{{ $item->name }}</a>
+                        <a href="{{ url('admin/ranges', $item->id ) }}">{{ $item->name }}</a>{{ $item->nif_cif }}
                       </td>
-                      <td>{{ $item->category->name }}</td>
+                      {{-- <td>{{ $item->category->name }}</td>
                       <td> 
                         {{ $item->hour }}
                       </td>
                       <td>  {{ $item->minutes }} </td>
-                      <td> {{ $item->seconds }}</td>
+                      <td> {{ $item->seconds }}</td> --}}
                       
 
-                      <td>
-                          <a href="{{ url('admin/polls/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Actualizar</a>
-                          <a href="{{ url('admin/questions/showquestions/' . $item->id ) }}" class="btn btn-success btn-xs">Preguntas</a> 
-                          <form action="{{ route('polls.destroy',  $item->id) }}" method="post" style="display:inline">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            
-                            <input type="submit" value="Eliminar" class="btn btn-danger btn-xs" onclick="return confirm('Esta seguro de eliminar?');">
-                          </form>
-                          
-                             
-                      </td>
+                      
                     </tr>
                 @endforeach
               @endif

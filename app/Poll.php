@@ -12,4 +12,9 @@ class Poll extends Model
     {
         return $this->belongsTo('App\Category');
     }
+
+    public function ranges()
+    {
+        return $this->hasMany('App\Range');
+    }
 }

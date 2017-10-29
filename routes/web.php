@@ -27,6 +27,7 @@ Route::group(['namespace' => 'Admin'],function(){
 	Route::resource('admin/admins','AdminController');
 	Route::resource('admin/polls','PollsController');
 	Route::resource('admin/categories','CategoryController');
+	Route::resource('admin/ranges','RangeController');
 	Route::resource('admin/questions','QuestionController');
 	Route::get('admin/questions/showquestions/{id}', 'QuestionController@showquestions');
 	Route::post('admin/questions/createquestion', 'QuestionController@createquestion')->name('pregunta.anadir');
