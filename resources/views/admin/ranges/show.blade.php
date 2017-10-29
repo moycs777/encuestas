@@ -24,10 +24,7 @@
       </div>
       <div class="box-body">
         <div class="box">
-          <div class="box-header">
-            {{-- <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalQuestion">
-                Añadir Preguntas
-            </button> --}}
+          <div class="box-header">            
             <div class="form-group row add">
                 <div class="col-md-8">
                 	{{ csrf_field() }}                  
@@ -49,9 +46,17 @@
                   </thead>
                    @foreach($poll->ranges as $item)
                     <tbody>
-                      <td>{{ $item->from }}</td>
-                      <td>{{ $item->to }}</td>
-                      <td>{{ $item->text }}</td>
+                      <input type="hidden" id="range_id" value="{{ $item->id }}">
+
+                      <td class="range" name="@php
+                        echo "from".$item->id ;
+                      @endphp"  id="{{ $item->id }}" data-toggle="modal" data-target="#addRangeModal" value="{{ $item->from }}">{{ $item->from }} </td>
+                      <td class="range" name="@php
+                        echo "to".$item->id ;
+                      @endphp  id="{{ $item->id }}" data-toggle="modal" data-target="#addRangeModal">{{ $item->to }} </td>
+                      <td class="range" name="@php
+                        echo "text".$item->id ;
+                      @endphp  id="{{ $item->id }}" data-toggle="modal" data-target="#addRangeModal">{{ $item->text }} </td>
                     </tbody>                    
            		     @endforeach
                 </table>
@@ -114,9 +119,9 @@ $(function () {
   var url_update = '{{ route('ranges.update', $poll->id) }}';
   var poll_id = {{ $poll->id }}
   
-  $('.range').click(function(){
+ /* $('.range').click(function(){
     console.log("se clickeo un rango");
-  });
+  });*/
 
 
   //Modal Añadir pregunta
@@ -149,18 +154,31 @@ $(function () {
         'to' : to, 
         'text' : text, 
         'poll_id' : poll_id,         
-        '_token' : $('input[name=_token]').val() }, function(data) {
-      
+        '_token' : $('input[name=_token]').val() }, function(data) {      
         $('#from').val('');
         $('#to').val('');
-        $('#text').val('');
-        
+        $('#text').val('');        
         $('#myDiv').load(location.href + ' #myDiv' );
     });
-
   }); 
 
-  
+  //Editar rango
+  $(document).on('click', '.range', function(event) {
+    //Modal editar una pregunta
+      console.log('editar rango');
+      var id = $(this).find('#range_id').val();
+      var range_id = $(this).attr('id');
+      var from = $("input[name='from"+range_id+"']").val(); 
+     
+      console.log( "datos: " + from + to +text);
+      
+      $('#title').text('Editar Rango');
+      $('#delete').show('400');
+      $('#saveChanges').show('400');
+      $('#add').hide('400'); 
+      $('#id').val(); 
+      console.log("id de rango: "  + range_id + id);
+  }); 
     
 
 });
