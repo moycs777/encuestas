@@ -17,6 +17,7 @@ class CreateQuestionsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('poll_id');
+            $table->boolean('multiple_answers');
             $table->timestamps();
         });
     }

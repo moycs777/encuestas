@@ -7,31 +7,90 @@ use App\Http\Controllers\Controller;
 use App\Poll;
 use App\Question;
 use App\Answer;
+use Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 
 class QuestionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+   
+    public function index(Request $request)
     {
-       $polls = Poll::all();
-       return view('admin.questions.index',compact('polls'));
+       //dd($request->all());
+       $poll = Poll::find($request->poll_id);
+       $questions = Question::where('poll_id', '=', $request->poll_id)
+            ->get();
+       return view('admin.questions.index',compact('poll', 'questions'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    
+    public function create(Request $request)
+    {
+        $poll = Poll::find($request->poll_id);
+        return view('admin.questions.create', compact('poll'));
+    }
+
+
+    public function store(Request $request)
+    {
+        //dd($request->all());
+        $this->validate($request, ['name' => 'required' ]);
+
+        $question = Question::create($request->all());
+
+        Session::flash('message', 'question added!');
+        Session::flash('status', 'success');
+
+        $poll = Poll::find($request->poll_id);
+        $questions = Question::where('poll_id', '=', $request->poll_id)
+             ->get();
+        return view('admin.questions.index',compact('poll', 'questions'));
+
+    }
+    
+
+    public function show($id)
     {
         //
     }
+
+    
+    public function edit($id)
+    {
+        //
+    }
+
+    
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    
+    public function destroy($id)
+    {
+        //
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public function showquestions($id)
     {
@@ -39,13 +98,7 @@ class QuestionController extends Controller
         $encuesta = Poll::find($id);
         $preguntas = Question::where('poll_id', '=', $encuesta->id)
             ->get();
-        //dd($encuesta);
-        //dd($preguntas->count());
-        //Este se cumple cuando una encuesta ya tiene preguntas
-       /* if ($preguntas->count()>=1) {
-            
-        }*/
-        //Cuando la encuesta no tiene preguntas
+        
         return view('admin.questions.create', compact('encuesta', 'preguntas'));
         
     }
@@ -124,26 +177,6 @@ class QuestionController extends Controller
         
         return $request->all();
     }
-    public function show($id)
-    {
-        //
-    }
 
     
-    public function edit($id)
-    {
-        //
-    }
-
-   
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
- 
-    public function destroy($id)
-    {
-        //
-    }
 }

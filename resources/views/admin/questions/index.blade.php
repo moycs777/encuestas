@@ -2,6 +2,9 @@
 
 @section('headSection')
 <link rel="stylesheet" href="{{ asset('admin/plugins/datatables/dataTables.bootstrap.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/css/font-awesome.min.css') }}">
+{{--  <link rel="stylesheet" href="{{ url('https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css') }}">  --}}
+{{-- <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous"> --}}
 @endsection
 
 @section('main-content')
@@ -10,7 +13,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-     Preguntas
+     Encuesta: {{ $poll->name }}
     </h1>    
   </section>
   <!-- Main content -->
@@ -22,52 +25,61 @@
       <div class="box-body">
         <div class="box">
           <div class="box-header">
-            
-          </div>
-          <!-- /.box-header -->
-          <div class="box-body">
-            @include('includes.messages')
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>ID</th><th>Nombre de la encuesta</th><th>Categoria</th><th>Hora</th><th>Minutos</th><th>Segundos</th><th>Acciones</th>
-              </tr>
-              </thead>
-              <tbody>
-              @if (!empty($polls))
-                @foreach ($polls as $item)
-                  <tr>
-                      <td>{{ $item->id }}</td>
-                      <td>
-                        <a href="{{ url('admin/questions/createquestions', $item->id ) }}">{{ $item->name }}</a>{{ $item->nif_cif }}
-                      </td>
-                      <td>{{ $item->category->name }}</td>
-                      <td> 
-                        {{ $item->hour }}
-                      </td>
-                      <td>  {{ $item->minutes }} </td>
-                      <td> {{ $item->seconds }}</td>
-                      
+            {{-- <button class="btn btn-success btn-xs" data-toggle="modal" data-target="#modalQuestion">
+                Añadir Preguntas
+            </button> --}}
+            <div class="form-group row add">
+                <div class="col-md-8">                	
+                  {{-- <h1>Preguntas</h1> --}}
+                  <form action="{{ route('questions.create') }}" method="get" style="display:inline">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="poll_id" value="{{$poll->id}}">
+                    <input type="submit" value="agregar pregunta" class="btn btn-success btn-xs" ><i class="fa fa-plus" aria-hidden="true" class="pull-right"></i>
+                  </form>
+                </div>                
+            </div>
+          </div>          
 
-                      <td>
-                          {{-- <a href="{{ url('admin/polls/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Actualizar</a> 
-                          <form action="{{ route('polls.destroy',  $item->id) }}" method="post" style="display:inline">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            
-                            <input type="submit" value="Eliminar" class="btn btn-danger btn-xs" onclick="return confirm('Esta seguro de eliminar?');">
-                          </form> --}}
-                          
-                             
-                      </td>
-                    </tr>
-                @endforeach
-              @endif
-              </tbody>
-             
+          <div id="myDiv">
+      		@if (!empty($questions))
+     		  @foreach($questions as $item)
+           <div class="box-body">
+            <table class="table table-bordered">
+             <tr >
+               <th style="width: 10px">{{ $loop->iteration }}</th>
+               <th class="question" id="{{ $item->id }}" data-toggle="modal" data-target="#questionModal">{{ $item->name }} 
+                <input type="hidden" id="question_id" value="{{ $item->id }}">
+               </th>
+                   
+               <th style="width: 20px">
+                  <form action="{{ route('answers.create') }}" method="get" style="display:inline">
+                    {{ csrf_field() }}
+                    <input type="hidden" name="poll_id" value="{{$poll->id}}">
+                    <input type="hidden" name="question_id" value="{{$item->id}}">
+                    <input type="submit" value="agregar respuesta" class="btn btn-success btn-xs" ><i class="fa fa-plus" aria-hidden="true" class="pull-right"></i>
+                  </form>
+               </th>
+               <th style="width: 20px">Puntos</th>
+               {{--  <th style="width: 10px">Acciones</th>  --}}
+             </tr>
+             @if (!empty($item->answers))
+     			    @foreach($item->answers as $answer)
+		             <tr>
+		               <td>-</td>
+		               <td class="answer" id="{{ $answer->id }}" data-toggle="modal" data-target="#answerModal">{{ $answer->name }}</td>                   
+		               <td></td>		               
+                   <td><span class="badge bg-light-blue">{{ $answer->value }}</span></td>		              
+		             </tr>
+		          @endforeach
+		        @endif      
             </table>
-          </div>
-          <!-- /.box-body -->
+            </div>
+           <!-- /.box-body -->           
+
+     		@endforeach
+	      @endif
+        </div>
+
         </div>
       </div>
       <!-- /.box-body -->
@@ -75,24 +87,27 @@
       </div>
       <!-- /.box-footer-->
     </div>
-    <!-- /.box -->
+    <!-- /.box --> 
   </section>
   <!-- /.content -->
 </div>
-<!-- /.content-wrapper -->
+
 @endsection
 @section('footerSection')
 <script src="{{ asset('admin/plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/plugins/datatables/dataTables.bootstrap.min.js') }}"></script>
-<script>
-  $(function () {
-    /*$("#example1").DataTable();*/
-    $("#example1").DataTable( {
-      "pageLength": 100
-    });
-  });
-</script>
-@endsection
-                                    
-          
+<script>	
 
+$(function () {
+	/*$("#example1").DataTable();*/
+	$("#example1").DataTable( {
+	  "pageLength": 100
+	});
+  console.log("pagina para editar las preguntas y respuestas");
+  
+
+});
+</script>
+<script src="{{ asset('admin/custom/question/answer.js') }}"></script>
+
+@endsection

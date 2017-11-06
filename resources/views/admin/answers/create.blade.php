@@ -7,9 +7,9 @@
     <section class="content-header">
       <h1>
         
-        <small> Crear preguntas para las encuesta: </small><h2>{{$poll->name}}</h2>
+        <small> Crear repuesta para la pregunta: </small><h2>{{$question->name}}</h2>
       </h1>
-      <ol class="breadcrumb">
+      {{-- <ol class="breadcrumb">
         <li>
           <form action="{{ route('questions.index') }}" method="get" style="display:inline">
               {{ csrf_field() }}
@@ -17,7 +17,7 @@
               <i class="fa fa-dashboard"><input type="submit" value="Atras" class="btn btn-success btn-xs" ></i>
           </form>
         </li>
-      </ol>
+      </ol> --}}
     </section>
 
     <!-- Main content -->
@@ -29,39 +29,21 @@
             <div class="box-header with-border">
             </div>
         @include('includes.messages')  
-            <form role="form" action="{{ route('questions.store') }}" method="post">
+            <form role="form" action="{{ route('answers.store') }}" method="post">
             {{ csrf_field() }}
               <input type="hidden" name="poll_id" value="{{$poll->id}}">
+              <input type="hidden" name="question_id" value="{{$question->id}}">
               <div class="box-body">
               <div class="col-lg-offset-3 col-lg-4">
                 <div class="form-group">
-                    <label for="name">Nombre de la pregunta</label>
+                    <label for="name">Respuesta</label>
                   <input type="text" class="form-control" id="name" name="name" placeholder="pregunta">
                 </div>
 
                 <div class="form-group">
-                  <label for="slug">Multiples respuestas?</label>
-                  <br>
-                  <input type="radio" name="multiple_answers" value="1" checked="checked" > Si<br>
-                  <input type="radio" name="multiple_answers" value="0"> No<br>
+                    <label for="name">Puntos</label>
+                  <input type="number" class="form-control" id="value" name="value" placeholder="puntos" min="0">
                 </div>
-                  
-                 
-
-                  <div class="form-group" id="hour">
-                  <label for="name">Horas</label>
-                  <input type="text" class="form-control"  name="hour" placeholder="Hora">
-                  </div>
-
-                  <div class="form-group" id="minutes">
-                  <label for="name">Minutos</label>
-                  <input type="text" class="form-control"  name="minutes" placeholder="Minutos">
-                  </div>
-
-                  <div class="form-group" id="seconds">
-                  <label for="name">Segundos</label>
-                  <input type="text" class="form-control"  name="seconds" placeholder="Segundos">
-                  </div>
 
                 <div class="form-group">
                   <button type="submit" class="btn btn-primary">Guardar</button>
@@ -71,7 +53,7 @@
                       <i class="fa fa-dashboard"><input type="submit" value="Atras" class="btn btn-success" ></i>
                   </form>
                 </div>
-                
+
               </div>
         </div>
             </form>
@@ -96,7 +78,7 @@
         $('#minutes').hide();
         $('#seconds').hide();
 
-      console.log( "crear preguntas 1.0" );   
+      console.log( "crear respuestas 1.0" );   
       $('#type').on('change',function () {
           var var_type = $('#type').val();
           console.log(var_type);  

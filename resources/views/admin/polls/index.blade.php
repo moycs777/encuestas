@@ -48,19 +48,22 @@
                            No
                         @endif
                       </td>
+
                       <td>{{ $item->category->name }}</td>
 
                       <td>
                           <a href="{{ url('admin/polls/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Actualizar</a>
-                          <a href="{{ url('admin/questions/showquestions/' . $item->id ) }}" class="btn btn-success btn-xs">Preguntas</a> 
+                        <form action="{{ route('questions.index') }}" method="get" style="display:inline">
+                            {{ csrf_field() }}
+                            <input type="hidden" name="poll_id" value="{{$item->id}}">
+                            <input type="submit" value="Preguntas" class="btn btn-success btn-xs" >
+                        </form>
                           <form action="{{ route('polls.destroy',  $item->id) }}" method="post" style="display:inline">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             
                             <input type="submit" value="Eliminar" class="btn btn-danger btn-xs" onclick="return confirm('Esta seguro de eliminar?');">
                           </form>
-                          
-                             
                       </td>
                     </tr>
                 @endforeach

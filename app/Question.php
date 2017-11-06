@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    protected $fillable = ['name', 'poll_id'];
+    protected $fillable = ['name', 'poll_id', 'multiple_answers'];
 
     public function answers()
     {
