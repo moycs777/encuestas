@@ -42,6 +42,13 @@
 	                <label for="name">Nombre de la encuesta</label>
 	                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la encuesta">
 	              </div>
+	              
+	              <div class="form-group">
+	                <label for="slug">Mostrar todas las preguntas?</label>
+	                <br>
+	                <input type="radio" name="show_all_questions" value="1" checked="checked" > Si<br>
+	                <input type="radio" name="show_all_questions" value="0"> No<br>
+	              </div>
 
 
 	            <div class="form-group">

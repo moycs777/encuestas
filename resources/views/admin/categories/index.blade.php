@@ -29,7 +29,7 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>ID</th><th>Nombre de la categoria</th><th>Es pausable</th><th>Acciones</th>
+                <th>ID</th><th>Nombre de la categoria</th><th>Tipo de tiempo</th><th>Es pausable</th><th>Preguntas obligatorias</th><th>Acciones</th>
               </tr>
               </thead>
               <tbody>
@@ -42,7 +42,25 @@
                       </td>
                       
                       <td> 
+                        @if ($item->timer_type == 1)
+                          Sin tiempo
+                        @elseif ($item->timer_type == 2)
+                          Tiempo por pregunta
+                        @elseif ($item->timer_type == 3)
+                           Tiempo por encuesta
+                        @endif
+                      </td>
+
+                      <td> 
                         @if ($item->pausable == 1)
+                          Si
+                        @else
+                          No
+                        @endif
+                      </td>
+
+                      <td> 
+                        @if ($item->answer_required == 1)
                           Si
                         @else
                           No

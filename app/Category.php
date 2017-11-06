@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = ['name', 'hour','minutes','seconds','pausable','status'];
+
+    protected $fillable = ['name', 'timer_type',  'hour','minutes','seconds','pausable','status', 'answer_required'];
 
     public function polls()
     {

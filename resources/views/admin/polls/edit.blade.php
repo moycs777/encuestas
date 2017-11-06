@@ -44,23 +44,19 @@
 	                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la encuesta" value="{{ $poll->name }}">
 	              </div>
 
-	              <div class="form-group">
-	                <label for="hora">hora</label>
-	                <br>
-	                <input type="number" name="hour" value="{{ $poll->hour }}" min="0" max="23"  > <br>
-	              </div>
+                <div class="form-group">
+					<label for="slug">Mostrar todas las preguntas?</label>
+					<br>
+					@if ($poll->show_all_questions == 1)
+						<input type="radio" name="show_all_questions" id="show_all_questions" value="1" checked="checked"> Si<br>
+						<input type="radio" name="show_all_questions" id="show_all_questions" value="0"> No<br>
+					@else
+						<input type="radio" name="show_all_questions" id="show_all_questions" value="1"> Si<br>
+						<input type="radio" name="show_all_questions" id="show_all_questions" value="0" checked="checked"> No<br>
+					@endif
+				  </div>
 
-	              <div class="form-group">
-	                <label for="minutes">Minutos</label>
-	                <br>
-	                <input type="number" name="minutes" value="{{ $poll->minutes }}" min="0" max="60"  > <br>
-	              </div>
-
-	              <div class="form-group">
-	                <label for="seconds">Segundos</label>
-	                <br>
-	                <input type="seconds" name="seconds" value="{{ $poll->seconds }}" min="0" max="60"  > <br>
-	              </div>
+	            
 
 	              
 

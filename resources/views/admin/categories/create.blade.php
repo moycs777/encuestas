@@ -22,9 +22,7 @@
 	        <div class="box box-primary">
 	          <div class="box-header with-border">
 	          </div>
-	    	@include('includes.messages')      
-	          <!-- /.box-header -->
-	          <!-- form start -->
+	    	@include('includes.messages')  
 	          <form role="form" action="{{ route('categories.store') }}" method="post">
 	          {{ csrf_field() }}
 	            <div class="box-body">
@@ -34,19 +32,27 @@
 	                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la categoria">
 	              </div>
                   
-                  <div class="form-group">
+	               <div class="form-group">
+	                   <select name="timer_type" id="type" required>
+		                 <option value="1">Sin tiempo</option>
+		                 <option value="2">Tiempo por pregunta</option>
+		                 <option value="3">Tiempo por encuesta</option>
+		              </select>
+		          </div>
+
+                  <div class="form-group" id="hour">
 	                <label for="name">Horas</label>
-	                <input type="text" class="form-control" id="hour" name="hour" placeholder="Hora">
+	                <input type="text" class="form-control"  name="hour" placeholder="Hora">
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group" id="minutes">
 	                <label for="name">Minutos</label>
-	                <input type="text" class="form-control" id="minutes" name="minutes" placeholder="Minutos">
+	                <input type="text" class="form-control"  name="minutes" placeholder="Minutos">
                   </div>
 
-                  <div class="form-group">
+                  <div class="form-group" id="seconds">
 	                <label for="name">Segundos</label>
-	                <input type="text" class="form-control" id="seconds" name="seconds" placeholder="Segundos">
+	                <input type="text" class="form-control"  name="seconds" placeholder="Segundos">
                   </div>
 
 	              <div class="form-group">
@@ -54,6 +60,13 @@
 	                <br>
 	                <input type="radio" name="pausable" value="1" checked="checked" > Si<br>
 	                <input type="radio" name="pausable" value="0"> No<br>
+	              </div>
+
+	              <div class="form-group">
+	                <label for="slug">Son obligatorias las respuestas?</label>
+	                <br>
+	                <input type="radio" name="answer_required" value="1" checked="checked" > Si<br>
+	                <input type="radio" name="answer_required" value="0"> No<br>
 	              </div>
 
 	              <div class="form-group">
@@ -80,22 +93,28 @@
 	
 	<script>
 	    $(function() {
-		  // $('#chk').attr('checked', true);
-		  // $("#chk").text("Hello world!");
+	    	$('#hour').hide();
+	    	$('#minutes').hide();
+	    	$('#seconds').hide();
 
-		  // if( $('#chk').prop('checked') ) {
-    //           alert('Seleccionado');
-    //       }
+			console.log( "testing categories 1.0" );   
+			$('#type').on('change',function () {
+		          var var_type = $('#type').val();
+		          console.log(var_type);  
+		          if (var_type == 2 || var_type == 3) {
+		            $('#hour').show();
+		            $('#minutes').show();
+		            $('#seconds').show();
+		          }
 
-            $('#chk').on( 'click', function() {
-          	   if( $(this).is(':checked') ){
-             	 // Hacer algo si el checkbox ha sido seleccionado
-               	 alert("El checkbox con valor " + $(this).val() + " ha sido seleccionado");
-          	   } else {
-            	 // Hacer algo si el checkbox ha sido deseleccionado
-              	 alert("El checkbox con valor " + $(this).val() + " ha sido deseleccionado");
-               }
-			});
+		          if (var_type == 1) {
+		            $('#hour').hide();
+			    	$('#minutes').hide();
+			    	$('#seconds').hide();
+		          }       
+	          
+	        });  
+
 		});
 	</script>
 @endsection

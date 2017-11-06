@@ -17,6 +17,7 @@ class CreatePollsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->boolean('status')->default(1);
+            $table->boolean('show_all_questions')->default(1);
             $table->integer('category_id');
             $table->timestamps();
         });

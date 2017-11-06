@@ -30,7 +30,7 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
               <tr>
-                <th>ID</th><th>Nombre de la encuesta</th><th>Categoria</th><th>Hora</th><th>Minutos</th><th>Segundos</th><th>Acciones</th>
+                <th>ID</th><th>Nombre de la encuesta</th><th>Mostrar todas las preguntas?</th><th>Categoria</th><th>Acciones</th>
               </tr>
               </thead>
               <tbody>
@@ -41,13 +41,14 @@
                       <td>
                         <a href="{{ url('admin/polls', $item->id . '/edit' ) }}">{{ $item->name }}</a>
                       </td>
-                      <td>{{ $item->category->name }}</td>
-                      <td> 
-                        {{ $item->hour }}
+                      <td>
+                        @if ($item->show_all_questions == 1)
+                          Si
+                        @elseif ($item->show_all_questions == 0)
+                           No
+                        @endif
                       </td>
-                      <td>  {{ $item->minutes }} </td>
-                      <td> {{ $item->seconds }}</td>
-                      
+                      <td>{{ $item->category->name }}</td>
 
                       <td>
                           <a href="{{ url('admin/polls/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Actualizar</a>
