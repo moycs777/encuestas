@@ -1,76 +1,59 @@
-<!-- Footer -->
 	<footer id="footer">
 		<div class="container">
-			<section class="links">
-				<div class="row">
-					<section class="3u 6u(medium) 12u$(small)">
-						<h3>Lorem ipsum dolor</h3>
-						<ul class="unstyled">
-							<li><a href="#">Lorem ipsum dolor sit</a></li>
-							<li><a href="#">Nesciunt itaque, alias possimus</a></li>
-							<li><a href="#">Optio rerum beatae autem</a></li>
-							<li><a href="#">Nostrum nemo dolorum facilis</a></li>
-							<li><a href="#">Quo fugit dolor totam</a></li>
+			<div class="row text-center">
+				<div class="footer-content">
+					<div class="wow animated fadeInDown">
+						<p>newsletter signup</p>
+						<p>Get Cool Stuff! We hate spam!</p>
+					</div>
+					<form action="#" method="post" class="subscribe-form wow animated fadeInUp">
+						<div class="input-field">
+							<input type="email" class="subscribe form-control" placeholder="Enter Your Email...">
+							<button type="submit" class="submit-icon">
+								<i class="fa fa-paper-plane fa-lg"></i>
+							</button>
+						</div>
+					</form>
+					<div class="footer-social">
+						<ul>
+							<li class="wow animated zoomIn"><a href="#"><i class="fa fa-thumbs-up fa-3x"></i></a></li>
+							<li class="wow animated zoomIn" data-wow-delay="0.3s"><a href="#"><i class="fa fa-twitter fa-3x"></i></a></li>
+							<li class="wow animated zoomIn" data-wow-delay="0.6s"><a href="#"><i class="fa fa-skype fa-3x"></i></a></li>
+							<li class="wow animated zoomIn" data-wow-delay="0.9s"><a href="#"><i class="fa fa-dribbble fa-3x"></i></a></li>
+							<li class="wow animated zoomIn" data-wow-delay="1.2s"><a href="#"><i class="fa fa-youtube fa-3x"></i></a></li>
 						</ul>
-					</section>
-					<section class="3u 6u$(medium) 12u$(small)">
-						<h3>Culpa quia, nesciunt</h3>
-						<ul class="unstyled">
-							<li><a href="#">Lorem ipsum dolor sit</a></li>
-							<li><a href="#">Reiciendis dicta laboriosam enim</a></li>
-							<li><a href="#">Corporis, non aut rerum</a></li>
-							<li><a href="#">Laboriosam nulla voluptas, harum</a></li>
-							<li><a href="#">Facere eligendi, inventore dolor</a></li>
-						</ul>
-					</section>
-					<section class="3u 6u(medium) 12u$(small)">
-						<h3>Neque, dolore, facere</h3>
-						<ul class="unstyled">
-							<li><a href="#">Lorem ipsum dolor sit</a></li>
-							<li><a href="#">Distinctio, inventore quidem nesciunt</a></li>
-							<li><a href="#">Explicabo inventore itaque autem</a></li>
-							<li><a href="#">Aperiam harum, sint quibusdam</a></li>
-							<li><a href="#">Labore excepturi assumenda</a></li>
-						</ul>
-					</section>
-					<section class="3u$ 6u$(medium) 12u$(small)">
-						<h3>Illum, tempori, saepe</h3>
-						<ul class="unstyled">
-							<li><a href="#">Lorem ipsum dolor sit</a></li>
-							<li><a href="#">Recusandae, culpa necessita nam</a></li>
-							<li><a href="#">Cupiditate, debitis adipisci blandi</a></li>
-							<li><a href="#">Tempore nam, enim quia</a></li>
-							<li><a href="#">Explicabo molestiae dolor labore</a></li>
-						</ul>
-					</section>
-				</div>
-			</section>
-			<div class="row">
-				<div class="8u 12u$(medium)">
-					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li>
-						<li>Design: <a href="http://templated.co">TEMPLATED</a></li>
-						<li>Images: <a href="http://unsplash.com">Unsplash</a></li>
-					</ul>
-				</div>
-				<div class="4u$ 12u$(medium)">
-					<ul class="icons">
-						<li>
-							<a class="icon rounded fa-facebook"><span class="label">Facebook</span></a>
-						</li>
-						<li>
-							<a class="icon rounded fa-twitter"><span class="label">Twitter</span></a>
-						</li>
-						<li>
-							<a class="icon rounded fa-google-plus"><span class="label">Google+</span></a>
-						</li>
-						<li>
-							<a class="icon rounded fa-linkedin"><span class="label">LinkedIn</span></a>
-						</li>
-					</ul>
+					</div>
+					
+					<p>Copyright &copy; 2014-2015 Design and Developed By<a href="http://www.themefisher.com">Themefisher</a> </p>
 				</div>
 			</div>
 		</div>
 	</footer>
+	<!-- Footer -->
+	
+	<!-- Essential jQuery Plugins
+		================================================== -->
+		<!-- Main jQuery -->
+        <script src="js/jquery-1.11.1.min.js"></script>
+		<!-- Twitter Bootstrap -->
+        <script src="js/bootstrap.min.js"></script>
+		<!-- Single Page Nav -->
+        <script src="js/jquery.singlePageNav.min.js"></script>
+		<!-- jquery.fancybox.pack -->
+        <script src="js/jquery.fancybox.pack.js"></script>
+		<!-- Google Map API -->
+		<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<!-- Owl Carousel -->
+        <script src="js/owl.carousel.min.js"></script>
+        <!-- jquery easing -->
+        <script src="js/jquery.easing.min.js"></script>
+        <!-- Fullscreen slider -->
+        <script src="js/jquery.slitslider.js"></script>
+        <script src="js/jquery.ba-cond.min.js"></script>
+		<!-- onscroll animation -->
+        <script src="js/wow.min.js"></script>
+		<!-- Custom Functions -->
+        <script src="js/main.js"></script>
+
 	@section('footer')
 	       @show

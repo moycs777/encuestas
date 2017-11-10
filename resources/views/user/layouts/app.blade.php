@@ -9,9 +9,18 @@
     @include('user/layouts/head')
 </head>
 
-	<body class="landing">
+	<body id="body">
+
+		<!-- preloader -->
+		<div id="preloader">
+            <div class="loder-box">
+            	<div class="battery"></div>
+            </div>
+		</div>
+		<!-- end preloader -->
+		
 		@include('user/layouts/header')
-        @section('main-content')
+        @section('content')
             @show
 
   		@include('user/layouts/footer')
