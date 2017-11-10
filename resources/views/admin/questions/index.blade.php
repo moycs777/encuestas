@@ -13,7 +13,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-     Encuesta: {{ $poll->name }}
+     Encuesta : {{ $poll->name }}
     </h1>    
   </section>
   <!-- Main content -->
@@ -59,7 +59,7 @@
                     <input type="submit" value="agregar respuesta" class="btn btn-success btn-xs" ><i class="fa fa-plus" aria-hidden="true" class="pull-right"></i>
                   </form>
                </th>
-               <th style="width: 20px">Puntos</th>
+               <th style="width: 20px">Valor</th>
                {{--  <th style="width: 10px">Acciones</th>  --}}
              </tr>
              @if (!empty($item->answers))
