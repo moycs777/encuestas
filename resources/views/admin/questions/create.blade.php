@@ -7,7 +7,7 @@
     <section class="content-header">
       <h1>
         
-        <small> Crear preguntas para las encuesta: </small><h2>{{$poll->name}}</h2>
+        <small>Crear preguntas para las encuesta: </small><h2>{{$poll->name}}</h2>
       </h1>
       <ol class="breadcrumb">
         <li>
