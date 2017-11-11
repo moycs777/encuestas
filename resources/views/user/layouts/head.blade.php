@@ -18,22 +18,22 @@
 		<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
 		
 		<!-- Fontawesome Icon font -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="{{ asset('css/font-awesome.min.css') }}">
 		<!-- bootstrap.min -->
-        <link rel="stylesheet" href="css/jquery.fancybox.css">
+        <link rel="stylesheet" href="{{ asset('css/jquery.fancybox.css') }}">
 		<!-- bootstrap.min -->
-        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 		<!-- bootstrap.min -->
-        <link rel="stylesheet" href="css/owl.carousel.css">
+        <link rel="stylesheet" href="{{ asset('css/owl.carousel.css') }}">
 		<!-- bootstrap.min -->
-        <link rel="stylesheet" href="css/slit-slider.css">
+        <link rel="stylesheet" href="{{ asset('css/slit-slider.css') }}">
 		<!-- bootstrap.min -->
-        <link rel="stylesheet" href="css/animate.css">
+        <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
 		<!-- Main Stylesheet -->
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="{{ asset('css/main.css') }}">
 
 		<!-- Modernizer Script for old Browsers -->
-        <script src="js/modernizr-2.6.2.min.js"></script>
+        <script src="{{ asset('js/modernizr-2.6.2.min.js') }}"></script>
 	
  @section('head')
         @show

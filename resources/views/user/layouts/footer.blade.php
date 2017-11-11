@@ -1,4 +1,4 @@
-	<footer id="footer">
+	{{-- <footer id="footer">
 		<div class="container">
 			<div class="row text-center">
 				<div class="footer-content">
@@ -29,31 +29,31 @@
 			</div>
 		</div>
 	</footer>
-	<!-- Footer -->
+	<!-- Footer --> --}}
 	
 	<!-- Essential jQuery Plugins
 		================================================== -->
 		<!-- Main jQuery -->
-        <script src="js/jquery-1.11.1.min.js"></script>
+        <script src="{{ asset('js/jquery-1.11.1.min.js') }}"></script>
 		<!-- Twitter Bootstrap -->
-        <script src="js/bootstrap.min.js"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
 		<!-- Single Page Nav -->
-        <script src="js/jquery.singlePageNav.min.js"></script>
+        <script src="{{ asset('js/jquery.singlePageNav.min.js') }}"></script>
 		<!-- jquery.fancybox.pack -->
-        <script src="js/jquery.fancybox.pack.js"></script>
+        <script src="{{ asset('js/jquery.fancybox.pack.js') }}"></script>
 		<!-- Google Map API -->
 		<script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 		<!-- Owl Carousel -->
-        <script src="js/owl.carousel.min.js"></script>
+        <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
         <!-- jquery easing -->
-        <script src="js/jquery.easing.min.js"></script>
+        <script src="{{ asset('js/jquery.easing.min.js') }}"></script>
         <!-- Fullscreen slider -->
-        <script src="js/jquery.slitslider.js"></script>
-        <script src="js/jquery.ba-cond.min.js"></script>
+        <script src="{{ asset('js/jquery.slitslider.js') }}"></script>
+        <script src="{{ asset('js/jquery.ba-cond.min.js') }}"></script>
 		<!-- onscroll animation -->
-        <script src="js/wow.min.js"></script>
+        <script src="{{ asset('js/wow.min.js') }}"></script>
 		<!-- Custom Functions -->
-        <script src="js/main.js"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
 
 	@section('footer')
 	       @show

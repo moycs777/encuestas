@@ -1,7 +1,7 @@
-@extends('layouts.app')
-
+@extends('user.layouts.app2')
 @section('content')
 <div class="container">
+  <br><br><br><br>
     <div class="row">
         <form action="{{ route('encuestas.store') }}" method="post"> 
             {{ csrf_field()  }} 
@@ -9,52 +9,61 @@
             <div class="myform">
                 {{-- <input type="hidden" name="respuesta_id[]" value="">     --}}            
             </div>
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12 {{-- col-md-offset-2 --}}">
             <div class="panel panel-default">
                 <div class="panel-heading">Encuesta</div>
                 <div class="panel-body">
                     @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
+                      <div class="alert alert-success">
+                          {{ session('status') }}
+                      </div>
                     @endif
                     @if (!$encuesta == null)
-                    
-                        <div class="table-responsive">                          
-                        <table class="table">
-                            <tr>
-                                
-                            </tr>
-                            </thead>
-                            <tbody> 
-                            <tr>                                
-                                <td class="active"><a href="#">{{ $encuesta->name }}</a></td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        </div>
+                      <div class="table-responsive">                          
+                      <table class="table">
+                          <tr>
+                              
+                          </tr>
+                          </thead>
+                          <tbody> 
+                          <tr>                                
+                              <td class="active"><a href="#">{{ $encuesta->name }}</a></td>
+                          </tr>
+                          </tbody>
+                      </table>
+                      </div>
                     @endif
                     {{-- Preguntas --}}
                     @if (!$preguntas == null)
-                        @foreach ($preguntas as $pregunta)
-                            <div class="row">
-                                <div class="col-md-3 col-xs-2">
-                                    <p>{{  $pregunta->name }}</p>
-                                </div>
-                                {{-- Respuestas --}}                            
-                                <div class="col-md-9 col-xs-4">                              
-                                @if (!empty($pregunta->answers))
-                                    @foreach($pregunta->answers as $answer)
-                                    <input type="radio" 
-                                            name="{{  $pregunta->id }}" 
-                                            value="{{ $answer->id }}" 
-                                            class="rad" 
-                                            id="{{ $answer->id }}"> {{ $answer->name }}
-                                    @endforeach
-                                @endif
-                                </div>
-                            </div>
-                        @endforeach
+                      @foreach ($preguntas as $pregunta)
+                        <div class="row">
+                          <div class="col-md-4 col-xs-4">
+                              <p>{{  $pregunta->name }}</p>
+                          </div>
+                          {{-- Respuestas --}}                            
+                          <div class="col-md-8 col-xs-6">                              
+                          @if (!empty($pregunta->answers))
+                            @foreach($pregunta->answers as $answer)
+                              @if ($pregunta->multiple_answers == 1)
+                                <input type="checkbox" 
+                                  name="{{  $pregunta->id }}" 
+                                  value="{{ $answer->id }}" 
+                                  class="chk" 
+                                  id="{{ $answer->id }}"> {{ $answer->name }}
+                              @else
+                              {{-- @endif  
+                              @if ($pregunta->multiple_answers == 0) --}}
+                                <input type="radio" 
+                                  name="{{  $pregunta->id }}" 
+                                  value="{{ $answer->id }}" 
+                                  class="rad" 
+                                  id="{{ $answer->id }}"> {{ $answer->name }}
+                              @endif  
+                            @endforeach
+                          @endif
+                          </div>
+                        </div>
+                      @endforeach
                     @endif
                 </div>
                 <input type="submit" value="Registrar encuesta" >
@@ -96,6 +105,27 @@ $(function () {
 
       console.log( $('[name=respuesta_id]').val() );
   });
+
+  $('.chk').click(function(event) {
+      console.log(this.value);
+      //respuestas.push[this.value];
+      $('[name=respuestas]').val(this.value);
+      respuesta = this.value;
+      pregunta_id = $(this).attr("name");
+      name_input = 'respuesta_id['+pregunta_id+']';
+      console.log(respuesta + pregunta_id);
+
+      $('<input>').attr({
+          type: 'hidden',
+          id: 'foo',
+          name: name_input/*'respuesta_id[respuesta]'*/,
+          value: respuesta
+      }).appendTo('form');
+
+
+      console.log( $('[name=respuesta_id]').val() );
+  });
+
 
 
 

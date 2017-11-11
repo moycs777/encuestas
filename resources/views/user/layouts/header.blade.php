@@ -15,7 +15,7 @@
 					
 					<!-- logo -->
 					<h1 class="navbar-brand">
-						<a href="#body">Blue</a>
+						<a href="{{ url('/') }}">Inicio</a>
 					</h1>
 					<!-- /logo -->
                 </div>
@@ -24,10 +24,12 @@
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
                     <ul id="nav" class="nav navbar-nav">
 						<li><a href="#body">Home</a></li>                        
+                        <li><a href="{{ route('encuestas.index') }}" class="external">Encuestas</a></li>
                         <li><a href="#service">Service</a></li>
                         <li><a href="#portfolio">portfolio</a></li>
                         <li><a href="#testimonials">Testimonial</a></li>
                         <li><a href="#price">price</a></li>
+                        <li><a href="{{ route('admin.index') }}" class="external">Admin</a></li>
                         <li><a href="#contact">Contact</a></li>
                     </ul>
                 </nav>

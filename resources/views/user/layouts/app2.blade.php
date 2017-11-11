@@ -23,7 +23,6 @@
         @section('content')
             @show
 
-  		@include('user/layouts/foot')
   		@include('user/layouts/footer')
   		
 

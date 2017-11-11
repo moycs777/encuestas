@@ -4,7 +4,7 @@
 @section('title','Ahorra comprando!')
 @section('sub-heading','Gana fabulosos premios')
 
-@section('main-content')
+@section('content')
 
 	<!-- Banner -->
 		<section id="banner">
@@ -121,6 +121,8 @@
 				</form>
 			</div>
 		</section>
+@endsection
+
 
 	
 
