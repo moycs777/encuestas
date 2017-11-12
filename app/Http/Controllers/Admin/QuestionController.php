@@ -16,11 +16,12 @@ class QuestionController extends Controller
    
     public function index(Request $request)
     {
-       //dd($request->all());
-       $poll = Poll::find($request->poll_id);
+       //  esto debe ir en el metodo show, se debe cambiar el enlace en el index de encuestas
+       /*$poll = Poll::find($request->poll_id);
        $questions = Question::where('poll_id', '=', $request->poll_id)
             ->get();
-       return view('admin.questions.index',compact('poll', 'questions'));
+        deberi ir un return redirect toroute questions index con un id en el req 
+       return view('admin.questions.index',compact('poll', 'questions')*/
     }
 
     
@@ -44,6 +45,8 @@ class QuestionController extends Controller
         $poll = Poll::find($request->poll_id);
         $questions = Question::where('poll_id', '=', $request->poll_id)
              ->get();
+        //deberi ir un return redirect toroute questions index con un id en el req 
+
         return view('admin.questions.index',compact('poll', 'questions'));
 
     }
@@ -51,25 +54,56 @@ class QuestionController extends Controller
 
     public function show($id)
     {
-        //
+        //dd($request->all());
+        $poll = Poll::find($request->poll_id);
+        $questions = Question::where('poll_id', '=', $request->poll_id)
+             ->get();
+         //deberi ir un return redirect toroute questions index con un id en el req 
+        return view('admin.questions.index',compact('poll', 'questions'));
     }
 
     
     public function edit($id)
     {
-        //
+        $question = Question::find($id);
+        //dd($question);
+        return view('admin.questions.edit', compact('question'));
     }
 
     
     public function update(Request $request, $id)
     {
-        //
+        //dd($request->all());
+        $this->validate($request, ['name' => 'required' ]);
+
+        $question = Question::findOrFail($id);
+        $question->update($request->all());
+
+        Session::flash('message', 'question updated!');
+        Session::flash('status', 'success');
+
+        $poll = Poll::find($request->poll_id);
+        $questions = Question::where('poll_id', '=', $request->poll_id)
+             ->get();
+        //deberi ir un return redirect toroute questions index con un id en el req 
+
+        return view('admin.questions.index',compact('poll', 'questions'));
     }
 
     
     public function destroy($id)
     {
-        //
+        $question = Question::findOrFail($id);
+        $poll = Poll::find($question->poll_id);
+
+        $question->delete();
+
+        Session::flash('message', 'question deleted!');
+        Session::flash('status', 'success');
+
+        $questions = Question::where('poll_id', '=', $poll->id)
+             ->get();
+        return view('admin.questions.index',compact('poll', 'questions'));
     }
 
 

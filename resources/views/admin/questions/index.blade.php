@@ -47,7 +47,13 @@
             <table class="table table-bordered">
              <tr >
                <th style="width: 10px">{{ $loop->iteration }}</th>
-               <th class="question" id="{{ $item->id }}" data-toggle="modal" data-target="#questionModal">{{ $item->name }} 
+               <th class="question" id="{{ $item->id }}" data-toggle="modal" data-target="#questionModal"><a href="{{ route('questions.edit', $item->id) }}">{{ $item->name }}</a>
+               <form action="{{ route('questions.destroy',  $item->id) }}" method="post" style="display:inline">
+                  {{ csrf_field() }}
+                  {{ method_field('DELETE') }}
+                  
+                  <input type="submit" value="Eliminar" class="btn btn-danger btn-xs" onclick="return confirm('Esta seguro de eliminar?');">
+                </form>
                 <input type="hidden" id="question_id" value="{{ $item->id }}">
                </th>
                    

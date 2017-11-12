@@ -3,7 +3,7 @@
 <div class="container">
   <br><br><br><br>
     <div class="row">
-        <form action="{{ route('encuestas.store') }}" method="post"> 
+        <form action="{{ route('encuestas.store') }}" method="post" id="formid"> 
             {{ csrf_field()  }} 
             <input type="hidden" name="poll_id" value="{{ $encuesta->id }}">
             <div class="myform">
@@ -114,16 +114,31 @@ $(function () {
       pregunta_id = $(this).attr("name");
       name_input = 'respuesta_id['+pregunta_id+']';
       console.log(respuesta + pregunta_id);
-
       $('<input>').attr({
           type: 'hidden',
           id: 'foo',
           name: name_input/*'respuesta_id[respuesta]'*/,
           value: respuesta
       }).appendTo('form');
-
-
       console.log( $('[name=respuesta_id]').val() );
+
+      var suma = 0;
+      var selected = 0;    
+        $('#formid input[type=checkbox]').each(function(){
+            if (this.checked) {
+                selected += parseInt($(this).val());
+                //console.log("Valor de selected:   " + selected);
+                suma += selected;
+                console.log("suma:   " + suma);
+            }
+        }); 
+
+        if (selected != '') 
+            console.log('Has seleccionado: '+selected);  
+        else
+            console.log('Debes seleccionar al menos una opción.');
+
+        //return false;
   });
 
 
