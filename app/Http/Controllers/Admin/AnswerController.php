@@ -43,7 +43,9 @@ class AnswerController extends Controller
         $poll = Poll::find($request->poll_id);
         $questions = Question::where('poll_id', '=', $request->poll_id)
              ->get();
-        return view('admin.questions.index',compact('poll', 'questions'));
+        //return view('admin.questions.index',compact('poll', 'questions'));
+        return redirect()->route('questions.show', ['id' => $request->poll_id]);
+        
     }
 
     

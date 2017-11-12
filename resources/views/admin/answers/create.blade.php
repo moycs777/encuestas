@@ -37,7 +37,7 @@
               <div class="col-lg-offset-3 col-lg-4">
                 <div class="form-group">
                     <label for="name">Respuesta</label>
-                  <input type="text" class="form-control" id="name" name="name" placeholder="pregunta">
+                  <input type="text" class="form-control" id="name" name="name" placeholder="Respuesta">
                 </div>
 
                 <div class="form-group">

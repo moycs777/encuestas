@@ -3,6 +3,7 @@
 <div class="container">
   <br><br><br><br>
     <div class="row">
+    <p>categoria  {{ $encuesta->category }} </p>
         <form action="{{ route('encuestas.store') }}" method="post" id="formid"> 
             {{ csrf_field()  }} 
             <input type="hidden" name="poll_id" value="{{ $encuesta->id }}">
@@ -67,6 +68,7 @@
                     @endif
                 </div>
                 <input type="submit" value="Registrar encuesta" >
+                <button id="evaluar" class="btn btn-danger">Evaluar</button>
             </div>
         </div>
         </form>
@@ -141,6 +143,11 @@ $(function () {
         //return false;
   });
 
+  $("#evaluar").click(function(){
+        $("#listas li").each(function(){
+            alert($(this).attr('id'));
+        });
+  });
 
 
 

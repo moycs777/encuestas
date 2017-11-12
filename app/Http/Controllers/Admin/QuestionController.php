@@ -47,7 +47,9 @@ class QuestionController extends Controller
              ->get();
         //deberi ir un return redirect toroute questions index con un id en el req 
 
-        return view('admin.questions.index',compact('poll', 'questions'));
+        //return view('admin.questions.index',compact('poll', 'questions'));
+        return redirect()->route('questions.show', ['id' => $request->poll_id]);
+             
 
     }
     
@@ -55,11 +57,13 @@ class QuestionController extends Controller
     public function show($id)
     {
         //dd($request->all());
-        $poll = Poll::find($request->poll_id);
-        $questions = Question::where('poll_id', '=', $request->poll_id)
+        $poll = Poll::find($id);
+        $questions = Question::where('poll_id', '=', $id)
              ->get();
          //deberi ir un return redirect toroute questions index con un id en el req 
-        return view('admin.questions.index',compact('poll', 'questions'));
+        //return redirect()->route('questions.show', ['id' => $id]);
+        return view('admin.questions.index', compact('poll', 'questions'));
+
     }
 
     

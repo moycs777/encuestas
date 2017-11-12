@@ -53,11 +53,7 @@
 
                       <td>
                           <a href="{{ url('admin/polls/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Actualizar</a>
-                        <form action="{{ route('questions.index') }}" method="get" style="display:inline">
-                            {{ csrf_field() }}
-                            <input type="hidden" name="poll_id" value="{{$item->id}}">
-                            <input type="submit" value="Preguntas" class="btn btn-success btn-xs" >
-                        </form>
+                          <a href="{{ route('questions.show', $item->id) }}" class="btn btn-success btn-xs">Preguntas</a>
                           <form action="{{ route('polls.destroy',  $item->id) }}" method="post" style="display:inline">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
