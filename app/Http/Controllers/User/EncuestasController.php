@@ -29,15 +29,13 @@ class EncuestasController extends Controller
     
     public function store(Request $request)
     {
-        //dd($request->1);
-        dd($request->all());
-        //dd($request->respuesta_id);
+        //dd($request->all());
         $encuesta = Poll::find($request->poll_id);
         $preguntas = Question::where('poll_id', '=', $request->poll_id)->get();
         //$respuestas = Answer::where('poll_id', $encuesta->id)->get();
         $total = 0;
-        foreach ($request->respuesta_id as $key => $value) {
-            print_r('llave: '.$key .' valor: '. $value. ' ');
+        foreach ($request->id_respuestas as $key => $value) {
+            //print_r('llave: '.$key .' valor: '. $value. ' ');
             $total += Answer::where('id', $value)->first()->value;
         }
       

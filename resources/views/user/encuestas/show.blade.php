@@ -47,7 +47,7 @@
                             @foreach($pregunta->answers as $answer)
                               @if ($pregunta->multiple_answers == 1)
                                 <input type="checkbox" 
-                                  name="{{  $pregunta->id }}" 
+                                  name="respuestas{{-- {{  $pregunta->id }} --}}" 
                                   value="{{ $answer->id }}" 
                                   class="chk" 
                                   id="{{ $answer->id }}"> {{ $answer->name }}
@@ -55,7 +55,7 @@
                               {{-- @endif  
                               @if ($pregunta->multiple_answers == 0) --}}
                                 <input type="radio" 
-                                  name="{{  $pregunta->id }}" 
+                                  name="respuestas{{-- {{  $pregunta->id }} --}}" 
                                   value="{{ $answer->id }}" 
                                   class="rad" 
                                   id="{{ $answer->id }}"> {{ $answer->name }}
@@ -67,8 +67,9 @@
                       @endforeach
                     @endif
                 </div>
-                <input type="submit" value="Registrar encuesta" >
+               {{--  <input type="submit" value="Registrar encuesta" > --}}
                 <button id="evaluar" class="btn btn-danger">Evaluar</button>
+                <input type="text" id="arreglo" class="form-control" placeholder="Titel" name="arreglo[]">
             </div>
         </div>
         </form>
@@ -78,17 +79,19 @@
 <script>    
 console.log("no ha iniciado jq");
 $(function () {
-    
-  console.log("regitrar encuestas"); 
+    $("input:submit").click(function() { return false; });
+  console.log("regitrar encuestas con $ each"); 
   
   var poll_id = {{ $encuesta->id }};
-  var respuestas = [];
+  //var respuestas = [];
+
+ 
   
   $('.question').click(function(){
     console.log("se clickeo un elemento de pregunta");
   });
 
-  $('.rad').click(function(event) {
+  /*$('.rad').click(function(event) {
       console.log(this.value);
       //respuestas.push[this.value];
       $('[name=respuestas]').val(this.value);
@@ -100,7 +103,7 @@ $(function () {
       $('<input>').attr({
           type: 'hidden',
           id: 'foo',
-          name: name_input/*'respuesta_id[respuesta]'*/,
+          name: name_input,
           value: respuesta
       }).appendTo('form');
 
@@ -119,7 +122,7 @@ $(function () {
       $('<input>').attr({
           type: 'hidden',
           id: 'foo',
-          name: name_input/*'respuesta_id[respuesta]'*/,
+          name: name_input,
           value: respuesta
       }).appendTo('form');
       console.log( $('[name=respuesta_id]').val() );
@@ -129,7 +132,7 @@ $(function () {
         $('#formid input[type=checkbox]').each(function(){
             if (this.checked) {
                 selected += parseInt($(this).val());
-                //console.log("Valor de selected:   " + selected);
+                
                 suma += selected;
                 console.log("suma:   " + suma);
             }
@@ -140,19 +143,37 @@ $(function () {
         else
             console.log('Debes seleccionar al menos una opción.');
 
-        //return false;
-  });
+     
+  });*/
 
   $("#evaluar").click(function(){
-        $("#listas li").each(function(){
-            alert($(this).attr('id'));
-        });
+      var preguntas_input = $("[name=respuestas]");
+      var i = 0;
+      preguntas_input.each(function(index , valor){
+          //alert("id: " + $(this).attr('id') + " , esrtado: " + $(this).tagName + " valor: " + valor + ": " + $( this ).text() );
+        if ( $(this).prop( "checked" ) ) {
+         // alert("esta checked, " + $(this).attr('id') );
+          //arreglo[index] = $(this).attr('id');
+          //$('[name=arreglo]').val(this.value);
+          id = $(this).attr('id');
+          nombre = 'id_respuestas['+i+']';
+          //alert("nombre: " + nombre);
+          //alert("id: " + id);
+          $('<input>').attr({
+              type: 'hidden',
+              id: 'foo',
+              name: nombre,
+              value: id
+          }).appendTo('form');
+          i += 1;
+        }
+
+          
+
+      });
   });
 
 
-
-
- 
 
     
 
