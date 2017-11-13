@@ -13,6 +13,12 @@
         <div class="col-md-12 {{-- col-md-offset-2 --}}">
             <div class="panel panel-default">
                 <div class="panel-heading">Encuesta</div>
+                <div style="text-align:center;">
+                    <!-- <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="fecha" > &nbsp; </div> -->
+                    <!-- <input type = "text" name="fecha" id="fecha" > -->
+                  <div id="cabecera"><h2>XXXXXXXX</h2><h3>Ejemplos JavaScript</h3></div>
+                  <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div>
+                </div>
                 <div class="panel-body">
                     @if (session('status'))
                       <div class="alert alert-success">
@@ -79,72 +85,17 @@
 <script>    
 console.log("no ha iniciado jq");
 $(function () {
+  reloj();
     $("input:submit").click(function() { return false; });
   console.log("regitrar encuestas con $ each"); 
   
   var poll_id = {{ $encuesta->id }};
   //var respuestas = [];
-
- 
   
   $('.question').click(function(){
     console.log("se clickeo un elemento de pregunta");
   });
 
-  /*$('.rad').click(function(event) {
-      console.log(this.value);
-      //respuestas.push[this.value];
-      $('[name=respuestas]').val(this.value);
-      respuesta = this.value;
-      pregunta_id = $(this).attr("name");
-      name_input = 'respuesta_id['+pregunta_id+']';
-      console.log(respuesta + pregunta_id);
-
-      $('<input>').attr({
-          type: 'hidden',
-          id: 'foo',
-          name: name_input,
-          value: respuesta
-      }).appendTo('form');
-
-
-      console.log( $('[name=respuesta_id]').val() );
-  });
-
-  $('.chk').click(function(event) {
-      console.log(this.value);
-      //respuestas.push[this.value];
-      $('[name=respuestas]').val(this.value);
-      respuesta = this.value;
-      pregunta_id = $(this).attr("name");
-      name_input = 'respuesta_id['+pregunta_id+']';
-      console.log(respuesta + pregunta_id);
-      $('<input>').attr({
-          type: 'hidden',
-          id: 'foo',
-          name: name_input,
-          value: respuesta
-      }).appendTo('form');
-      console.log( $('[name=respuesta_id]').val() );
-
-      var suma = 0;
-      var selected = 0;    
-        $('#formid input[type=checkbox]').each(function(){
-            if (this.checked) {
-                selected += parseInt($(this).val());
-                
-                suma += selected;
-                console.log("suma:   " + suma);
-            }
-        }); 
-
-        if (selected != '') 
-            console.log('Has seleccionado: '+selected);  
-        else
-            console.log('Debes seleccionar al menos una opción.');
-
-     
-  });*/
 
   $("#evaluar").click(function(){
       var preguntas_input = $("[name=respuestas]");
@@ -168,14 +119,58 @@ $(function () {
           i += 1;
         }
 
-          
-
       });
   });
 
+      var n = 0;
+      var nn = 0;
+      var seg = {{ $encuesta->category->seconds }};
+      var min = {{ $encuesta->category->minutes }};
+      console.log("minutos: " + min + " " + "segundos: " + seg);
+      //var t = 0;
 
+     
+    function reloj() {
+      //var t = 0;
+      console.log("comenzo el temporizador");
+        var hoy=new Date(); 
+        var h=hoy.getHours(); 
+        var m=hoy.getMinutes(); 
+        var s=hoy.getSeconds();
+        m = actualizarHora(m); 
+        s = actualizarHora(s);
+        n = n + 1;
+        
+        seg = seg - 1 
+        // document.getElementById('fecha').innerHTML = hoy;
 
-    
+        if (n > 60){
+          n = 0;
+          nn = nn + 1;// minutos
+          t = t + 1;
+          seg = 60;
+          min = min - 1;
+
+              // Minutos
+          if (nn >= 2) {
+            alert("Fin : " + nn);
+            exit();
+          }
+          //***********************
+        }
+
+        //document.getElementById('displayReloj').innerHTML = h + ":" + m + ":" + n;
+        //document.getElementById('displayReloj').innerHTML = h + ":" + nn + ":" + n;
+        document.getElementById('displayReloj').innerHTML = h + ":" + min + ":" + seg;
+        var t = setTimeout(function(){reloj()},1000);
+    }
+   
+    function actualizarHora(i) {
+        if (i < 10) {
+           i = "0" + i
+        };  // Añadir el cero en números menores de 10
+        return i;
+    }
 
 });
 </script>
