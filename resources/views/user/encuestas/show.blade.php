@@ -130,47 +130,7 @@ $(function () {
       //var t = 0;
 
      
-    function reloj() {
-      //var t = 0;
-      console.log("comenzo el temporizador");
-        var hoy=new Date(); 
-        var h=hoy.getHours(); 
-        var m=hoy.getMinutes(); 
-        var s=hoy.getSeconds();
-        m = actualizarHora(m); 
-        s = actualizarHora(s);
-        n = n + 1;
-        
-        seg = seg - 1 
-        // document.getElementById('fecha').innerHTML = hoy;
-
-        if (n > 60){
-          n = 0;
-          nn = nn + 1;// minutos
-          t = t + 1;
-          seg = 60;
-          min = min - 1;
-
-              // Minutos
-          if (nn >= 2) {
-            alert("Fin : " + nn);
-            exit();
-          }
-          //***********************
-        }
-
-        //document.getElementById('displayReloj').innerHTML = h + ":" + m + ":" + n;
-        //document.getElementById('displayReloj').innerHTML = h + ":" + nn + ":" + n;
-        document.getElementById('displayReloj').innerHTML = h + ":" + min + ":" + seg;
-        var t = setTimeout(function(){reloj()},1000);
-    }
-   
-    function actualizarHora(i) {
-        if (i < 10) {
-           i = "0" + i
-        };  // Añadir el cero en números menores de 10
-        return i;
-    }
+ 
 
 });
 </script>
