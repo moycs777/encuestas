@@ -18,6 +18,8 @@
                     <!-- <input type = "text" name="fecha" id="fecha" > -->
                   <div id="cabecera"><h2>XXXXXXXX</h2><h3>Ejemplos JavaScript</h3></div>
                   <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div>
+                  <h1>Cuenta atras para redireccionar</h1>
+                  <h2 id='CuentaAtras'></h2>
                 </div>
                 <div class="panel-body">
                     @if (session('status'))
@@ -73,8 +75,8 @@
                       @endforeach
                     @endif
                 </div>
-               {{--  <input type="submit" value="Registrar encuesta" > --}}
-                <button id="evaluar" class="btn btn-danger">Evaluar</button>
+                <!-- <input type="submit"   value="Registrar encuesta" > --> 
+                <button id="evaluar" class="btn btn-danger"  >Evaluar</button>
                 <input type="text" id="arreglo" class="form-control" placeholder="Titel" name="arreglo[]">
             </div>
         </div>
@@ -85,7 +87,7 @@
 <script>    
 console.log("no ha iniciado jq");
 $(function () {
-  reloj();
+  
     $("input:submit").click(function() { return false; });
   console.log("regitrar encuestas con $ each"); 
   
@@ -128,11 +130,34 @@ $(function () {
       var min = {{ $encuesta->category->minutes }};
       console.log("minutos: " + min + " " + "segundos: " + seg);
       //var t = 0;
-
-     
+    
  
 
 });
+
+    /* Determinamos el tiempo total en segundos */
+    var totalTiempo=3;
+    /* Determinamos la url donde redireccionar */
+    var url="http://www.lawebdelprogramador.com";
+    function updateReloj()
+    {
+        console.log("temporizador");
+        document.getElementById('CuentaAtras').innerHTML = "Redireccionando en "+totalTiempo+" segundos";
+ 
+        if(totalTiempo<=0 )
+        {
+            console.log("fin del tiempo");
+            //window.location=url;
+            document.getElementById('evaluar').click();
+        }else{
+            /* Restamos un segundo al tiempo restante */
+            totalTiempo-=1;
+            /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
+            setTimeout("updateReloj()",1000);
+        }
+    }
+ 
+    window.onload=updateReloj;
 </script>
 
 @endsection

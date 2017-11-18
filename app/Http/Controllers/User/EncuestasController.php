@@ -32,7 +32,7 @@ class EncuestasController extends Controller
     
     public function store(Request $request)
     {
-        //dd($request->all());
+        dd($request->all());
         $encuesta = Poll::find($request->poll_id);
         $preguntas = Question::where('poll_id', '=', $request->poll_id)->get();
         //$respuestas = Answer::where('poll_id', $encuesta->id)->get();
