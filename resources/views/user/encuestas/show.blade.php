@@ -76,7 +76,7 @@
                     @endif
                 </div>
                 <!-- <input type="submit"   value="Registrar encuesta" > --> 
-                <button id="evaluar" class="btn btn-danger"  >Evaluar</button>
+                <button id="evaluar" class="btn btn-danger"  >Terminar encuesta</button>
                 <input type="text" id="arreglo" class="form-control" placeholder="Titel" name="arreglo[]">
             </div>
         </div>
@@ -88,7 +88,7 @@
 console.log("no ha iniciado jq");
 $(function () {
   
-    $("input:submit").click(function() { return false; });
+  $("input:submit").click(function() { return false; });
   console.log("regitrar encuestas con $ each"); 
   
   var poll_id = {{ $encuesta->id }};
@@ -158,6 +158,7 @@ $(function () {
     }
  
     window.onload=updateReloj;
+
 </script>
 
 @endsection

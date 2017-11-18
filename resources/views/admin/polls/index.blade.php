@@ -22,7 +22,7 @@
       <div class="box-body">
         <div class="box">
           <div class="box-header">
-            <h1>Encuestas <a href="{{ url('admin/polls/create') }}" class="btn btn-primary pull-right btn-sm">Crear Encuesta</a></h1>
+            <h1> <a href="{{ url('admin/polls/create') }}" class="btn btn-primary pull-right btn-sm">Crear Encuesta</a></h1>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
