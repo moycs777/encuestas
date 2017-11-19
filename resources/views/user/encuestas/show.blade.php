@@ -51,7 +51,7 @@
                           </div>
                           {{-- Respuestas --}}                            
                           <div class="col-md-8 col-xs-6">                              
-                          @if (!empty($pregunta->answers))
+                        @if (!empty($pregunta->answers))
                             @foreach($pregunta->answers as $answer)
                               @if ($pregunta->multiple_answers == 1)
                                 <input type="checkbox" 
@@ -69,14 +69,20 @@
                                   id="{{ $answer->id }}"> {{ $answer->name }}
                               @endif  
                             @endforeach
-                          @endif
+                        @endif
                           </div>
                         </div>
                       @endforeach
                     @endif
                 </div>
                 <!-- <input type="submit"   value="Registrar encuesta" > --> 
-                <button id="evaluar" class="btn btn-danger"  >Terminar encuesta</button>
+                <button id="evaluar" class="btn btn-danger">Terminar encuesta</button>
+                @if($encuesta->category->pausable == 0)
+                    <input type="hidden" name="pausable" value="0">                    
+                @else
+                    <button id="pausar" class="btn btn-success">pausar encuesta</button>
+                    <input type="hidden" name="pausable" value="1">                    
+                @endif
                 <input type="text" id="arreglo" class="form-control" placeholder="Titel" name="arreglo[]">
             </div>
         </div>
@@ -124,11 +130,11 @@ $(function () {
       });
   });
 
-      var n = 0;
+      /* var n = 0;
       var nn = 0;
       var seg = {{ $encuesta->category->seconds }};
-      var min = {{ $encuesta->category->minutes }};
-      console.log("minutos: " + min + " " + "segundos: " + seg);
+      var min = {{ $encuesta->category->minutes }}; */
+      //console.log("minutos: " + min + " " + "segundos: " + seg);
       //var t = 0;
     
  
@@ -136,7 +142,7 @@ $(function () {
 });
 
     /* Determinamos el tiempo total en segundos */
-    var totalTiempo=3;
+    var totalTiempo=3000;
     /* Determinamos la url donde redireccionar */
     var url="http://www.lawebdelprogramador.com";
     function updateReloj()

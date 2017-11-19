@@ -17,7 +17,7 @@ class CreateDetailAplicationsTable extends Migration
             $table->increments('id');
             $table->date('start')->nullable();
             $table->date('end')->nullable();
-            $table->integer('value');
+            $table->integer('value')->default(0);
             $table->integer('answer_id');
             $table->integer('master_aplication_id');
             $table->timestamps();

@@ -22,7 +22,7 @@
       <div class="box-body">
         <div class="box">
           <div class="box-header">
-            <h1>Categorias <a href="{{ url('admin/categories/create') }}" class="btn btn-primary pull-right btn-sm">Crear Categoria</a></h1>
+            <h1> <a href="{{ url('admin/categories/create') }}" class="btn btn-primary pull-right btn-sm">Crear Categoria</a></h1>
           </div>
           <!-- /.box-header -->
           <div class="box-body">

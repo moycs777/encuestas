@@ -15,7 +15,7 @@ class CreateMasterAplicationsTable extends Migration
     {
         Schema::create('master_aplications', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('start_date');
+            $table->timestamp('start_date');
             $table->integer('status');
             $table->integer('user_id');
             $table->integer('poll_id');
