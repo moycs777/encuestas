@@ -34,9 +34,9 @@ class EncuestasController extends Controller
     
     public function store(Request $request)
     {
-        $st = Session::get('start_date');
-        dd($st);
+        //dd($st);
         dd($request->all());
+        $st = Session::get('start_date');
         $master_aplication = new MasterAplication();
         $master_aplication->start_date = $st; 
         $master_aplication->user_id = 1;
