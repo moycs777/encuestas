@@ -4,6 +4,7 @@
   <br><br><br><br>
     <div class="row">
     <p>categoria  {{ $encuesta->category }} </p>
+        <input  type="hidden" id="seconds" value="{{ $encuesta->category->seconds }}" >
         <form action="{{ route('encuestas.store') }}" method="post" id="formid"> 
             {{ csrf_field()  }} 
             <input type="hidden" name="poll_id" value="{{ $encuesta->id }}">
@@ -18,7 +19,7 @@
                     <!-- <input type = "text" name="fecha" id="fecha" > -->
                   <div id="cabecera"><h2>XXXXXXXX</h2><h3>Ejemplos JavaScript</h3></div>
                   <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div>
-                  <h1>Cuenta atras para redireccionar</h1>
+                  <h1>Cuenta atras para redfinalizar la encusta</h1>
                   <h2 id='CuentaAtras'></h2>
                 </div>
                 <div class="panel-body">
@@ -140,30 +141,35 @@ $(function () {
  
 
 });
+    
+    var seconds = document.getElementById("seconds").value;
+    if(seconds){
 
-    /* Determinamos el tiempo total en segundos */
-    var totalTiempo=3000;
-    /* Determinamos la url donde redireccionar */
-    var url="http://www.lawebdelprogramador.com";
-    function updateReloj()
-    {
-        console.log("temporizador");
-        document.getElementById('CuentaAtras').innerHTML = "Redireccionando en "+totalTiempo+" segundos";
- 
-        if(totalTiempo<=0 )
+        /* Determinamos el tiempo total en segundos */
+        var totalTiempo=3000;
+        /* Determinamos la url donde redireccionar */
+        var url="http://www.lawebdelprogramador.com";
+        function updateReloj()
         {
-            console.log("fin del tiempo");
-            //window.location=url;
-            document.getElementById('evaluar').click();
-        }else{
-            /* Restamos un segundo al tiempo restante */
-            totalTiempo-=1;
-            /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
-            setTimeout("updateReloj()",1000);
+            console.log("temporizador");
+            document.getElementById('CuentaAtras').innerHTML = "finaliza en "+seconds+" segundos";
+
+            if(seconds<=0 )
+            {
+                console.log("fin del tiempo");
+                //window.location=url;
+                document.getElementById('evaluar').click();
+            }else{
+                /* Restamos un segundo al tiempo restante */
+                seconds-=1;
+                console.log(seconds);
+                /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
+                setTimeout("updateReloj()",1000);
+            }
         }
+
+        window.onload=updateReloj;
     }
- 
-    window.onload=updateReloj;
 
 </script>
 
