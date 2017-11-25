@@ -3,7 +3,13 @@
 <div class="container">
   <br><br><br><br>
     <div class="row">
-    <p>categoria  {{ $encuesta->category }} </p>
+    <p>categoria  {{ $encuesta->category }}
+      @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+      @endif
+     </p>
         <input  type="hidden" id="seconds" value="{{ $encuesta->category->seconds }}" >
         <form action="{{ route('encuestas.store') }}" method="post" id="formid"> 
             {{ csrf_field()  }} 
@@ -89,14 +95,29 @@
         </div>
         </form>
     </div>
+    @php
+      if ($encuesta->category->hour > 0 || $encuesta->category->minutes > 0 || $encuesta->category->seconds > 0) 
+      {
+        $timer = 1;
+      } else {
+        $timer = 0;
+      }
+      
+    @endphp
+</div>
+<div>
+  <input type="hidden" id="hour" name="hour" value="{{ $encuesta->category->hour }}">
+  <input type="hidden" id="min" name="min" value="{{ $encuesta->category->minutes }}">
+  <input type="hidden" id="seg" name="seg" value="{{ $encuesta->category->seconds }}">
 </div>
 <script src="{{ asset('admin/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 <script>    
-console.log("no ha iniciado jq");
+console.log("no ha iniciado jq 2");
 $(function () {
   
+  console.log("regitrar encuestas con $ each 2"); 
+  console.log("hay tiempo " + {{ $timer }} ); 
   $("input:submit").click(function() { return false; });
-  console.log("regitrar encuestas con $ each"); 
   
   var poll_id = {{ $encuesta->id }};
   //var respuestas = [];
@@ -105,35 +126,57 @@ $(function () {
     console.log("se clickeo un elemento de pregunta");
   });
 
-  
-/*var n = 0;
-var nn = 0;
-var seg = {{ $encuesta->category->seconds }};
-var min = {{ $encuesta->category->minutes }};
-console.log("minutos: " + min + " " + "segundos: " + seg);
+  //Encuesta por tiempo
+  if ( {{ $timer }} == 1) 
+  {
+    var n = 0;
+    var nn = 0;
+    var hour = $('input[name=hour]').val();
+    var min = $('input[name=min]').val();
+    var seg = $('input[name=seg]').val();
 
-function reloj() {
+    if ( hour == null) {hour=0; }
+    if ( min == null) {min=0; }
+    if ( seg == null) {seg=0; }
 
-  if (seg > 0) {
-       seg = seg - 1;
+    
+    console.log("Encuesta por tiempo "); 
+    
+    
+    console.log("minutos: " + min + " " + "segundos: " + seg);
+
+    function reloj() {
+
+      if (seg > 0) {
+           seg = seg - 1;
+        }
+
+      if ((min > 0)  && (seg == 0)){
+            min = min - 1;
+            seg = 60;
+        }
+
+        if ((min == 0) && (seg == 0)){
+          document.getElementById('displayReloj').innerHTML = min + " : " + seg;
+          alert("Fin : " + nn);
+        exit();
+        }
+      
+        document.getElementById('displayReloj').innerHTML = min + " : " + seg;
+        var t = setTimeout(function(){reloj()},1000);
     }
+    reloj();
+    
+    
+  }
 
-  if ((min > 0)  && (seg == 0)){
-        min = min - 1;
-        seg = 60;
-    }
+  //Encuesta sin tiempo
+  if ( {{ $timer }} == 0) 
+  {
+    console.log("Encuesta sin tiempo "); 
+    
+  }
 
-    if ((min == 0) && (seg == 0)){
-      document.getElementById('displayReloj').innerHTML = min + " : " + seg;
-      alert("Fin : " + nn);
-    exit();
-    }
-  
-    document.getElementById('displayReloj').innerHTML = min + " : " + seg;
-    var t = setTimeout(function(){reloj()},1000);
-}
-reloj();
-*/
   $("#evaluar").click(function(){
       var preguntas_input = $("[name=respuestas]");
       var i = 0;
