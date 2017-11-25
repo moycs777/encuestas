@@ -35,33 +35,29 @@ class EncuestasController extends Controller
     public function store(Request $request)
     {
         //dd($st);
-        dd($request->all());
+        //dd($request->all());
+        //dd($request->respuestas);
+        $this->validate($request,[
+            'respuestas' => 'required',
+        ]);
         $st = Session::get('start_date');
         $master_aplication = new MasterAplication();
         $master_aplication->start_date = $st; 
         $master_aplication->user_id = 1;
-        $master_aplication->poll_id = $id;
+        $master_aplication->poll_id = $request->poll_id;;
         $master_aplication->status = 0;
         $master_aplication->save();
 
-        DB::beginTransaction();
-
-        try {
-            /* DB::insert(...);
-            DB::insert(...);
-            DB::insert(...); */
-
-            DB::commit();
-            // all good
-        } catch (\Exception $e) {
-            DB::rollback();
-            // something went wrong
-        }
+        
 
         $encuesta = Poll::find($request->poll_id);
         $preguntas = Question::where('poll_id', '=', $request->poll_id)->get();
         //$respuestas = Answer::where('poll_id', $encuesta->id)->get();
         $total = 0;
+
+        AplicationPoll::where('user_id', '=', 1)
+            ->where('poll_id', '=', $request->poll_id)
+            ->delete();
 
         foreach ($request->id_respuestas as $key => $value) {
             //print_r('llave: '.$key .' valor: '. $value. ' ');

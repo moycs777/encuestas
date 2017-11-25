@@ -23,6 +23,7 @@ class CreateCategoriesTable extends Migration
             $table->boolean('pausable')->default(1);
             $table->boolean('status')->default(1);
             $table->boolean('answer_required');
+            $table->boolean('show_all_questions')->default(1);
             $table->timestamps();
         });
     }

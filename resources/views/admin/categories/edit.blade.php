@@ -88,6 +88,18 @@
 				    	<input type="radio" name="answer_required" id="answer_required" value="0" checked="checked"> No<br>
 				    @endif
 				  </div>
+					
+					<div class="form-group">
+						<label for="slug">Mostrar todas las preguntas?</label>
+						<br>
+						@if ($category->show_all_questions == 1)
+				    	<input type="radio" name="show_all_questions" id="show_all_questions" value="1" checked="checked"> Si<br>
+				    	<input type="radio" name="show_all_questions" id="show_all_questions" value="0"> No<br>
+				    @else
+				    	<input type="radio" name="show_all_questions" id="show_all_questions" value="1"> Si<br>
+				    	<input type="radio" name="show_all_questions" id="show_all_questions" value="0" checked="checked"> No<br>
+				    @endif
+					</div>
 
 	            <div class="form-group">
 	              <button type="submit" class="btn btn-primary">Guardar</button>

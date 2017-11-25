@@ -45,35 +45,35 @@
                     @endif
                     {{-- Preguntas --}}
                     @if (!$preguntas == null)
-                      @foreach ($preguntas as $pregunta)
-                        <div class="row">
-                          <div class="col-md-4 col-xs-4">
-                              <p>{{  $pregunta->name }}</p>
-                          </div>
-                          {{-- Respuestas --}}                            
-                          <div class="col-md-8 col-xs-6">                              
-                        @if (!empty($pregunta->answers))
-                            @foreach($pregunta->answers as $answer)
-                              @if ($pregunta->multiple_answers == 1)
-                                <input type="checkbox" 
-                                  name="respuestas{{-- {{  $pregunta->id }} --}}" 
-                                  value="{{ $answer->id }}" 
-                                  class="chk" 
-                                  id="{{ $answer->id }}"> {{ $answer->name }}
-                              @else
-                              {{-- @endif  
-                              @if ($pregunta->multiple_answers == 0) --}}
-                                <input type="radio" 
-                                  name="respuestas{{-- {{  $pregunta->id }} --}}" 
-                                  value="{{ $answer->id }}" 
-                                  class="rad" 
-                                  id="{{ $answer->id }}"> {{ $answer->name }}
-                              @endif  
-                            @endforeach
-                        @endif
-                          </div>
-                        </div>
-                      @endforeach
+                        @foreach ($preguntas as $pregunta)
+                            <div class="row">
+                                <div class="col-md-4 col-xs-4">
+                                    <p>{{  $pregunta->name }}</p>
+                                </div>
+                                {{-- Respuestas --}}                            
+                                <div class="col-md-8 col-xs-6">                              
+                                @if (!empty($pregunta->answers))
+                                    @foreach($pregunta->answers as $answer)
+                                        @if ($pregunta->multiple_answers == 1)
+                                            <input type="checkbox" 
+                                            name="respuestas{{-- {{  $pregunta->id }} --}}" 
+                                            value="{{ $answer->id }}" 
+                                            class="chk" 
+                                            id="{{ $answer->id }}"> {{ $answer->name }}
+                                        @else
+                                        {{-- @endif  
+                                        @if ($pregunta->multiple_answers == 0) --}}
+                                            <input type="radio" 
+                                            name="respuestas{{-- {{  $pregunta->id }} --}}" 
+                                            value="{{ $answer->id }}" 
+                                            class="rad" 
+                                            id="{{ $answer->id }}"> {{ $answer->name }}
+                                        @endif  
+                                    @endforeach
+                                @endif
+                                </div>
+                            </div>
+                        @endforeach
                     @endif
                 </div>
                 <!-- <input type="submit"   value="Registrar encuesta" > --> 
@@ -106,12 +106,11 @@ $(function () {
   });
 
   
-var n = 0;
+/*var n = 0;
 var nn = 0;
 var seg = {{ $encuesta->category->seconds }};
 var min = {{ $encuesta->category->minutes }};
 console.log("minutos: " + min + " " + "segundos: " + seg);
-//var t = 0;    
 
 function reloj() {
 
@@ -131,12 +130,10 @@ function reloj() {
     }
   
     document.getElementById('displayReloj').innerHTML = min + " : " + seg;
-    //tt = seg;
     var t = setTimeout(function(){reloj()},1000);
-      //alert("A "+seg);
 }
 reloj();
-
+*/
   $("#evaluar").click(function(){
       var preguntas_input = $("[name=respuestas]");
       var i = 0;

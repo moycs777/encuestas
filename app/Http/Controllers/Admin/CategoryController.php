@@ -30,6 +30,7 @@ class CategoryController extends Controller
    
     public function store(Request $request)
     {
+        //dd($request->all());
         $this->validate($request, ['name' => 'required', 'pausable' => 'required' ]);
 
         $store = Category::create($request->all());

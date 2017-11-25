@@ -42,24 +42,24 @@
 
                   <div class="form-group" id="hour">
 	                <label for="name">Horas</label>
-	                <input type="text" class="form-control"  name="hour" placeholder="Hora">
+	                <input type="text" class="form-control" class="hour" name="hour" placeholder="Hora">
                   </div>
 
                   <div class="form-group" id="minutes">
 	                <label for="name">Minutos</label>
-	                <input type="text" class="form-control"  name="minutes" placeholder="Minutos">
+	                <input type="text" class="form-control" class="minutes" name="minutes" placeholder="Minutos">
                   </div>
 
                   <div class="form-group" id="seconds">
 	                <label for="name">Segundos</label>
-	                <input type="text" class="form-control"  name="seconds" placeholder="Segundos">
+	                <input type="text" class="form-control" class="seconds"  name="seconds" placeholder="Segundos">
                   </div>
 
-	              <div class="form-group">
+	              <div class="form-group" id="pausable">
 	                <label for="slug">Es pausable la encuesta?</label>
 	                <br>
-	                <input type="radio" name="pausable" value="1" checked="checked" > Si<br>
-	                <input type="radio" name="pausable" value="0"> No<br>
+	                <input type="radio" name="pausable" class="pausable" value="1" checked="checked" > Si<br>
+	                <input type="radio" name="pausable" class="pausable" value="0"> No<br>
 	              </div>
 
 	              <div class="form-group">
@@ -67,6 +67,13 @@
 	                <br>
 	                <input type="radio" name="answer_required" value="1" checked="checked" > Si<br>
 	                <input type="radio" name="answer_required" value="0"> No<br>
+	              </div>
+	              
+								<div class="form-group">
+	                <label for="slug">Mostrar todas las preguntas?</label>
+	                <br>
+	                <input type="radio" name="show_all_questions" value="1" checked="checked" > Si<br>
+	                <input type="radio" name="show_all_questions" value="0"> No<br>
 	              </div>
 
 	              <div class="form-group">
@@ -105,12 +112,21 @@
 		            $('#hour').show();
 		            $('#minutes').show();
 		            $('#seconds').show();
+			    			$('#pausable').hide();
+			    			$('.pausable').val(0);
+								
 		          }
 
 		          if (var_type == 1) {
 		            $('#hour').hide();
-			    	$('#minutes').hide();
-			    	$('#seconds').hide();
+								$('#minutes').hide();
+								$('#seconds').hide();
+			    			$('#pausable').show();
+			    			$('.hour').val(0);
+			    			$('.minutes').val(0);
+			    			$('.seconds').val(0);
+								
+								
 		          }       
 	          
 	        });  
