@@ -105,6 +105,37 @@ $(function () {
     console.log("se clickeo un elemento de pregunta");
   });
 
+  
+var n = 0;
+var nn = 0;
+var seg = {{ $encuesta->category->seconds }};
+var min = {{ $encuesta->category->minutes }};
+console.log("minutos: " + min + " " + "segundos: " + seg);
+//var t = 0;    
+
+function reloj() {
+
+  if (seg > 0) {
+       seg = seg - 1;
+    }
+
+  if ((min > 0)  && (seg == 0)){
+        min = min - 1;
+        seg = 60;
+    }
+
+    if ((min == 0) && (seg == 0)){
+      document.getElementById('displayReloj').innerHTML = min + " : " + seg;
+      alert("Fin : " + nn);
+    exit();
+    }
+  
+    document.getElementById('displayReloj').innerHTML = min + " : " + seg;
+    //tt = seg;
+    var t = setTimeout(function(){reloj()},1000);
+      //alert("A "+seg);
+}
+reloj();
 
   $("#evaluar").click(function(){
       var preguntas_input = $("[name=respuestas]");
@@ -131,45 +162,9 @@ $(function () {
       });
   });
 
-      /* var n = 0;
-      var nn = 0;
-      var seg = {{ $encuesta->category->seconds }};
-      var min = {{ $encuesta->category->minutes }}; */
-      //console.log("minutos: " + min + " " + "segundos: " + seg);
-      //var t = 0;
-    
- 
-
 });
     
-    var seconds = document.getElementById("seconds").value;
-    if(seconds){
-
-        /* Determinamos el tiempo total en segundos */
-        var totalTiempo=3000;
-        /* Determinamos la url donde redireccionar */
-        var url="http://www.lawebdelprogramador.com";
-        function updateReloj()
-        {
-            console.log("temporizador");
-            document.getElementById('CuentaAtras').innerHTML = "finaliza en "+seconds+" segundos";
-
-            if(seconds<=0 )
-            {
-                console.log("fin del tiempo");
-                //window.location=url;
-                document.getElementById('evaluar').click();
-            }else{
-                /* Restamos un segundo al tiempo restante */
-                seconds-=1;
-                console.log(seconds);
-                /* Ejecutamos nuevamente la función al pasar 1000 milisegundos (1 segundo) */
-                setTimeout("updateReloj()",1000);
-            }
-        }
-
-        window.onload=updateReloj;
-    }
+    
 
 </script>
 
