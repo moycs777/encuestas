@@ -118,6 +118,14 @@ class EncuestasController extends Controller
         //creacion de el maestro
         Session::put('start_date', Carbon::now()->format('Y-m-d H:i:s'));
         $encuesta = Poll::find($id);
+
+        //Vista especial para 1 sola pregunta
+        if ($encuesta->category->show_all_questions == 0) {
+            $preguntas = Question::where('poll_id', '=', $encuesta->id)
+                ->get();
+            return view('user.encuestas.show_1_question', compact('encuesta', 'preguntas'));
+        }
+
         $preguntas = Question::where('poll_id', '=', $encuesta->id)
             ->get();
         return view('user.encuestas.show', compact('encuesta', 'preguntas'));
