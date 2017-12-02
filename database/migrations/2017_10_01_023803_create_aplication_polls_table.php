@@ -21,6 +21,7 @@ class CreateAplicationPollsTable extends Migration
             $table->integer('user_id');
             $table->integer('poll_id');
             $table->integer('answer_id');
+            $table->integer('question_id');
             $table->timestamps();
         });
     }

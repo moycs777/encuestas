@@ -72,6 +72,7 @@ class EncuestasController extends Controller
             $aplication_poll->value = $answer->value;
             $aplication_poll->user_id = 1;
             $aplication_poll->poll_id = $request->poll_id;
+            $aplication_poll->question_id = $answer->question_id;
             $aplication_poll->answer_id = $answer->id;
             $aplication_poll->save();
         }
@@ -95,6 +96,19 @@ class EncuestasController extends Controller
             }
         }
         //return ' Total: '. $total;
+        $polls = Poll::all();
+        return view('user.encuestas.index', compact('polls'));
+    }
+
+    public function individual(Request $request)
+    {
+        dd($request->all());
+        if ($request->id_respuestas == null) {
+            return redirect()->back()->with('message', 'Debes responder al menos 1pregunta!');
+        }
+        return view('user.encuestas.ajax', compact('encuesta', 'preguntas'));
+      
+        
     }
    
     public function show($id)
@@ -112,7 +126,7 @@ class EncuestasController extends Controller
             $encuesta = Poll::find($id);
             $preguntas = Question::where('poll_id', '=', $encuesta->id)
                 ->get();
-            return view('user.encuestas.show', compact('encuesta', 'preguntas', 'detail_aplication'));
+            return view('user.encuestas.general.show', compact('encuesta', 'preguntas', 'detail_aplication'));
         }
         //Creacion de una encusta
         //creacion de el maestro
@@ -123,12 +137,28 @@ class EncuestasController extends Controller
         if ($encuesta->category->show_all_questions == 0) {
             $preguntas = Question::where('poll_id', '=', $encuesta->id)
                 ->get();
-            return view('user.encuestas.show_1_question', compact('encuesta', 'preguntas'));
+            return view('user.encuestas.individual.ajax', compact('encuesta', 'preguntas'));
+            //return view('user.encuestas.show_1_question', compact('encuesta', 'preguntas'));
         }
 
         $preguntas = Question::where('poll_id', '=', $encuesta->id)
             ->get();
-        return view('user.encuestas.show', compact('encuesta', 'preguntas'));
+        return view('user.encuestas.general.show', compact('encuesta', 'preguntas'));
+
+    }
+
+    public function reanudar($id)
+    {
+        //dd($id);
+        $contestadas = AplicationPoll::where('poll_id', '=', $id)
+            //->where('user_id', '=', 10)
+            ->get();
+        //dd($contestadas);
+        $encuesta = Poll::find($id);
+
+        $preguntas = Question::where('poll_id', '=', $encuesta->id)
+            ->get();
+        return view('user.encuestas.general.reanudar_show', compact('encuesta', 'preguntas', 'contestadas'));
 
     }
     

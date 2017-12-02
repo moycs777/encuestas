@@ -28,7 +28,10 @@
                                         @foreach ($polls as $item)
                                     <tr>                                
                                         <td class="active"><a href="#">{{ $item->name }}</a></td> 
-                                        <td><a href="{{ route('encuestas.show', $item->id) }}">Comenzar</a></td>                            
+                                        
+                                        <td><a href="{{ route('encuestas.show', $item->id) }}">Comenzar</a></td>
+
+                                        <td><a href="{{ route('encuestas.reanudar', $item->id) }}">Reanudar</a></td>                            
                                         <td class="success">{{ $item->category_id }}</td>
                                     </tr>
                                         @endforeach

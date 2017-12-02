@@ -44,7 +44,7 @@
 	                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la encuesta" value="{{ $poll->name }}">
 	              </div>
 
-                <div class="form-group">
+               {{--  <div class="form-group">
 					<label for="slug">Mostrar todas las preguntas?</label>
 					<br>
 					@if ($poll->show_all_questions == 1)
@@ -54,11 +54,7 @@
 						<input type="radio" name="show_all_questions" id="show_all_questions" value="1"> Si<br>
 						<input type="radio" name="show_all_questions" id="show_all_questions" value="0" checked="checked"> No<br>
 					@endif
-				  </div>
-
-	            
-
-	              
+				  </div> --}}
 
 	            <div class="form-group">
 	              <button type="submit" class="btn btn-primary">Guardar</button>
