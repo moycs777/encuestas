@@ -22,31 +22,73 @@
 
             <div class="col-md-12 {{-- col-md-offset-2 --}}">
                 <div >
-                    <h1 class="text-center">{{ $encuesta->name }}</h1><br>
-                     {{--  <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div> --}}
+                    <h1 class="text-center">carru {{ $encuesta->name }}</h1><br>
                       <div class='container carousel' id="mycarrousel" data-interval="false">
-                        <div id="carousel-example-generic" class="carousel slide" {{-- data-ride="carousel" --}}>
-                            <!-- Indicators -->
-                            {{-- <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            </ol> --}}
-                            <!-- Wrapper for slides -->
+                        <div id="carousel-example-generic" class="carousel slide">                        
                             <div class="carousel-inner text-center" role="listbox">
                               @foreach ($preguntas as $pregunta)
-
                                 @if($loop->index == 0)
                                   <div class="item active">
                                 @else  
                                   <div class="item">
                                 @endif
-
-                                  <div class="col-lg-4">                            
-                                    <h2>¿ {{  $pregunta->name }} ?<br>
-                                        </h2>
+                                  {{-- <div class="col-md-12"> 
+                                   <h2>¿ {{  $pregunta->name }} ?<br></h2>
+                                  </div> --}}
+                                  <div class="panel-heading">
+                                      <h3 class="panel-title">
+                                        <span class="glyphicon "></span>{{  $pregunta->name }}? <a href="http://www.jquery2dotnet.com" target="_blank"><span
+                                            class="glyphicon "></span></a>
+                                    </h3>
                                   </div>
-                                    <div>
+
+                                  <div class="panel-body">
+                                        <div class="radio">
+                                          @if (!empty($pregunta->answers))
+                                            @foreach($pregunta->answers as $answer)
+                                              @if ($pregunta->multiple_answers == 1)
+                                                  <div style="float: left;padding: 6px;margin-bottom: 8px;border: 1px solid #bad3e8;border-radius: 10px; width: 100%;     font-weight: bold !important;">
+                                                    <input type="checkbox" 
+                                                    name="respuestas" 
+                                                    value="{{ $answer->id }}" 
+                                                    class="chk" 
+                                                    id="{{ $answer->id }}"
+                                                    @if (!$contestadas == null)
+                                                      @foreach ($contestadas as $item)
+                                                        @if ($item->answer_id == $answer->id)
+                                                          checked
+                                                        @endif
+                                                      @endforeach
+                                                    @endif
+                                                    > 
+                                                    {{ $answer->name }}
+                                                  </div>
+                                              @else
+                                                <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
+                                                  <input type="radio" 
+                                                  name="respuestas" 
+                                                  value="{{ $answer->id }}" 
+                                                  class="rad" 
+                                                  id="{{ $answer->id }}" 
+                                                  @if (!$contestadas == null)
+                                                    @foreach ($contestadas as $item)
+                                                      @if ($item->answer_id == $answer->id)
+                                                        checked
+                                                      @endif
+                                                    @endforeach
+                                                  @endif
+                                                  style="margin-left: 0px !important; "
+                                                  >
+                                                    <label style="font-weight: bold;">
+                                                      {{ $answer->name }}
+                                                    </label> 
+                                                </div>
+                                              @endif  
+                                            @endforeach
+                                          @endif
+                                        </div>
+                                      </div>
+                                    {{-- <div>
                                       @foreach($pregunta->answers as $answer)
                                         @if ($pregunta->multiple_answers == 1)
                                             <input type="checkbox" 
@@ -62,8 +104,7 @@
                                             id="{{ $answer->id }}"> {{ $answer->name }}
                                         @endif
                                       @endforeach
-                                      
-                                    </div>
+                                     </div> --}}
                                       
                                   <div>
                                     <a class="" href="#carousel-example-generic"  role="button" data-slide="next" id="next">
@@ -112,42 +153,23 @@
 console.log("no ha iniciado jq 2");
 $(function () {
 
-  function asd(){
-    console.log("ultima funcion" );
-      $('#next').hide();
-    //return preventDefault();
-  }
-
   $('.carousel').carousel({
     interval: 100000, 
     pause: true, 
     wrap: false
   });
 
-  function desabilitar(){
-    //return preventDefault();
-
-    console.log("ultimo elemento  y funcion desabilitar" );
-      $('#next').hide();
-      asd();
-      //alert("asd");
-  };
-
 
   // execute function after sliding:
   $('.carousel').on('slid.bs.carousel', function (e) {
       // This variable contains all kinds of data and methods related to the carousel
-      /*function desabilitar(){
-        console.log("ultimo elemento  y funcion desabilitar" );
-          $('#next').hide();
-          alert("asd");
-      };*/
+      //alert("asd");
       var carouselData = $(this).data('bs.carousel');
       // get current index of active element
       var currentIndex = carouselData.getItemIndex(carouselData.$element.find('.item.active'));
+
       // hide carousel controls at begin and end of slides
       $(this).children('.carousel-control').show();
-      
       if(currentIndex == 0){
           $(this).children('.left.carousel-control').fadeOut();
           e.preventDefault();
@@ -156,22 +178,12 @@ $(function () {
           return false; // stay on this slide
           //alert('primero');
       }else if(currentIndex+1  == carouselData.$items.length){
-          
+          $(this).children('.right.carousel-control').fadeOut();
+          console.log("ultimo elemento");
+          $('#next').fadeOut();
+          $('#mycarrousel').fadeOut(4000);
           //alert('ultimo');
       }
-      console.log('elemento actual: '+currentIndex);
-      console.log('numero de preguntas'+$('#numero_preguntas').val());
-      //currentIndex+=1;
-      if (currentIndex == $('#numero_preguntas').val() -1 ) 
-      {
-          //$(this).children('.right.carousel-control').fadeOut();
-          /*console.log("ultimo elemento  " );
-          $('#next').hide();
-          alert("asd");*/
-          desabilitar();
-          //$('#mycarrousel').fadeOut(4000);
-      }
-      //currentIndex+=1;
   });
 
   console.log("regitrar encuestas con $ each 2"); 

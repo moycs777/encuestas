@@ -61,18 +61,19 @@
                                   
                                     @foreach($pregunta->answers as $answer)
                                      {{--  <p>no hay respuesta aun</p> --}}
-                                  
                                       @if ($pregunta->multiple_answers == 1)
                                           <input type="checkbox" 
                                           name="respuestas" 
                                           value="{{ $answer->id }}" 
                                           class="chk" 
                                           id="{{ $answer->id }}" 
-                                          @foreach ($contestadas as $item)
-                                            @if ($item->answer_id == $answer->id)
-                                              checked
-                                            @endif
-                                          @endforeach
+                                          @if (!$contestadas == null)
+                                            @foreach ($contestadas as $item)
+                                              @if ($item->answer_id == $answer->id)
+                                                checked
+                                              @endif
+                                            @endforeach
+                                          @endif
                                           > 
                                           {{ $answer->name }}
                                       @else
@@ -89,7 +90,6 @@
                                           > 
                                           {{ $answer->name }}
                                       @endif
-
                                     @endforeach
                                 
                                 </div>

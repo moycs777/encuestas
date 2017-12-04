@@ -30,7 +30,7 @@ Route::group(['namespace' => 'User'],function(){
 	Route::resource('user/encuestas','EncuestasController');
 	Route::get('user/encuesta/reanudar/{id}','EncuestasController@reanudar')
 		->name('encuestas.reanudar');
-	Route::post('user/encuestas1','EncuestasController@individual')->name('encuestas.individual');
+	Route::post('user/encuestas1','EncuestasController@individualStore')->name('encuestas.individual');
 	Route::resource('user/test','TestController');
 	
 });
