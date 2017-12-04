@@ -20,7 +20,7 @@
                 <input type="hidden" id="numero_preguntas" value="{{ $numero_preguntas }}">           
             </div>
 
-            <div class="col-md-12 {{-- col-md-offset-2 --}}">
+            <div class="col-md-12 col-xs-12">
                 <div >
                     <h1 class="text-center">{{ $encuesta->name }}</h1><br>
                      {{--  <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div> --}}
@@ -42,11 +42,65 @@
                                   <div class="item">
                                 @endif
 
-                                  <div class="col-lg-4">                            
+                                  {{-- <div class="col-lg-4">                            
                                     <h2>¿ {{  $pregunta->name }} ?<br>
                                         </h2>
+                                  </div> --}}
+                                <div class="panel panel-primary">
+                                  <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <span class="glyphicon "></span>{{  $pregunta->name }}? <a href="http://www.jquery2dotnet.com" target="_blank"><span
+                                            class="glyphicon "></span></a>
+                                    </h3>
                                   </div>
-                                    <div>
+                                  <div class="panel-body">
+                                    <div class="radio">
+                                      @if (!empty($pregunta->answers))
+                                        @foreach($pregunta->answers as $answer)
+                                          @if ($pregunta->multiple_answers == 1)
+                                              <div style="float: left;padding: 6px;margin-bottom: 8px;border: 1px solid #bad3e8;border-radius: 10px; width: 100%;     font-weight: bold !important;">
+                                                <input type="checkbox" 
+                                                name="respuestas" 
+                                                value="{{ $answer->id }}" 
+                                                class="chk" 
+                                                id="{{ $answer->id }}"
+                                                @if (!$contestadas == null)
+                                                  @foreach ($contestadas as $item)
+                                                    @if ($item->answer_id == $answer->id)
+                                                      checked
+                                                    @endif
+                                                  @endforeach
+                                                @endif
+                                                > 
+                                                {{ $answer->name }}
+                                              </div>
+                                          @else
+                                            <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
+                                              <input type="radio" 
+                                              name="respuestas" 
+                                              value="{{ $answer->id }}" 
+                                              class="rad" 
+                                              id="{{ $answer->id }}" 
+                                              @if (!$contestadas == null)
+                                                @foreach ($contestadas as $item)
+                                                  @if ($item->answer_id == $answer->id)
+                                                    checked
+                                                  @endif
+                                                @endforeach
+                                              @endif
+                                              style="margin-left: 0px !important; "
+                                              >
+                                                <label style="font-weight: bold;">
+                                                  {{ $answer->name }}
+                                                </label> 
+                                            </div>
+                                          @endif  
+                                        @endforeach
+                                      @endif
+                                    </div>
+                                  </div>
+                                </div>
+                                    {{-- <div>
                                       @foreach($pregunta->answers as $answer)
                                         @if ($pregunta->multiple_answers == 1)
                                             <input type="checkbox" 
@@ -63,7 +117,7 @@
                                         @endif
                                       @endforeach
                                       
-                                    </div>
+                                    </div> --}}
                                       
                                   <div>
                                     <a class="" href="#carousel-example-generic"  role="button" data-slide="next" id="next">
@@ -169,6 +223,7 @@ $(function () {
           $('#next').hide();
           alert("asd");*/
           desabilitar();
+
           //$('#mycarrousel').fadeOut(4000);
       }
       //currentIndex+=1;
