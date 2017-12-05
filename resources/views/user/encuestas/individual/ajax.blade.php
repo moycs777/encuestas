@@ -10,7 +10,6 @@
   </style>
   <br><br><br><br>
     <div class="row">
-    {{-- <p>Mostrar 1 sola pregunta categoria  @upper( $encuesta->name ) --}}
         <input  type="hidden" id="seconds" value="{{ $encuesta->category->seconds }}" >
         <form action="{{ route('encuestas.individual') }}" method="post" id="formid"> 
             {{ csrf_field()  }} 
@@ -19,19 +18,12 @@
                 {{-- <input type="hidden" name="respuesta_id[]" value="">     --}} 
                 <input type="hidden" id="numero_preguntas" value="{{ $numero_preguntas }}">           
             </div>
-
             <div class="col-md-12 col-xs-12">
                 <div >
                     <h1 class="text-center">{{ $encuesta->name }}</h1><br>
-                     {{--  <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div> --}}
+                    
                       <div class='container carousel' id="mycarrousel" data-interval="false">
                         <div id="carousel-example-generic" class="carousel slide" {{-- data-ride="carousel" --}}>
-                            <!-- Indicators -->
-                            {{-- <ol class="carousel-indicators">
-                                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-                            </ol> --}}
                             <!-- Wrapper for slides -->
                             <div class="carousel-inner text-center" role="listbox">
                               @foreach ($preguntas as $pregunta)
@@ -41,11 +33,6 @@
                                 @else  
                                   <div class="item">
                                 @endif
-
-                                  {{-- <div class="col-lg-4">                            
-                                    <h2>¿ {{  $pregunta->name }} ?<br>
-                                        </h2>
-                                  </div> --}}
                                 <div class="panel panel-primary">
                                   <div class="panel-heading">
                                     <h3 class="panel-title">
@@ -105,7 +92,6 @@
                                       <button class="btn btn-primary" id="right.carousel-control">siguiente pregunta</button>
                                     </a>
                                   </div>
-
                                 </div>
                               @endforeach                                
                             </div>                           
@@ -187,7 +173,6 @@ $(function () {
           return false; // stay on this slide
           //alert('primero');
       }else if(currentIndex+1  == carouselData.$items.length){
-          
           //alert('ultimo');
       }
       console.log('elemento actual: '+currentIndex);
@@ -226,43 +211,33 @@ $(function () {
     if ( hour == null) {hour=0; }
     if ( min == null) {min=0; }
     if ( seg == null) {seg=0; }
-
     
     console.log("Encuesta por tiempo "); 
-    
-    
     console.log("minutos: " + min + " " + "segundos: " + seg);
 
     function reloj() {
-
       if (seg > 0) {
            seg = seg - 1;
         }
-
       if ((min > 0)  && (seg == 0)){
             min = min - 1;
             seg = 60;
         }
-
         if ((min == 0) && (seg == 0)){
           document.getElementById('displayReloj').innerHTML = min + " : " + seg;
           alert("Fin : " + nn);
         exit();
         }
-      
         document.getElementById('displayReloj').innerHTML = min + " : " + seg;
         var t = setTimeout(function(){reloj()},1000);
     }
     reloj();
-    
-    
   }
 
   //Encuesta sin tiempo
   if ( {{ $timer }} == 0) 
   {
     console.log("Encuesta sin tiempo "); 
-    
   }
 
   $("#evaluar").click(function(){
@@ -290,10 +265,8 @@ $(function () {
       });
   });
 
+//fin del evento de jquery
 });
-    
-    
-
 </script>
 @endsection
 
