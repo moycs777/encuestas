@@ -100,25 +100,6 @@
                                     </div>
                                   </div>
                                 </div>
-                                    {{-- <div>
-                                      @foreach($pregunta->answers as $answer)
-                                        @if ($pregunta->multiple_answers == 1)
-                                            <input type="checkbox" 
-                                            name="respuestas" 
-                                            value="{{ $answer->id }}" 
-                                            class="chk" 
-                                            id="{{ $answer->id }}"> {{ $answer->name }}
-                                        @else
-                                            <input type="radio" 
-                                            name="respuestas" 
-                                            value="{{ $answer->id }}" 
-                                            class="rad" 
-                                            id="{{ $answer->id }}"> {{ $answer->name }}
-                                        @endif
-                                      @endforeach
-                                      
-                                    </div> --}}
-                                      
                                   <div>
                                     <a class="" href="#carousel-example-generic"  role="button" data-slide="next" id="next">
                                       <button class="btn btn-primary" id="right.carousel-control">siguiente pregunta</button>
@@ -130,18 +111,18 @@
                             </div>                           
                         </div>
                     </div> 
-                {{-- <input type="submit"   value="Registrar encuesta" > --}}
                 <br>    
-                <br>                     
-                <!-- <input type="submit"   value="Registrar encuesta" > --> 
-                <button id="evaluar" class="btn btn-danger">Terminar encuesta</button>
-                @if($encuesta->category->pausable == 0)
-                    <input type="hidden" name="pausable" value="0">                    
-                @else
-                    <button id="pausar" class="btn btn-success">pausar encuesta</button>
-                    <input type="hidden" name="pausable" value="1">                    
-                @endif
-                <input type="text" id="arreglo" class="form-control" name="arreglo[]">
+                <br>
+                <div class="col-md-4 col-xs-4"">
+                  <button id="evaluar" class="btn btn-danger block">Terminar encuesta</button>
+                  @if($encuesta->category->pausable == 0)
+                      <input type="hidden" name="pausable" value="0">                    
+                  @else
+                      <button id="pausar" class="btn btn-success block">pausar encuesta</button>
+                      <input type="hidden" name="pausable" value="1">                    
+                  @endif
+                  <input type="text" id="arreglo" class="form-control" name="arreglo[]">
+                </div>                     
             </div>
         </div>
         </form>
@@ -152,8 +133,7 @@
         $timer = 1;
       } else {
         $timer = 0;
-      }
-      
+      }      
     @endphp
 </div>
 <div>
@@ -165,11 +145,16 @@
 
 console.log("no ha iniciado jq 2");
 $(function () {
+  var inicio = 0;
+
+  if (inicio == 1) {
+      //alert("Has finalizado la encuesta, has click en el boton finalizar");
+  }
 
   function asd(){
     console.log("ultima funcion" );
       $('#next').hide();
-    //return preventDefault();
+      inicio = 1;
   }
 
   $('.carousel').carousel({
@@ -179,23 +164,14 @@ $(function () {
   });
 
   function desabilitar(){
-    //return preventDefault();
-
     console.log("ultimo elemento  y funcion desabilitar" );
       $('#next').hide();
       asd();
-      //alert("asd");
   };
 
 
   // execute function after sliding:
   $('.carousel').on('slid.bs.carousel', function (e) {
-      // This variable contains all kinds of data and methods related to the carousel
-      /*function desabilitar(){
-        console.log("ultimo elemento  y funcion desabilitar" );
-          $('#next').hide();
-          alert("asd");
-      };*/
       var carouselData = $(this).data('bs.carousel');
       // get current index of active element
       var currentIndex = carouselData.getItemIndex(carouselData.$element.find('.item.active'));
@@ -206,6 +182,7 @@ $(function () {
           $(this).children('.left.carousel-control').fadeOut();
           e.preventDefault();
           console.log("primera slide");
+          alert("has finalizado la encuesta, has clcick en finalizar para guardar los resultados");
           $('.carousel').carousel('pause');
           return false; // stay on this slide
           //alert('primero');
@@ -218,15 +195,12 @@ $(function () {
       //currentIndex+=1;
       if (currentIndex == $('#numero_preguntas').val() -1 ) 
       {
-          //$(this).children('.right.carousel-control').fadeOut();
-          /*console.log("ultimo elemento  " );
-          $('#next').hide();
-          alert("asd");*/
           desabilitar();
-
-          //$('#mycarrousel').fadeOut(4000);
       }
-      //currentIndex+=1;
+      if (currentIndex == 0 && inicio == 1 ) 
+      {
+        //alert("Has finalizado la encuesta, has click en el boton finalizar");
+      }
   });
 
   console.log("regitrar encuestas con $ each 2"); 
