@@ -18,8 +18,8 @@
 						<div class="slide-caption">
                             <div class="caption-content">
                                 <h2 class="animated fadeInDown">BLUE Onepage HTML5 Template</h2>
-                                <span class="animated fadeInDown">Clean and Professional one page Template</span>
-                                <a href="#" class="btn btn-blue btn-effect">Join US</a>
+                                <span class="animated fadeInDown">El mejor sistema de encuestas on-line</span>
+                                <a href="{{ route('login') }}" class="btn btn-blue btn-effect">ingresa!</a>
                             </div>
                         </div>
 						
@@ -31,8 +31,8 @@
 						<div class="slide-caption">
                             <div class="caption-content">
                                 <h2>BLUE Onepage HTML5 Template</h2>
-                                <span>Clean and Professional one page Template</span>
-                                <a href="#" class="btn btn-blue btn-effect">Join US</a>
+                                <span>El mejor sistema de encuestas on-line</span>
+                                <a href="{{ route('login') }}" class="btn btn-blue btn-effect">ingresa!</a>
                             </div>
                         </div>
 						
@@ -44,8 +44,8 @@
 						<div class="slide-caption">
                             <div class="caption-content">
                                 <h2>BLUE Onepage HTML5 Template</h2>
-                                <span>Clean and Professional one page Template</span>
-                                <a href="#" class="btn btn-blue btn-effect">Join US</a>
+                                <span>El mejor sistema de encuestas on-line</span>
+                                <a href="{{ route('login') }}" class="btn btn-blue btn-effect">ingresa!</a>
                             </div>
                         </div>
 

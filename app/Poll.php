@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Poll extends Model
 {
-    protected $fillable = ['name','category_id', 'show_all_questions', 'status'];
+    protected $fillable = ['name','category_id', 'show_all_questions','ready', 'status'];
 
     public function category()
     {

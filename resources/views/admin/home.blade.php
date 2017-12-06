@@ -10,7 +10,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-     Inicio
+     Inicio, bienvenido {{ Auth::user()->name }}
     </h1>    
   </section>
   <!-- Main content -->
@@ -24,48 +24,7 @@
           <div class="box-header">
             
           </div>
-          <!-- /.box-header -->
-          {{-- <div class="box-body">
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-              <tr>
-                <th>ID</th><th>Name</th><th>Nif Cif</th><th>Categoria</th><th>Acciones</th>
-              </tr>
-              </thead>
-              <tbody>
-              @if (!empty($store))
-                @foreach ($store as $item)
-                  <tr>
-                      <td>{{ $item->id }}</td>
-                      <td>
-                        <a href="{{ url('admin/store', $item->id . '/edit' ) }}">{{ $item->name }}</a></td><td>{{ $item->nif_cif }}</td>
-                      <td> 
-                        @if ($item->clasification)
-                          @foreach ($item->clasification as $element)
-                            {{$element->name}}
-                          @endforeach
-                        @endif
-                      </td>
-                      
-
-                      <td>
-                          <a href="{{ url('admin/store/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">Actualzar</a> 
-                          {!! Form::open([
-                              'method'=>'DELETE',
-                              'url' => ['admin/store', $item->id],
-                              'style' => 'display:inline'
-                          ]) !!}
-                              {!! Form::submit('Elimninar', ['class' => 'btn btn-danger btn-xs']) !!}
-                          {!! Form::close() !!}
-                      </td>
-                    </tr>
-                @endforeach
-              @endif
-              </tbody>
-             
-            </table>
-          </div> --}}
-          <!-- /.box-body -->
+          
         </div>
       </div>
       <!-- /.box-body -->
