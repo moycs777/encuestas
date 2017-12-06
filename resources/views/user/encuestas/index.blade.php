@@ -19,25 +19,27 @@
                                     {{ session('status') }}
                                 </div>
                             @endif
-                            @if (!$polls == null)
-                                <div class="table-responsive">                          
-                                <table class="table"><tr>
-                                    <th>Nombre</th><th></th><th></th></tr>
-                                    </thead>
-                                    <tbody>                          
-                                        @foreach ($polls as $item)
-                                    <tr>                                
-                                        <td class="active">{{ $item->name }}{{--  <a href="#"></a>  --}}</td> 
-                                        
-                                        <td><a href="{{ route('encuestas.show', $item->id) }}">Comenzar</a></td>
-
-                                        <td><a href="{{ route('encuestas.reanudar', $item->id) }}">Reanudar</a></td>                            
-                                        {{--  <td class="success">{{ $item->category_id }}</td>  --}}
-                                    </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                </div>
+                            @if (Auth::guest())
+                                <h3 class="text-center">Debes estar registardo para ver las encuestas</h3>
+                            @else
+                                @if (!$polls == null)
+                                    <div class="table-responsive">                          
+                                    <table class="table"><tr>
+                                        <th>Nombre</th><th></th><th></th></tr>
+                                        </thead>
+                                        <tbody>                          
+                                            @foreach ($polls as $item)
+                                        <tr>                                
+                                            <td class="active">{{ $item->name }}{{--  <a href="#"></a>  --}}</td>
+                                            <td><a href="{{ route('encuestas.show', $item->id) }}">Comenzar</a></td>
+                                            <td><a href="{{ route('encuestas.reanudar', $item->id) }}">Reanudar</a></td>                            
+                                            {{--  <td class="success">{{ $item->category_id }}</td>  --}}
+                                        </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                @endif
                             @endif
                         </div>
                     </div>
@@ -47,8 +49,6 @@
         </div>
     </section>
     <!-- end Service section -->
-
-
         {{-- <br><br><br><br><br>
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
