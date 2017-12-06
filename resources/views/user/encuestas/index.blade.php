@@ -22,17 +22,17 @@
                             @if (!$polls == null)
                                 <div class="table-responsive">                          
                                 <table class="table"><tr>
-                                    <th>Nombre</th><th></th><th>Categoria</th></tr>
+                                    <th>Nombre</th><th></th><th></th></tr>
                                     </thead>
                                     <tbody>                          
                                         @foreach ($polls as $item)
                                     <tr>                                
-                                        <td class="active"><a href="#">{{ $item->name }}</a></td> 
+                                        <td class="active">{{ $item->name }}{{--  <a href="#"></a>  --}}</td> 
                                         
                                         <td><a href="{{ route('encuestas.show', $item->id) }}">Comenzar</a></td>
 
                                         <td><a href="{{ route('encuestas.reanudar', $item->id) }}">Reanudar</a></td>                            
-                                        <td class="success">{{ $item->category_id }}</td>
+                                        {{--  <td class="success">{{ $item->category_id }}</td>  --}}
                                     </tr>
                                         @endforeach
                                     </tbody>

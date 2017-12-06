@@ -38,7 +38,7 @@ class EncuestasController extends Controller
             return redirect()->back()->with('message', 'Debes responder al menos 1pregunta!');
         }
         //dd($st);
-        dd($request->all());
+        //dd($request->all());
         //dd($request->respuestas);
         $this->validate($request,[
             'respuestas' => 'required',
@@ -50,8 +50,6 @@ class EncuestasController extends Controller
         $master_aplication->poll_id = $request->poll_id;;
         $master_aplication->status = 0;
         $master_aplication->save();
-
-        
 
         $encuesta = Poll::find($request->poll_id);
         $preguntas = Question::where('poll_id', '=', $request->poll_id)->get();
@@ -95,7 +93,7 @@ class EncuestasController extends Controller
                 //return $resume;
             }
         }
-        //return ' Total: '. $total;
+        return ' Total: '. $resume;
         $polls = Poll::all();
         return view('user.encuestas.index', compact('polls'));
     }
@@ -163,7 +161,7 @@ class EncuestasController extends Controller
 
         $preguntas = Question::where('poll_id', '=', $encuesta->id)
             ->get();
-        return view('user.encuestas.general.reanudar_show', compact('encuesta', 'preguntas', 'contestadas'));
+        return view('user.encuestas.general.show', compact('encuesta', 'preguntas', 'contestadas'));
 
     }
     
