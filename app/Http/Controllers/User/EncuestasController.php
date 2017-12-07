@@ -18,6 +18,7 @@ use App\MasterAplication;
 use App\DetailAplication;
 use App\Question;
 
+
 class EncuestasController extends Controller
 {
     public function __construct()
@@ -78,16 +79,18 @@ class EncuestasController extends Controller
             $aplication_poll->answer_id = $answer->id;
             $aplication_poll->save();
         }
+        dd($total);        
 
         //determinar el rango
-        $range = 0;
+        $ranges = null;
+        $resume = null;
         $ranges = Range::where('poll_id', '=', $request->poll_id)->get();
-        //dd($range);
+        //dd($ranges);
         foreach ($ranges as $key => $value) {
             if ( $total >= $value->from && $total <= $value->to) {
                 $range = $value;
                 $resume = new Resume();
-                $resume->user_id = 1;
+                $resume->user_id = Auth::user()->id;
                 $resume->poll_id = $request->poll_id;
                 $resume->total = $total;
                 $resume->from = $value->from;
@@ -97,9 +100,9 @@ class EncuestasController extends Controller
                 //return $resume;
             }
         }
-        return ' Total: '. $resume;
+        return ' resume: '. $resume;
         $polls = Poll::all();
-        return view('user.encuestas.resultados.resultado', compact('range', 'resume'));
+        //return view('user.encuestas.resultados.resultado', compact('range'));
     }
 
     public function individualStore(Request $request)
