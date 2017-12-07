@@ -3,7 +3,7 @@
 <div class="container">
   <br><br><br><br>
     <div class="row">
-    <p>Mostrar 1 sola pregunta categoria  @upper( $encuesta->name )
+    <p>categoria  {{ $encuesta->category }}
       @if(session()->has('message'))
         <div class="alert alert-success">
             {{ session()->get('message') }}
@@ -50,77 +50,39 @@
                       </div>
                     @endif
                     {{-- Preguntas --}}
-                    @php
-                        $salir = true;
-                        $continuar = true;
-                    @endphp
                     @if (!$preguntas == null)
-                        @while ($salir)
-                            @if($continuar == true)
-                                @foreach ($preguntas as $pregunta)
-                                    @php $continuar = false; @endphp
-                                    <div class="row">
-                                        <div class="col-md-4 col-xs-4">
-                                            <p>{{  $pregunta->name }}</p>
-                                        </div>
-                                        {{-- Respuestas --}}                            
-                                        <div class="col-md-8 col-xs-6">                              
-                                        @if (!empty($pregunta->answers))
-                                            @foreach($pregunta->answers as $answer)
-                                                @if ($pregunta->multiple_answers == 1)
-                                                    <input type="checkbox" 
-                                                    name="respuestas{{-- {{  $pregunta->id }} --}}" 
-                                                    value="{{ $answer->id }}" 
-                                                    class="chk" 
-                                                    id="{{ $answer->id }}"> {{ $answer->name }}
-                                                @else
-                                                {{-- @endif  
-                                                @if ($pregunta->multiple_answers == 0) --}}
-                                                    <input type="radio" 
-                                                    name="respuestas{{-- {{  $pregunta->id }} --}}" 
-                                                    value="{{ $answer->id }}" 
-                                                    class="rad" 
-                                                    id="{{ $answer->id }}"> {{ $answer->name }}
-                                                @endif
-                                            @endforeach
-                                            @php
-                                                $salir = false;
-                                            @endphp
-                                            @break
-                                            {{--  Salir  --}}
-                                            <div>
-                                                <br>    
-                                                <br>    
-                                                <br>    
-                                                <input type="button" name="siguiente" value="siguiente"  class=""  id="{{$loop->iteration}}">
-                                                <p> asd {{ $loop->parent }}</p>
-                                            </div>
-                                            <input type="hidden" name="continuar" value="0">                    
-                                            
-
-                                            {{--  Detenemos el loop  --}}
-                                            {{--  @php
-                                                $salir = false;
-                                            @endphp  --}}
-
-                                            
-                                            @php
-                                                
-                                            @endphp  
-                                        @endif
-                                        </div>
-                                    </div>
-                                @endforeach
-                                
-                            @endif
-                        @endwhile
-                        <p>Salio</p>
+                        @foreach ($preguntas as $pregunta)
+                            <div class="row">
+                                <div class="col-md-4 col-xs-4">
+                                    <p>{{  $pregunta->name }}</p>
+                                </div>
+                                {{-- Respuestas --}}                            
+                                <div class="col-md-8 col-xs-6">                              
+                                @if (!empty($pregunta->answers))
+                                    @foreach($pregunta->answers as $answer)
+                                        @if ($pregunta->multiple_answers == 1)
+                                            <input type="checkbox" 
+                                            name="respuestas{{-- {{  $pregunta->id }} --}}" 
+                                            value="{{ $answer->id }}" 
+                                            class="chk" 
+                                            id="{{ $answer->id }}"> {{ $answer->name }}
+                                        @else
+                                        {{-- @endif  
+                                        @if ($pregunta->multiple_answers == 0) --}}
+                                            <input type="radio" 
+                                            name="respuestas{{-- {{  $pregunta->id }} --}}" 
+                                            value="{{ $answer->id }}" 
+                                            class="rad" 
+                                            id="{{ $answer->id }}"> {{ $answer->name }}
+                                        @endif  
+                                    @endforeach
+                                @endif
+                                </div>
+                            </div>
+                        @endforeach
                     @endif
                 </div>
-                <!-- <input type="submit"   value="Registrar encuesta" > -->
-                <br>    
-                <br>    
-                 
+                <!-- <input type="submit"   value="Registrar encuesta" > --> 
                 <button id="evaluar" class="btn btn-danger">Terminar encuesta</button>
                 @if($encuesta->category->pausable == 0)
                     <input type="hidden" name="pausable" value="0">                    
@@ -241,27 +203,11 @@ $(function () {
   });
 
 });
-
-//Botn siguiente
-$('[name=siguiente]').click(function(event) {
-    console.log('boton siguiente activado');
-    console.log('id de siguiente: ' + $(this).attr('id'));
-    var respuestas_input = $("[name=respuestas]");
-
-    respuestas_input.each(function(index , valor){
-        if ( $(this).prop( "checked" ) ) {
-          console.log("esta checkeado el index: " + index);
-      
-        }  
-
-    });
-});
     
     
 
 </script>
 
 @endsection
-
 
 

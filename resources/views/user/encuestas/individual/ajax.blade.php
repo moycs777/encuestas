@@ -64,7 +64,7 @@
                                           @else
                                             <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
                                               <input type="radio" 
-                                              name="respuestas" 
+                                              name="respuestas{{$pregunta->id}}" 
                                               value="{{ $answer->id }}" 
                                               class="rad" 
                                               id="{{ $answer->id }}" 
@@ -241,7 +241,8 @@ $(function () {
   }
 
   $("#evaluar").click(function(){
-      var preguntas_input = $("[name=respuestas]");
+      var preguntas_input = $(":input");      
+      //var preguntas_input = $("[name=respuestas]");
       var i = 0;
       preguntas_input.each(function(index , valor){
           //alert("id: " + $(this).attr('id') + " , esrtado: " + $(this).tagName + " valor: " + valor + ": " + $( this ).text() );

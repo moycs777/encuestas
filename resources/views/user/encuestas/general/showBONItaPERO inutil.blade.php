@@ -1,53 +1,49 @@
 @extends('user.layouts.app2')
 @section('content')
 <div class="container">
-  <style>
-    .carousel {padding-bottom: 25px}
-    .carousel img{padding-top: 20px;}
-    .carousel h2 {color: #0072b5;}
-    .carousel h2 small{color: #289bde}
-    .carousel col-lg-4 p {text-align: center;}
-  </style>
   <br><br><br><br>
     <div class="row">
-    {{-- <p>Mostrar 1 sola pregunta categoria  @upper( $encuesta->name ) --}}
+    <p>{{-- categoria  {{ $encuesta->category }} --}}
+      @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+      @endif
+     </p>
         <input  type="hidden" id="seconds" value="{{ $encuesta->category->seconds }}" >
-        <form action="{{ route('encuestas.individual') }}" method="post" id="formid"> 
+        <form action="{{ route('encuestas.store') }}" method="post" id="formid"> 
             {{ csrf_field()  }} 
             <input type="hidden" name="poll_id" value="{{ $encuesta->id }}">
             <div class="myform">
-                {{-- <input type="hidden" name="respuesta_id[]" value="">     --}} 
-                <input type="hidden" id="numero_preguntas" value="{{ $numero_preguntas }}">           
+                {{-- <input type="hidden" name="respuesta_id[]" value="">     --}}            
             </div>
-
-            <div class="col-md-12 {{-- col-md-offset-2 --}}">
-                <div >
-                    <h1 class="text-center">carru {{ $encuesta->name }}</h1><br>
-                      <div class='container carousel' id="mycarrousel" data-interval="false">
-                        <div id="carousel-example-generic" class="carousel slide">                        
-                            <div class="carousel-inner text-center" role="listbox">
-                              @foreach ($preguntas as $pregunta)
-                                @if($loop->index == 0)
-                                  <div class="item active">
-                                @else  
-                                  <div class="item">
-                                @endif
-                                  {{-- <div class="col-md-12"> 
-                                   <h2>¿ {{  $pregunta->name }} ?<br></h2>
-                                  </div> --}}
-                                  <div class="panel-heading">
-                                      <h3 class="panel-title">
-                                        <span class="glyphicon "></span>{{  $pregunta->name }}? <a href="http://www.jquery2dotnet.com" target="_blank"><span
-                                            class="glyphicon "></span></a>
-                                    </h3>
-                                  </div>
-
-                                  <div class="panel-body">
+        <div class="col-md-12 {{-- col-md-offset-2 --}}">
+            <div class="{{-- panel panel-default --}}">
+                <h1 class="text-center">error {{ $encuesta->name }}</h1><br>
+                {{-- <div style="text-align:center;">
+                  <div id="cabecera"></div>
+                  <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div>
+                  <h2 id='CuentaAtras'></h2> --}}
+                </div>
+                <div {{-- class="panel-body" --}}>
+                    {{-- Preguntas --}}
+                    @if (!$preguntas == null)
+                        @foreach ($preguntas as $pregunta)
+                          <div class="row">
+                              <div class="col-md-12 col-xs-12">
+                                  <div class="panel panel-primary">
+                                      <div class="panel-heading">
+                                          <h3 class="panel-title">
+                                              <span class="glyphicon "></span>{{  $pregunta->name }}? <a href="http://www.jquery2dotnet.com" target="_blank"><span
+                                                  class="glyphicon "></span></a>
+                                          </h3>
+                                      </div>
+                                      <div class="panel-body">
                                         <div class="radio">
                                           @if (!empty($pregunta->answers))
                                             @foreach($pregunta->answers as $answer)
                                               @if ($pregunta->multiple_answers == 1)
-                                                  <div style="float: left;padding: 6px;margin-bottom: 8px;border: 1px solid #bad3e8;border-radius: 10px; width: 100%;     font-weight: bold !important;">
+                                                  {{-- <div style="float: left;padding: 6px;margin-bottom: 8px;border: 1px solid #bad3e8;border-radius: 10px; width: 100%;     font-weight: bold !important;"> --}}
                                                     <input type="checkbox" 
                                                     name="respuestas" 
                                                     value="{{ $answer->id }}" 
@@ -62,9 +58,9 @@
                                                     @endif
                                                     > 
                                                     {{ $answer->name }}
-                                                  </div>
+                                                  {{-- </div> --}}
                                               @else
-                                                <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
+                                                {{-- <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;"> --}}
                                                   <input type="radio" 
                                                   name="respuestas" 
                                                   value="{{ $answer->id }}" 
@@ -82,44 +78,23 @@
                                                     <label style="font-weight: bold;">
                                                       {{ $answer->name }}
                                                     </label> 
-                                                </div>
+                                                {{-- </div> --}}
                                               @endif  
                                             @endforeach
                                           @endif
                                         </div>
                                       </div>
-                                    {{-- <div>
-                                      @foreach($pregunta->answers as $answer)
-                                        @if ($pregunta->multiple_answers == 1)
-                                            <input type="checkbox" 
-                                            name="respuestas" 
-                                            value="{{ $answer->id }}" 
-                                            class="chk" 
-                                            id="{{ $answer->id }}"> {{ $answer->name }}
-                                        @else
-                                            <input type="radio" 
-                                            name="respuestas" 
-                                            value="{{ $answer->id }}" 
-                                            class="rad" 
-                                            id="{{ $answer->id }}"> {{ $answer->name }}
-                                        @endif
-                                      @endforeach
-                                     </div> --}}
-                                      
-                                  <div>
-                                    <a class="" href="#carousel-example-generic"  role="button" data-slide="next" id="next">
-                                      <button class="btn btn-primary" id="right.carousel-control">siguiente pregunta</button>
-                                    </a>
+                                      {{-- <div class="panel-footer">
+                                        <button type="button" class="btn btn-primary btn-sm">
+                                            Vote</button>
+                                        <a href="#">View Result</a>
+                                      </div> --}}
                                   </div>
-
-                                </div>
-                              @endforeach                                
-                            </div>                           
-                        </div>
-                    </div> 
-                {{-- <input type="submit"   value="Registrar encuesta" > --}}
-                <br>    
-                <br>                     
+                              </div>
+                          </div>
+                        @endforeach
+                    @endif
+                </div>
                 <!-- <input type="submit"   value="Registrar encuesta" > --> 
                 <button id="evaluar" class="btn btn-danger">Terminar encuesta</button>
                 @if($encuesta->category->pausable == 0)
@@ -128,7 +103,7 @@
                     <button id="pausar" class="btn btn-success">pausar encuesta</button>
                     <input type="hidden" name="pausable" value="1">                    
                 @endif
-                <input type="text" id="arreglo" class="form-control" name="arreglo[]">
+                <input type="text" id="arreglo" class="form-control" placeholder="" name="arreglo[]">
             </div>
         </div>
         </form>
@@ -147,45 +122,12 @@
   <input type="hidden" id="hour" name="hour" value="{{ $encuesta->category->hour }}">
   <input type="hidden" id="min" name="min" value="{{ $encuesta->category->minutes }}">
   <input type="hidden" id="seg" name="seg" value="{{ $encuesta->category->seconds }}">
-</div><script src="{{ asset('admin/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
-<script>  
-
+</div>
+<script src="{{ asset('admin/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+<script>    
 console.log("no ha iniciado jq 2");
 $(function () {
-
-  $('.carousel').carousel({
-    interval: 100000, 
-    pause: true, 
-    wrap: false
-  });
-
-
-  // execute function after sliding:
-  $('.carousel').on('slid.bs.carousel', function (e) {
-      // This variable contains all kinds of data and methods related to the carousel
-      //alert("asd");
-      var carouselData = $(this).data('bs.carousel');
-      // get current index of active element
-      var currentIndex = carouselData.getItemIndex(carouselData.$element.find('.item.active'));
-
-      // hide carousel controls at begin and end of slides
-      $(this).children('.carousel-control').show();
-      if(currentIndex == 0){
-          $(this).children('.left.carousel-control').fadeOut();
-          e.preventDefault();
-          console.log("primera slide");
-          $('.carousel').carousel('pause');
-          return false; // stay on this slide
-          //alert('primero');
-      }else if(currentIndex+1  == carouselData.$items.length){
-          $(this).children('.right.carousel-control').fadeOut();
-          console.log("ultimo elemento");
-          $('#next').fadeOut();
-          $('#mycarrousel').fadeOut(4000);
-          //alert('ultimo');
-      }
-  });
-
+  
   console.log("regitrar encuestas con $ each 2"); 
   console.log("hay tiempo " + {{ $timer }} ); 
   $("input:submit").click(function() { return false; });
@@ -249,6 +191,8 @@ $(function () {
   }
 
   $("#evaluar").click(function(){
+      alert("asd");
+      console.log("funcion evaluar");
       var preguntas_input = $("[name=respuestas]");
       var i = 0;
       preguntas_input.each(function(index , valor){
@@ -278,6 +222,7 @@ $(function () {
     
 
 </script>
+
 @endsection
 
 

@@ -38,11 +38,11 @@ class EncuestasController extends Controller
     
     public function store(Request $request)
     {
-        if ($request->id_respuestas == null) {
+        /* if ($request->id_respuestas == null) {
             return redirect()->back()->with('message', 'Debes responder al menos 1pregunta!');
-        }
+        } */
         //dd($st);
-        //dd($request->all());
+        dd($request->all());
         //dd($request->respuestas);
         $this->validate($request,[
             'respuestas' => 'required',
@@ -104,11 +104,11 @@ class EncuestasController extends Controller
 
     public function individualStore(Request $request)
     {
-        //dd($request->all());
+        dd($request->all());
         if ($request->id_respuestas == null) {
             return redirect()->back()->with('message', 'Debes responder al menos 1pregunta!');
         }
-        return view('user.encuestas.ajax', compact('encuesta', 'preguntas'));
+        return view('user.encuestas.individual.ajax', compact('encuesta', 'preguntas'));
       
         
     }

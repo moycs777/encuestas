@@ -6,6 +6,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 wow animated fadeInLeft">
+                    <p>{{ $range }}</p>
+                    <p>{{ $resume }}</p>
                     <div class="recent-works">
                         <h3>Recent Works</h3>
                         <div id="works">

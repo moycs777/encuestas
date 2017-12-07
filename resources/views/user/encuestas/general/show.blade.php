@@ -19,7 +19,7 @@
             </div>
         <div class="col-md-12 {{-- col-md-offset-2 --}}">
             <div class="{{-- panel panel-default --}}">
-                <h1 class="text-center">{{ $encuesta->name }}</h1><br>
+                <h1 class="text-center">error {{ $encuesta->name }}</h1><br>
                 {{-- <div style="text-align:center;">
                   <div id="cabecera"></div>
                   <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div>
@@ -62,7 +62,7 @@
                                               @else
                                                 <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
                                                   <input type="radio" 
-                                                  name="respuestas" 
+                                                  name="respuestas{{$pregunta->id}}" 
                                                   value="{{ $answer->id }}" 
                                                   class="rad" 
                                                   id="{{ $answer->id }}" 
@@ -191,7 +191,10 @@ $(function () {
   }
 
   $("#evaluar").click(function(){
-      var preguntas_input = $("[name=respuestas]");
+      alert("asd");
+      console.log("funcion evaluar");
+      var preguntas_input = $(":input");      
+      //var preguntas_input = $("[name=respuestas]");
       var i = 0;
       preguntas_input.each(function(index , valor){
           //alert("id: " + $(this).attr('id') + " , esrtado: " + $(this).tagName + " valor: " + valor + ": " + $( this ).text() );
