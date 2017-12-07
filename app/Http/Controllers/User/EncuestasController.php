@@ -80,8 +80,8 @@ class EncuestasController extends Controller
         }
 
         //determinar el rango
-        $ranges = Range::where('poll_id', '=', $request->poll_id)->get();
         $range = 0;
+        $ranges = Range::where('poll_id', '=', $request->poll_id)->get();
         //dd($range);
         foreach ($ranges as $key => $value) {
             if ( $total >= $value->from && $total <= $value->to) {
@@ -99,7 +99,7 @@ class EncuestasController extends Controller
         }
         return ' Total: '. $resume;
         $polls = Poll::all();
-        return view('user.encuestas.index', compact('polls'));
+        return view('user.encuestas.resultados.resultado', compact('range', 'resume'));
     }
 
     public function individualStore(Request $request)
