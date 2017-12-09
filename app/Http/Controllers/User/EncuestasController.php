@@ -43,11 +43,13 @@ class EncuestasController extends Controller
             return redirect()->back()->with('message', 'Debes responder al menos 1pregunta!');
         } */
         //dd($st);
-        dd($request->all());
+        //dd($request->all());
         //dd($request->respuestas);
         $this->validate($request,[
-            'respuestas' => 'required',
+            'id_respuestas' => 'required',
         ]);
+        //dd($request->all());
+        
         $st = Session::get('start_date');
         $master_aplication = new MasterAplication();
         $master_aplication->start_date = $st; 
@@ -55,6 +57,8 @@ class EncuestasController extends Controller
         $master_aplication->poll_id = $request->poll_id;;
         $master_aplication->status = 0;
         $master_aplication->save();
+        //dd($request->all());
+        
 
         $encuesta = Poll::find($request->poll_id);
         $preguntas = Question::where('poll_id', '=', $request->poll_id)->get();
@@ -79,10 +83,10 @@ class EncuestasController extends Controller
             $aplication_poll->answer_id = $answer->id;
             $aplication_poll->save();
         }
-        dd($total);        
+        //dd($total);        
 
         //determinar el rango
-        $ranges = null;
+        //$ranges = null;
         $resume = null;
         $ranges = Range::where('poll_id', '=', $request->poll_id)->get();
         //dd($ranges);
@@ -100,9 +104,7 @@ class EncuestasController extends Controller
                 //return $resume;
             }
         }
-        return ' resume: '. $resume;
-        $polls = Poll::all();
-        //return view('user.encuestas.resultados.resultado', compact('range'));
+        return view('user.encuestas.resultados.resultado', compact('resume', 'total', 'encuesta'));
     }
 
     public function individualStore(Request $request)

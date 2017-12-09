@@ -20,10 +20,10 @@
         <div class="col-md-12 {{-- col-md-offset-2 --}}">
             <div class="{{-- panel panel-default --}}">
                 <h1 class="text-center">error {{ $encuesta->name }}</h1><br>
-                {{-- <div style="text-align:center;">
+                <div style="text-align:center;">
                   <div id="cabecera"></div>
                   <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div>
-                  <h2 id='CuentaAtras'></h2> --}}
+                  <h2 id='CuentaAtras'></h2>
                 </div>
                 <div {{-- class="panel-body" --}}>
                     {{-- Preguntas --}}
@@ -148,32 +148,36 @@ $(function () {
     var min = $('input[name=min]').val();
     var seg = $('input[name=seg]').val();
 
-    if ( hour == null) {hour=0; }
-    if ( min == null) {min=0; }
-    if ( seg == null) {seg=0; }
+    if ( hour == null || hour == '') {hour=0; }
+    if ( min == null || min == '') {min=0; }
+    if ( seg == null || seg == '') {seg=0; }
 
-    
     console.log("Encuesta por tiempo "); 
     
-    
-    console.log("minutos: " + min + " " + "segundos: " + seg);
+    console.log("horas" + hour + " ,minutos: " + min + " " + " ,segundos: " + seg);
 
     function reloj() {
 
       if (seg > 0) {
-           seg = seg - 1;
-        }
+         seg = seg - 1;
+      }
 
       if ((min > 0)  && (seg == 0)){
-            min = min - 1;
-            seg = 60;
-        }
+          min = min - 1;
+          seg = 60;
+      }
 
-        if ((min == 0) && (seg == 0)){
-          document.getElementById('displayReloj').innerHTML = min + " : " + seg;
-          alert("Fin : " + nn);
-        exit();
-        }
+      if ((hour > 0) && (min == 0)){
+          hour = min; //hour - 1;
+          min = 60;
+      }
+
+      if ((hour == 0) && (min == 0) && (seg == 0)){
+         document.getElementById('displayReloj').innerHTML = min + " : " + seg;
+         document.getElementById('evaluar').click();
+         alert("Fin : " + nn);
+         exit();
+      }
       
         document.getElementById('displayReloj').innerHTML = min + " : " + seg;
         var t = setTimeout(function(){reloj()},1000);
@@ -186,12 +190,11 @@ $(function () {
   //Encuesta sin tiempo
   if ( {{ $timer }} == 0) 
   {
-    console.log("Encuesta sin tiempo "); 
-    
+    console.log("Encuesta sin tiempo ");     
   }
 
   $("#evaluar").click(function(){
-      alert("asd");
+      //alert("asd");
       console.log("funcion evaluar");
       var preguntas_input = $(":input");      
       //var preguntas_input = $("[name=respuestas]");
@@ -218,8 +221,8 @@ $(function () {
       });
   });
 
-});
-    
+
+});  
     
 
 </script>

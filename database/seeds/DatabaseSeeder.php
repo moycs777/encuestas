@@ -24,6 +24,21 @@ class DatabaseSeeder extends Seeder
             'level' => 1,            
             'created_at'  => Carbon::now()->format('Y-m-d H:i:s'),        
         ]);
+
+        DB::table('admins')->insert([
+            'name' => 'Rodolfo',            
+            'email' => 'halconrod@gmail.com',
+            'password' => bcrypt('12345678'),            
+            'level' => 1,            
+            'created_at'  => Carbon::now()->format('Y-m-d H:i:s'),        
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'Rodolfo',            
+            'email' => 'halconrod@gmail.com',
+            'password' => bcrypt('12345678'),               
+            'created_at'  => Carbon::now()->format('Y-m-d H:i:s'),        
+        ]);
         
         DB::table('categories')->insert([
             'name' => 'Con tiempo general',            
