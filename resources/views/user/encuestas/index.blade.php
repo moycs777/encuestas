@@ -29,8 +29,11 @@
                                         <tr>                                
                                             <td class="active">{{ $item->name }}{{--  <a href="#"></a>  --}}</td>
                                             <td><a href="{{ route('encuestas.show', $item->id) }}">Comenzar</a></td>
-                                            <td><a href="{{ route('encuestas.reanudar', $item->id) }}">Reanudar</a></td>                            
-                                            {{--  <td class="success">{{ $item->category_id }}</td>  --}}
+                                            @if ($item->category->hour > 0 || $item->category->minutes > 0 || $item->category->seconds > 0)
+                                            @else
+                                                <td><a href="{{ route('encuestas.reanudar', $item->id) }}">Reanudar</a>
+                                                </td>
+                                            @endif
                                         </tr>
                                             @endforeach
                                         </tbody>

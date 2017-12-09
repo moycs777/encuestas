@@ -42,12 +42,7 @@ class EncuestasController extends Controller
         if ($request->id_respuestas == null) {
             return redirect()->back()->with('message', 'Debes responder al menos 1pregunta!');
         }
-        //dd($st);
-        //dd($request->all());
-        //dd($request->respuestas);
-        /* $this->validate($request,[
-            'id_respuestas' => 'required',
-        ]); */
+        
         //dd($request->all());
         
         $st = Session::get('start_date');
@@ -57,8 +52,7 @@ class EncuestasController extends Controller
         $master_aplication->poll_id = $request->poll_id;;
         $master_aplication->status = 0;
         $master_aplication->save();
-        //dd($request->all());
-        
+        //dd($request->all());        
 
         $encuesta = Poll::find($request->poll_id);
         $preguntas = Question::where('poll_id', '=', $request->poll_id)->get();
@@ -87,7 +81,8 @@ class EncuestasController extends Controller
 
         //determinar el rango
         //$ranges = null;
-        $resume = null;
+        $resume = new \stdClass();
+        $resume->text = null;
         $ranges = Range::where('poll_id', '=', $request->poll_id)->get();
         //dd($ranges);
         foreach ($ranges as $key => $value) {

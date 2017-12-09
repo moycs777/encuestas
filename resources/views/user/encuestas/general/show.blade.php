@@ -17,19 +17,21 @@
             <div class="myform">
                 {{-- <input type="hidden" name="respuesta_id[]" value="">     --}}
             </div>
-          <div class="col-md-12 {{-- col-md-offset-2 --}}">
+          <div class="col-md-12">
             <div class=""><br>               
                 <div class="sec-title text-center">
                   <h2 class="wow animated text-center" style="color: #999999;"> {{ $encuesta->name }}</h2>
                 </div>
-                <div style="text-align:center;">
-                  <p>Tiempo para responder: {{ $encuesta->category->hour }}:{{ $encuesta->category->minutes }}:{{ $encuesta->category->seconds }}</p>
-                  <div id="cabecera"></div>
-                  <p>Tiempo restante:</p>
-                  <div style="color:#337ab7; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp;
+                @if ($encuesta->category->timer_type >1)                
+                  <div style="text-align:center;">
+                    <p>Tiempo para responder: {{ $encuesta->category->hour }}:{{ $encuesta->category->minutes }}:{{ $encuesta->category->seconds }}</p>
+                    <div id="cabecera"></div>
+                    <p>Tiempo restante:</p>
+                    <div style="color:#337ab7; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp;
+                    </div>
+                    <h2 id='CuentaAtras'></h2>
                   </div>
-                  <h2 id='CuentaAtras'></h2>
-                </div>
+                @endif
                 <div 
                   @if (!$preguntas == null)
                     @foreach ($preguntas as $pregunta)

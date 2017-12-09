@@ -23,13 +23,11 @@
 				<!-- main nav -->
                 <nav class="collapse navbar-collapse navbar-right" role="navigation">
                     <ul id="nav" class="nav navbar-nav">
-						<li><a href="{{ url('/') }}">Home</a></li>                        
+						<li><a href="{{ url('/') }}" class="external">Home</a></li>
                         <li><a href="{{ route('encuestas.index') }}" class="external">Encuestas</a></li>
-                       
                         <li><a href="{{ route('admin.index') }}" class="external">Admin</a></li>
                         {{-- <li><a href="{{ route('register') }}" class="external">register</a></li> --}}
                         <li><a href="#contact">Contacto</a></li>
-                        
                         @if (Auth::guest())
                             <li><a href="{{ route('login') }}" class="external" >Login</a></li>
                             <li><a href="{{ route('register') }}" class="external" >Registro</a></li>
@@ -38,7 +36,6 @@
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
-
                                 <ul class="dropdown-menu" role="menu">
                                     <li>
                                         <a href="{{ route('logout') }} " class="external"
@@ -46,7 +43,6 @@
                                                      document.getElementById('logout-form').submit();">
                                             Salir
                                         </a>
-
                                         <form id="logout-form" action="{{ route('logout') }} " class="external" method="POST" style="display: none;">
                                             {{ csrf_field() }}
                                         </form>
