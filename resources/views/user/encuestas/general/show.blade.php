@@ -15,85 +15,84 @@
             {{ csrf_field()  }} 
             <input type="hidden" name="poll_id" value="{{ $encuesta->id }}">
             <div class="myform">
-                {{-- <input type="hidden" name="respuesta_id[]" value="">     --}}            
+                {{-- <input type="hidden" name="respuesta_id[]" value="">     --}}
             </div>
-        <div class="col-md-12 {{-- col-md-offset-2 --}}">
-            <div class="{{-- panel panel-default --}}">
-                <h1 class="text-center"> {{ $encuesta->name }}</h1><br>
+          <div class="col-md-12 {{-- col-md-offset-2 --}}">
+            <div class=""><br>               
+                <div class="sec-title text-center">
+                  <h2 class="wow animated text-center" style="color: #999999;"> {{ $encuesta->name }}</h2>
+                </div>
                 <div style="text-align:center;">
+                  <p>Tiempo para responder: {{ $encuesta->category->hour }}:{{ $encuesta->category->minutes }}:{{ $encuesta->category->seconds }}</p>
                   <div id="cabecera"></div>
-                  <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div>
+                  <p>Tiempo restante:</p>
+                  <div style="color:#337ab7; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp;
+                  </div>
                   <h2 id='CuentaAtras'></h2>
                 </div>
-                <div {{-- class="panel-body" --}}>
-                    {{-- Preguntas --}}
-                    @if (!$preguntas == null)
-                        @foreach ($preguntas as $pregunta)
-                          <div class="row">
-                              <div class="col-md-12 col-xs-12">
-                                  <div class="panel panel-primary">
-                                      <div class="panel-heading">
-                                          <h3 class="panel-title">
-                                              <span class="glyphicon "></span>{{  $pregunta->name }}? <a href="http://www.jquery2dotnet.com" target="_blank"><span
-                                                  class="glyphicon "></span></a>
-                                          </h3>
-                                      </div>
-                                      <div class="panel-body">
-                                        <div class="radio">
-                                          @if (!empty($pregunta->answers))
-                                            @foreach($pregunta->answers as $answer)
-                                              @if ($pregunta->multiple_answers == 1)
-                                                  <div style="float: left;padding: 6px;margin-bottom: 8px;border: 1px solid #bad3e8;border-radius: 10px; width: 100%;     font-weight: bold !important;">
-                                                    <input type="checkbox" 
-                                                    name="respuestas" 
-                                                    value="{{ $answer->id }}" 
-                                                    class="chk" 
-                                                    id="{{ $answer->id }}"
-                                                    @if (!$contestadas == null)
-                                                      @foreach ($contestadas as $item)
-                                                        @if ($item->answer_id == $answer->id)
-                                                          checked
-                                                        @endif
-                                                      @endforeach
+                <div 
+                  @if (!$preguntas == null)
+                    @foreach ($preguntas as $pregunta)
+                      <div class="row">
+                          <div class="col-md-12 col-xs-12">
+                              <div class="panel panel-primary">
+                                  <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                      <span class="glyphicon "></span>{{  $pregunta->name }}? <a href="http://www.jquery2dotnet.com" target="_blank"><span
+                                          class="glyphicon "></span></a>
+                                    </h3>
+                                  </div>
+                                  <div class="panel-body">
+                                    <div class="radio">
+                                      @if (!empty($pregunta->answers))
+                                        @foreach($pregunta->answers as $answer)
+                                          @if ($pregunta->multiple_answers == 1)
+                                              <div style="float: left;padding: 6px;margin-bottom: 8px;border: 1px solid #bad3e8;border-radius: 10px; width: 100%;     font-weight: bold !important;">
+                                                <input type="checkbox" 
+                                                name="respuestas" 
+                                                value="{{ $answer->id }}" 
+                                                class="chk" 
+                                                id="{{ $answer->id }}"
+                                                @if (!$contestadas == null)
+                                                  @foreach ($contestadas as $item)
+                                                    @if ($item->answer_id == $answer->id)
+                                                      checked
                                                     @endif
-                                                    > 
-                                                    {{ $answer->name }}
-                                                  </div>
-                                              @else
-                                                <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
-                                                  <input type="radio" 
-                                                  name="respuestas{{$pregunta->id}}" 
-                                                  value="{{ $answer->id }}" 
-                                                  class="rad" 
-                                                  id="{{ $answer->id }}" 
-                                                  @if (!$contestadas == null)
-                                                    @foreach ($contestadas as $item)
-                                                      @if ($item->answer_id == $answer->id)
-                                                        checked
-                                                      @endif
-                                                    @endforeach
+                                                  @endforeach
+                                                @endif
+                                                > 
+                                                {{ $answer->name }}
+                                              </div>
+                                          @else
+                                            <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
+                                              <input type="radio" 
+                                              name="respuestas{{$pregunta->id}}" 
+                                              value="{{ $answer->id }}" 
+                                              class="rad" 
+                                              id="{{ $answer->id }}" 
+                                              @if (!$contestadas == null)
+                                                @foreach ($contestadas as $item)
+                                                  @if ($item->answer_id == $answer->id)
+                                                    checked
                                                   @endif
-                                                  style="margin-left: 0px !important; "
-                                                  >
-                                                    <label style="font-weight: bold;">
-                                                      {{ $answer->name }}
-                                                    </label> 
-                                                </div>
-                                              @endif  
-                                            @endforeach
-                                          @endif
-                                        </div>
-                                      </div>
-                                      {{-- <div class="panel-footer">
-                                        <button type="button" class="btn btn-primary btn-sm">
-                                            Vote</button>
-                                        <a href="#">View Result</a>
-                                      </div> --}}
+                                                @endforeach
+                                              @endif
+                                              style="margin-left: 0px !important; "
+                                              >
+                                                <label style="font-weight: bold;">
+                                                  {{ $answer->name }}
+                                                </label> 
+                                            </div>
+                                          @endif  
+                                        @endforeach
+                                      @endif
+                                    </div>
                                   </div>
                               </div>
                           </div>
-                        @endforeach
-                    @endif
+                      </div>
+                    @endforeach
+                  @endif
                 </div>
                 <!-- <input type="submit"   value="Registrar encuesta" > --> 
                 <button id="evaluar" class="btn btn-danger">Terminar encuesta</button>
@@ -106,7 +105,7 @@
                 <input type="text" id="arreglo" class="form-control" placeholder="" name="arreglo[]">
             </div>
         </div>
-        </form>
+          </form>
     </div>
     @php
       if ($encuesta->category->hour > 0 || $encuesta->category->minutes > 0 || $encuesta->category->seconds > 0) 

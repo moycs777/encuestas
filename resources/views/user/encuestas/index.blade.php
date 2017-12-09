@@ -5,12 +5,9 @@
     <section id="service">
         <div class="container">
             <div class="row">
-            
-                <div class="sec-title text-center">
-                    <h2 class="wow animated bounceInLeft">Encuestas</h2>
-                    {{-- <p class="wow animated bounceInRight">Lista de encuestas</p> --}}
+                <div class="sec-title text-center"><br>
+                    <h2 class="wow animated text-center" style="color: #999999;">Encuestas  </h2>
                 </div>
-                
                 <div class="col-md-8 col-md-offset-2">
                     <div class="panel panel-default">
                         <div class="panel-body">

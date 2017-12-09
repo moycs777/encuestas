@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-12 col-xs-12">
                 <div >
-                    <h1 class="text-center">{{ $encuesta->name }}</h1><br>
+                    <h1 class="text-center" style="color: #999999;">{{ $encuesta->name }}</h1><br>
                     
                       <div class='container carousel' id="mycarrousel" data-interval="false">
                         <div id="carousel-example-generic" class="carousel slide" {{-- data-ride="carousel" --}}>

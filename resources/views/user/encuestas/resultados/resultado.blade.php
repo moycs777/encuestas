@@ -2,36 +2,45 @@
 @section('content')
     <br>    <br>    <br>    <br>
     <!-- Service section -->
-    <section id="about" >
+    <section id="service">
         <div class="container">
             <div class="row">
-                
-                <div class="col-md-12 {{-- col-md-offset-1 wow animated fadeInRight --}}">
-                    <div class="welcome-block">
-                        {{-- <h3 class="text-center">Ya tenemos tu calificacion.</h3> --}} 
-                        <div class="sec-title text-center">
-                            <h2 class="wow animated bounceInLeft">Ya tenemos tu calificacion.</h2>
-                        </div>                               
-                         <div class="message-body">
-                            {{-- <img src="{{ asset('img/member-1.jpg') }}" class="pull-left" alt="member"> --}}
-                            <h3>Tu puntaje fue: <strong>{{ $total }}</strong>, en la encuesta: <strong>{{ $encuesta->name }}</strong>.</h3>                           
-                            <h3>
-                                @if (!$resume==null)
-                                    {{ $resume->text }}.
-                                @endif
-                            </h3>
-                         </div>
-                    </div>                     
+                <div class="sec-title text-center">
+                    <h2 class="wow animated bounceInLeft" style="color: #999999;">Encuestas</h2>
                 </div>
-                <div class="col-xs-12">
-                    <div class="text-center">
-                        <a href="{{ url('/') }}" class="btn btn-border btn-effect  {{-- pull-right --}}">Inicio</a>
-                        <br><br>
+                <div class="col-md-8 col-md-offset-2">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            @if (session('status'))
+                                <div class="alert alert-success">
+                                    {{ session('status') }}
+                                </div>
+                            @endif
+                            <h3 class="text-center">Ya tenemos tu calificacion.</h3>
+                            <br>                             
+                            <div class="table-responsive">          
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Encuesta</th>
+                                    <th>Puntaje</th>
+                                    <th>Resultado</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td>{{ $encuesta->name }}</td>
+                                    <td>{{ $total }}</td>
+                                    <td>{{ $resume->text }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </div>                
             </div>
         </div>
-    </section>
-    <!-- end about section -->
+    </section>    
   
 @endsection

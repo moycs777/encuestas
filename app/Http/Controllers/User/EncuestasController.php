@@ -39,15 +39,15 @@ class EncuestasController extends Controller
     
     public function store(Request $request)
     {
-        /* if ($request->id_respuestas == null) {
+        if ($request->id_respuestas == null) {
             return redirect()->back()->with('message', 'Debes responder al menos 1pregunta!');
-        } */
+        }
         //dd($st);
         //dd($request->all());
         //dd($request->respuestas);
-        $this->validate($request,[
+        /* $this->validate($request,[
             'id_respuestas' => 'required',
-        ]);
+        ]); */
         //dd($request->all());
         
         $st = Session::get('start_date');
