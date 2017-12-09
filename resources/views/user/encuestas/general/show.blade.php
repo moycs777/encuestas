@@ -19,7 +19,7 @@
             </div>
         <div class="col-md-12 {{-- col-md-offset-2 --}}">
             <div class="{{-- panel panel-default --}}">
-                <h1 class="text-center">error {{ $encuesta->name }}</h1><br>
+                <h1 class="text-center"> {{ $encuesta->name }}</h1><br>
                 <div style="text-align:center;">
                   <div id="cabecera"></div>
                   <div style="color:blue; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp; </div>
@@ -168,18 +168,18 @@ $(function () {
       }
 
       if ((hour > 0) && (min == 0)){
-          hour = min; //hour - 1;
+          hour = hour - 1;
           min = 60;
       }
 
       if ((hour == 0) && (min == 0) && (seg == 0)){
-         document.getElementById('displayReloj').innerHTML = min + " : " + seg;
+         document.getElementById('displayReloj').innerHTML = hour + " : " + min + " : " + seg;
          document.getElementById('evaluar').click();
          alert("Fin : " + nn);
          exit();
       }
       
-        document.getElementById('displayReloj').innerHTML = min + " : " + seg;
+        document.getElementById('displayReloj').innerHTML = hour + ":" + min + ":" + seg;
         var t = setTimeout(function(){reloj()},1000);
     }
     reloj();
