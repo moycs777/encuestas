@@ -41,8 +41,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Puntos</label>
-                  <input type="number" class="form-control" id="value" name="value" placeholder="puntos" min="0">
+                    <label for="name">Valoracion</label>
+                  <input type="number" class="form-control" id="value" name="value" placeholder="Valoracion" min="0" required>
                 </div>
 
                 <div class="form-group">

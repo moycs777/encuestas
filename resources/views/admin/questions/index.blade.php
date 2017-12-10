@@ -65,7 +65,7 @@
                     <input type="submit" value="agregar respuesta" class="btn btn-success btn-xs" ><i class="fa fa-plus" aria-hidden="true" class="pull-right"></i>
                   </form>
                </th>
-               <th style="width: 20px">Valor</th>
+               <th style="width: 20px">Valoracion</th>
                {{--  <th style="width: 10px">Acciones</th>  --}}
              </tr>
              @if (!empty($item->answers))
