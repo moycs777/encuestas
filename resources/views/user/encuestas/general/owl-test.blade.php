@@ -52,16 +52,20 @@ body {font-family: Arial;}
    
   </div>
 
-{{--   @foreach ($pregs as $preguntas)
-    <button class="tablinks" onclick="openCity(event, 'tab{{ $loop->iteration }}')">pagina {{ $loop->iteration }}</button>
-    <div id="tab{{ $loop->iteration }}" class="tabcontent">
-      @foreach ($preguntas as $pregunta)
-          <h3>{{ $pregunta->name }}</h3>
-      @endforeach
+  @if(session()->has('message'))
+    <div class="alert alert-success">
+        {{ session()->get('message') }}
     </div>
-  @endforeach --}}
- 
-
+  @endif
+  </p>
+    
+    {{-- <input  type="hidden" id="seconds" value="{{ $encuesta->category->seconds }}" >
+    <form action="{{ route('encuestas.store') }}" method="post" id="formid"> 
+        {{ csrf_field()  }} 
+        <input type="hidden" name="poll_id" value="{{ $encuesta->id }}">
+        <div class="myform">
+        </div>
+ --}}
  @foreach ($pregs as $preguntas)
     <button class="tablinks" onclick="openCity(event, 'tab{{ $loop->iteration }}')">pagina {{ $loop->iteration }}</button>
     <div id="tab{{ $loop->iteration }}" class="tabcontent">
@@ -123,7 +127,7 @@ body {font-family: Arial;}
       @endforeach
     </div>
   @endforeach
- 
+                
 
   <script>
   function openCity(evt, cityName) {
@@ -140,6 +144,24 @@ body {font-family: Arial;}
       evt.currentTarget.className += " active";
   }
   </script>
+
+  <input  type="hidden" id="seconds" value="{{ $encuesta->category->seconds }}" >
+    <form action="{{ route('encuestas.store') }}" method="post" id="formid"> 
+        {{ csrf_field()  }} 
+        <input type="hidden" name="poll_id" value="{{ $encuesta->id }}">
+        <div class="myform">
+        </div>
+
+        <button id="evaluar" class="btn btn-danger">Terminar encuesta</button>
+        @if($encuesta->category->pausable == 0)
+            <input type="hidden" name="pausable" value="0">                    
+        @else
+            <button id="pausar" class="btn btn-success">pausar encuesta</button>
+            <input type="hidden" name="pausable" value="1">                    
+        @endif
+        <input type="text" id="arreglo" class="form-control" placeholder="" name="arreglo[]">
+
+   </form>
 
 
     @php

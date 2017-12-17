@@ -39,11 +39,11 @@ class EncuestasController extends Controller
     
     public function store(Request $request)
     {
-        if ($request->id_respuestas == null) {
+        /*if ($request->id_respuestas == null) {
             return redirect()->back()->with('message', 'Debes responder al menos 1pregunta!');
-        }
+        }*/
         
-        //dd($request->all());
+        dd($request->all());
         
         $st = Session::get('start_date');
         $master_aplication = new MasterAplication();
@@ -153,7 +153,7 @@ class EncuestasController extends Controller
         $pregs = $preguntas->chunk(4);
         //dd($pregs);
         return view('user.encuestas.general.owl-test', compact('encuesta', 'preguntas', 'contestadas', 'pregs'));
-        //return view('user.encuestas.general.chunk', compact('encuesta', 'preguntas'));
+        //return view('user.encuestas.general.show', compact('encuesta', 'preguntas', 'contestadas'));
 
     }
 
