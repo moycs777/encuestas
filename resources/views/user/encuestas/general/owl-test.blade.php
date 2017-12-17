@@ -8,71 +8,55 @@
 @section('content')
 <div class="container">
   <br><br><br><br>
-    <div class="row">
-    <p>{{-- categoria  {{ $encuesta->category }} --}}
-      @if(session()->has('message'))
-        <div class="alert alert-success">
-            {{ session()->get('message') }}
+
+    <div id="rootwizard" class="tabbable tabs-left">
+
+       <div id="rootwizard">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container">
+      <ul>
+          <li><a href="#tab1" data-toggle="tab">First</a></li>
+        <li><a href="#tab2" data-toggle="tab">Second</a></li>
+        <li><a href="#tab3" data-toggle="tab">Third</a></li>
+        <li><a href="#tab4" data-toggle="tab">Forth</a></li>
+        <li><a href="#tab5" data-toggle="tab">Fifth</a></li>
+        <li><a href="#tab6" data-toggle="tab">Sixth</a></li>
+        <li><a href="#tab7" data-toggle="tab">Seventh</a></li>
+      </ul>
+       </div>
         </div>
-      @endif
-     </p>
-        <input  type="hidden" id="seconds" value="{{ $encuesta->category->seconds }}" >
-        <form action="{{ route('encuestas.store') }}" method="post" id="formid"> 
-            {{ csrf_field()  }} 
-            <input type="hidden" name="poll_id" value="{{ $encuesta->id }}">
-            <div class="myform">
-                {{-- <input type="hidden" name="respuesta_id[]" value="">     --}}
-            </div>
-          <div class="col-md-12">
-            <div class=""><br>               
-                <div class="sec-title text-center">
-                  <h2 class="wow animated text-center" style="color: #999999;">qwl-test {{ $encuesta->name }}</h2>
+      </div>
+
+      @foreach ($preguntas->chunk(3) as $chunk)
+            @foreach ($chunk as $product)
+                <div class="col-xs-4">{{ $product->name }}</div>
+            @endforeach
+
+        <div class="tab-content">
+
+            @foreach ($chunk as $product)
+                <div class="tab-pane" id="tab1">
+                  {{ $product->name }}
                 </div>
-                @if ($encuesta->category->timer_type >1)                
-                  <div style="text-align:center;">
-                    <p>Tiempo para responder: {{ $encuesta->category->hour }}:{{ $encuesta->category->minutes }}:{{ $encuesta->category->seconds }}</p>
-                    <div id="cabecera"></div>
-                    <p>Tiempo restante:</p>
-                    <div style="color:#337ab7; font-family: verdana, arial; font-size:30px; padding:15px;" id ="displayReloj" > &nbsp;
-                    </div>
-                    <h2 id='CuentaAtras'></h2>
-                  </div>
-                @endif
-                <div 
-                    
-                  @if (!$preguntas == null)
-                    @foreach ($preguntas as $pregunta)
-                        
-                    @endforeach
-                  @endif
-                </div>
-                <!-- <input type="submit"   value="Registrar encuesta" > --> 
-                <button id="evaluar" class="btn btn-danger">Terminar encuesta</button>
-                @if($encuesta->category->pausable == 0)
-                    <input type="hidden" name="pausable" value="0">                    
-                @else
-                    <button id="pausar" class="btn btn-success">pausar encuesta</button>
-                    <input type="hidden" name="pausable" value="1">                    
-                @endif
-                <input type="text" id="arreglo" class="form-control" placeholder="" name="arreglo[]">
-            </div>
+            @endforeach
+
+          <ul class="pager wizard">
+            <li class="previous first" style="display:none;"><a href="#">First</a></li>
+            <li class="previous"><a href="#">Previous</a></li>
+            <li class="next last" style="display:none;"><a href="#">Last</a></li>
+              <li class="next"><a href="#">Next</a></li>
+          </ul>
         </div>
-          </form>
+    @endforeach
+
+
+
     </div>
-    <div class="owl-carousel owl-theme">
-                        <div class="item"><h4>1</h4></div>
-                        <div class="item"><h4>2</h4></div>
-                        <div class="item"><h4>3</h4></div>
-                        <div class="item"><h4>4</h4></div>
-                        <div class="item"><h4>5</h4></div>
-                        <div class="item"><h4>6</h4></div>
-                        <div class="item"><h4>7</h4></div>
-                        <div class="item"><h4>8</h4></div>
-                        <div class="item"><h4>9</h4></div>
-                        <div class="item"><h4>10</h4></div>
-                        <div class="item"><h4>11</h4></div>
-                        <div class="item"><h4>12</h4></div>
-                    </div>
+        
+
+    </div>
+   
     @php
       if ($encuesta->category->hour > 0 || $encuesta->category->minutes > 0 || $encuesta->category->seconds > 0) 
       {
@@ -98,6 +82,8 @@
 <script>    
 console.log("no ha iniciado jq 2");
 $(function () {
+
+  $('#rootwizard').bootstrapWizard();
   
   console.log("regitrar encuestas con $ each 2"); 
   console.log("hay tiempo " + {{ $timer }} ); 

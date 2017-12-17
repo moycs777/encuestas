@@ -150,8 +150,9 @@ class EncuestasController extends Controller
 
         $preguntas = Question::where('poll_id', '=', $encuesta->id)
             ->get();
-        return view('user.encuestas.general.test', compact('encuesta', 'preguntas', 'contestadas'));
-        //return view('user.encuestas.general.show', compact('encuesta', 'preguntas', 'contestadas'));
+        
+        return view('user.encuestas.general.owl-test', compact('encuesta', 'preguntas', 'contestadas'));
+        //return view('user.encuestas.general.chunk', compact('encuesta', 'preguntas'));
 
     }
 
