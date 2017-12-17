@@ -1,62 +1,150 @@
 @extends('user.layouts.app2')
 
 @push('styles')
-<link rel="stylesheet" href="{{ asset('OwlCarousel2-2.2.1\dist\assets/owl.carousel.min.css') }}">
-<link rel="stylesheet" href="{{ asset('OwlCarousel2-2.2.1\dist\assets/owl.theme.default.min.css') }}">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+    background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+</style>
 @endpush
 
 @section('content')
+
 <div class="container">
   <br><br><br><br>
 
-    <div id="rootwizard" class="tabbable tabs-left">
+  <div class="tab">
+    <button class="tablinks" onclick="openCity(event, 'tab1')">London</button>
+    <button class="tablinks" onclick="openCity(event, 'tab2')">Paris</button>
+    <button class="tablinks" onclick="openCity(event, 'tab3')">Tokyo</button>
+    <button class="tablinks" onclick="openCity(event, 'tab4')">Tokyo</button>
+  </div>
 
-       <div id="rootwizard">
-      <div class="navbar">
-        <div class="navbar-inner">
-          <div class="container">
-      <ul>
-          <li><a href="#tab1" data-toggle="tab">First</a></li>
-        <li><a href="#tab2" data-toggle="tab">Second</a></li>
-        <li><a href="#tab3" data-toggle="tab">Third</a></li>
-        <li><a href="#tab4" data-toggle="tab">Forth</a></li>
-        <li><a href="#tab5" data-toggle="tab">Fifth</a></li>
-        <li><a href="#tab6" data-toggle="tab">Sixth</a></li>
-        <li><a href="#tab7" data-toggle="tab">Seventh</a></li>
-      </ul>
-       </div>
-        </div>
-      </div>
-
-      @foreach ($preguntas->chunk(3) as $chunk)
-            @foreach ($chunk as $product)
-                <div class="col-xs-4">{{ $product->name }}</div>
-            @endforeach
-
-        <div class="tab-content">
-
-            @foreach ($chunk as $product)
-                <div class="tab-pane" id="tab1">
-                  {{ $product->name }}
-                </div>
-            @endforeach
-
-          <ul class="pager wizard">
-            <li class="previous first" style="display:none;"><a href="#">First</a></li>
-            <li class="previous"><a href="#">Previous</a></li>
-            <li class="next last" style="display:none;"><a href="#">Last</a></li>
-              <li class="next"><a href="#">Next</a></li>
-          </ul>
-        </div>
-    @endforeach
-
-
-
+{{--   @foreach ($pregs as $preguntas)
+    <button class="tablinks" onclick="openCity(event, 'tab{{ $loop->iteration }}')">pagina {{ $loop->iteration }}</button>
+    <div id="tab{{ $loop->iteration }}" class="tabcontent">
+      @foreach ($preguntas as $pregunta)
+          <h3>{{ $pregunta->name }}</h3>
+      @endforeach
     </div>
-        
+  @endforeach --}}
+ 
 
+ @foreach ($pregs as $preguntas)
+    <button class="tablinks" onclick="openCity(event, 'tab{{ $loop->iteration }}')">pagina {{ $loop->iteration }}</button>
+    <div id="tab{{ $loop->iteration }}" class="tabcontent">
+      @foreach ($preguntas as $pregunta)
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <h3 class="panel-title">
+                <span class="glyphicon "></span>{{  $pregunta->name }}? <a href="http://www.jquery2dotnet.com" target="_blank"><span
+                    class="glyphicon "></span></a>
+              </h3>
+            </div>
+            <div class="panel-body">
+              <div class="radio">
+                @if (!empty($pregunta->answers))
+                  @foreach($pregunta->answers as $answer)
+                    @if ($pregunta->multiple_answers == 1)
+                        <div style="float: left;padding: 6px;margin-bottom: 8px;border: 1px solid #bad3e8;border-radius: 10px; width: 100%;     font-weight: bold !important;">
+                          <input type="checkbox" 
+                          name="respuestas" 
+                          value="{{ $answer->id }}" 
+                          class="chk" 
+                          id="{{ $answer->id }}"
+                          @if (!$contestadas == null)
+                            @foreach ($contestadas as $item)
+                              @if ($item->answer_id == $answer->id)
+                                checked
+                              @endif
+                            @endforeach
+                          @endif
+                          > 
+                          {{ $answer->name }}
+                        </div>
+                    @else
+                      <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
+                        <input type="radio" 
+                        name="respuestas{{$pregunta->id}}" 
+                        value="{{ $answer->id }}" 
+                        class="rad" 
+                        id="{{ $answer->id }}" 
+                        @if (!$contestadas == null)
+                          @foreach ($contestadas as $item)
+                            @if ($item->answer_id == $answer->id)
+                              checked
+                            @endif
+                          @endforeach
+                        @endif
+                        style="margin-left: 0px !important; "
+                        >
+                          <label style="font-weight: bold;">
+                            {{ $answer->name }}
+                          </label> 
+                      </div>
+                    @endif  
+                  @endforeach
+                @endif
+              </div>
+            </div>
+        </div>
+      @endforeach
     </div>
-   
+  @endforeach
+ 
+
+  <script>
+  function openCity(evt, cityName) {
+      var i, tabcontent, tablinks;
+      tabcontent = document.getElementsByClassName("tabcontent");
+      for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+      }
+      tablinks = document.getElementsByClassName("tablinks");
+      for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(cityName).style.display = "block";
+      evt.currentTarget.className += " active";
+  }
+  </script>
+
+
     @php
       if ($encuesta->category->hour > 0 || $encuesta->category->minutes > 0 || $encuesta->category->seconds > 0) 
       {
