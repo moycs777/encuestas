@@ -49,10 +49,7 @@ body {font-family: Arial;}
   <br><br><br><br>
 
   <div class="tab">
-    <button class="tablinks" onclick="openCity(event, 'tab1')">London</button>
-    <button class="tablinks" onclick="openCity(event, 'tab2')">Paris</button>
-    <button class="tablinks" onclick="openCity(event, 'tab3')">Tokyo</button>
-    <button class="tablinks" onclick="openCity(event, 'tab4')">Tokyo</button>
+   
   </div>
 
 {{--   @foreach ($pregs as $preguntas)
