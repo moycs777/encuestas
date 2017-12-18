@@ -17,7 +17,7 @@
                                 </div>
                             @endif
                             @if (Auth::guest())
-                                <h3 class="text-center">Debes estar registardo para ver las encuestas</h3>
+                                <h3 class="text-center">Debes estar registrado para ver las encuestas</h3>
                             @else
                                 @if (!$polls == null)
                                     <div class="table-responsive">                          
