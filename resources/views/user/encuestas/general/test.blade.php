@@ -1,4 +1,10 @@
 @extends('user.layouts.app2')
+
+@push('styles')
+  {{-- <script src="{{ asset('css/encuestas/general.js') }}"></script> --}}
+  <link rel="stylesheet" type="text/css" href="{{ asset('css/encuestas/general.js') }}"/>  
+@endpush
+
 @section('content')
 <div class="container">
   <br><br><br><br>
@@ -20,7 +26,7 @@
           <div class="col-md-12">
             <div class=""><br>               
                 <div class="sec-title text-center">
-                  <h2 class="wow animated text-center" style="color: #999999;">test {{ $encuesta->name }}</h2>
+                  <h2 class="wow animated text-center" style="color: #999999;">vista deprueba:  {{ $encuesta->name }}</h2>
                 </div>
                 @if ($encuesta->category->timer_type >1)                
                   <div style="text-align:center;">
@@ -32,94 +38,84 @@
                     <h2 id='CuentaAtras'></h2>
                   </div>
                 @endif
-                <div 
-                  @if (!$preguntas == null)
-                    @foreach ($preguntas as $pregunta)
-                        <div class="row">
-                            <div class="col-md-12 col-xs-12">
-                              @if ($loop->iteration == 1)
-                                @php
-                                  $div_id = 1;
-                                  $x = $div_id + 2;
-                                @endphp
-                              @elseif ($loop->iteration >2)
-                                  @php
-                                    $div_id = 2; 
-                                    $x += 2;                               
-                                  @endphp
-                              @endif
-                                <table>
-                                  <button type="button" class="paginador" value="{{ $div_id }}" class="btn btn-primary" >pagina {{ $div_id }}</button>
-                                  
-                                </table>
-                                <script>
-                                  function mostrar_ocultar(mostrar, ocultar) {
-                                    document.getElementById(mostrar).style.display='block';
-                                    document.getElementById(ocultar).style.display='none';
-                                    return false;
-                                  }
-                                </script>
-
-                                <div class="panel panel-primary" style="display:block" id="div_{{ $div_id }}" pag="{{ $div_id }}">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title">
-                                        <span class="glyphicon "></span>{{ $loop->iteration }}. {{  $pregunta->name }}? <a href=""><span
-                                          class="glyphicon "></span></a>
-                                        </h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <div class="radio">
-                                        @if (!empty($pregunta->answers))
-                                            @foreach($pregunta->answers as $answer)
-                                            @if ($pregunta->multiple_answers == 1)
-                                                <div style="float: left;padding: 6px;margin-bottom: 8px;border: 1px solid #bad3e8;border-radius: 10px; width: 100%;     font-weight: bold !important;">
-                                                    <input type="checkbox" 
-                                                    name="respuestas" 
-                                                    value="{{ $answer->id }}" 
-                                                    class="chk" 
-                                                    id="{{ $answer->id }}"
-                                                    @if (!$contestadas == null)
-                                                    @foreach ($contestadas as $item)
-                                                        @if ($item->answer_id == $answer->id)
-                                                        checked
+                {{-- Primer ciclo --}}
+                @if (!$pregs == null)
+                  @foreach ($pregs as $preguntas) 
+                    {{-- enlace del paginador --}} 
+                    <a class="tablinks" onclick="openTab(event, 'tab{{ $loop->iteration }}')">pagina {{ $loop->iteration }}</a>
+                    {{-- div paginador --}}                
+                    <div {{-- aqui es donde deja de funcionar el submit --}} id="tab{{ $loop->iteration }}" class="tabcontent"> 
+                      {{-- Segundo ciclo --}}
+                      @if (!$preguntas == null)
+                        @foreach ($preguntas as $pregunta)
+                            <div class="row">
+                                <div class="col-md-12 col-xs-12">                                
+                                    <div class="panel panel-primary" style="display:block" >
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">
+                                            <span class="glyphicon "></span>{{ $loop->iteration }}. {{  $pregunta->name }}? <a href=""><span
+                                              class="glyphicon "></span></a>
+                                            </h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="radio">
+                                            @if (!empty($pregunta->answers))
+                                                @foreach($pregunta->answers as $answer)
+                                                @if ($pregunta->multiple_answers == 1)
+                                                    <div style="float: left;padding: 6px;margin-bottom: 8px;border: 1px solid #bad3e8;border-radius: 10px; width: 100%;     font-weight: bold !important;">
+                                                        <input type="checkbox" 
+                                                        name="respuestas" 
+                                                        value="{{ $answer->id }}" 
+                                                        class="chk" 
+                                                        id="{{ $answer->id }}"
+                                                        @if (!$contestadas == null)
+                                                        @foreach ($contestadas as $item)
+                                                            @if ($item->answer_id == $answer->id)
+                                                            checked
+                                                            @endif
+                                                        @endforeach
                                                         @endif
-                                                    @endforeach
+                                                        > 
+                                                        {{ $answer->name }}
+                                                    </div>
+                                                @else
+                                                    <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
+                                                    <input type="radio" 
+                                                    name="respuestas{{$pregunta->id}}" 
+                                                    value="{{ $answer->id }}" 
+                                                    class="rad" 
+                                                    id="{{ $answer->id }}" 
+                                                    @if (!$contestadas == null)
+                                                        @foreach ($contestadas as $item)
+                                                        @if ($item->answer_id == $answer->id)
+                                                            checked
+                                                        @endif
+                                                        @endforeach
                                                     @endif
-                                                    > 
-                                                    {{ $answer->name }}
-                                                </div>
-                                            @else
-                                                <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
-                                                <input type="radio" 
-                                                name="respuestas{{$pregunta->id}}" 
-                                                value="{{ $answer->id }}" 
-                                                class="rad" 
-                                                id="{{ $answer->id }}" 
-                                                @if (!$contestadas == null)
-                                                    @foreach ($contestadas as $item)
-                                                    @if ($item->answer_id == $answer->id)
-                                                        checked
-                                                    @endif
-                                                    @endforeach
-                                                @endif
-                                                style="margin-left: 0px !important; "
-                                                >
-                                                    <label style="font-weight: bold;">
-                                                    {{ $answer->name }}
-                                                    </label> 
-                                                </div>
-                                            @endif  
-                                            @endforeach
-                                        @endif
+                                                    style="margin-left: 0px !important; "
+                                                    >
+                                                        <label style="font-weight: bold;">
+                                                        {{ $answer->name }}
+                                                        </label> 
+                                                    </div>
+                                                @endif  
+                                                @endforeach
+                                            @endif
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
 
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
-                  @endif
-                </div>
+                        @endforeach
+                      @endif
+                      {{-- Fin segundo ciclo --}}
+                    </div>
+                    {{-- fin de div paginador --}}
+                  @endforeach
+                @endif
+                {{-- fin del primer ciclo --}}
+
                 <!-- <input type="submit"   value="Registrar encuesta" > --> 
                 <button id="evaluar" class="btn btn-danger">Terminar encuesta</button>
                 @if($encuesta->category->pausable == 0)
@@ -148,9 +144,13 @@
   <input type="hidden" id="min" name="min" value="{{ $encuesta->category->minutes }}">
   <input type="hidden" id="seg" name="seg" value="{{ $encuesta->category->seconds }}">
 </div>
+
+
+
 <script src="{{ asset('admin/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+<script src="{{ asset('js/encuestas/general.js') }}"></script>
 <script>    
-console.log("no ha iniciado jq 2");
+console.log("archivo interno");
 $(function () {
   
   console.log("regitrar encuestas con $ each 2"); 
@@ -159,37 +159,12 @@ $(function () {
   //Mostramos la 1era pagina de rpeguntas
   var elem = document.getElementById('div_1');
   elem.style.display = 'block';
-
-  $('.paginador').click(function() {
-      console.log("boton paginador " + $(this).val()); 
-        /*$("").each(function(index){
-            console.log("paginador " + 1); 
-        });*/
-  });
-
   $( "#1" ).css( "color", "green" )
-
-
-
-
-
-
-
-
-
-
-
-
-
   $("input:submit").click(function() { return false; });
   
   var poll_id = {{ $encuesta->id }};
   //var respuestas = [];
   
-  $('.question').click(function(){
-    console.log("se clickeo un elemento de pregunta");
-  });
-
   //Encuesta por tiempo
   if ( {{ $timer }} == 1) 
   {
@@ -244,42 +219,9 @@ $(function () {
     console.log("Encuesta sin tiempo ");     
   }
 
-  $("#evaluar").click(function(){
-      //alert("asd");
-      console.log("funcion evaluar");
-      var preguntas_input = $(":input");      
-      //var preguntas_input = $("[name=respuestas]");
-      var i = 0;
-      preguntas_input.each(function(index , valor){
-          //alert("id: " + $(this).attr('id') + " , esrtado: " + $(this).tagName + " valor: " + valor + ": " + $( this ).text() );
-        if ( $(this).prop( "checked" ) ) {
-         // alert("esta checked, " + $(this).attr('id') );
-          //arreglo[index] = $(this).attr('id');
-          //$('[name=arreglo]').val(this.value);
-          id = $(this).attr('id');
-          nombre = 'id_respuestas['+i+']';
-          //alert("nombre: " + nombre);
-          //alert("id: " + id);
-          $('<input>').attr({
-              type: 'hidden',
-              id: 'foo',
-              name: nombre,
-              value: id
-          }).appendTo('form');
-          i += 1;
-        }
 
-      });
-  });
-
-  
-
-
-});  
-    
-
+});      
 </script>
-
 @endsection
 
 
