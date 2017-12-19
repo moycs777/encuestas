@@ -17,19 +17,21 @@ jQuery(document).ready(function($) {
     $( ".tabcontent" ).each(function( index, element ) {
       // element == this
       $( element ).css( "display", "none" );
-      //$( element ).css( "backgroundColor", "yellow" );
-      if ( $( this ).is( "#stop" ) ) {
+      /*if ( $( this ).is( "#stop" ) ) {
         $( "span" ).text( "Stopped at div index #" + index );
         return false;
-      }
+      }*/
     });
-
-    $(".tabcontent").each(function(){
+    
+    console.log('mostramos solo el elemento seleccionado, id : '+ tab);
+    $( "#tab"+tab).css( "display", "block" );
+    //$("#tab"+tab).css("color", "green");
+   /* $(".tabcontent").each(function(){
       
       console.log("element " + $(this).find(".tabcontent") );
       $(this).find(".tabcontent").hide();
    
-    });
+    });*/
   }
 
   $("#evaluar").click(function(){

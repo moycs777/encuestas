@@ -42,7 +42,7 @@
                 @if (!$pregs == null)
                   @foreach ($pregs as $preguntas) 
                     {{-- enlace del paginador --}} 
-                    <a class="anchorclass" {{-- onclick="openTab(event, 'tab{{ $loop->iteration }}')" --}} href="#" id="tab{{ $loop->iteration }}">pagina {{ $loop->iteration }} </a>
+                    <a class="anchorclass" {{-- onclick="openTab(event, 'tab{{ $loop->iteration }}')" --}} href="#" id="{{ $loop->iteration }}">pagina {{ $loop->iteration }} </a>
                     {{-- div paginador --}}                
                     <div {{-- aqui es donde deja de funcionar el submit --}} id="tab{{ $loop->iteration }}" class="tabcontent"> 
                       {{-- Segundo ciclo --}}
@@ -167,7 +167,7 @@ $(function () {
     function yourfunction(){
       console.log("a, id: " + $(this).attr('id') );
     }*/
-    
+
   //Mostramos la 1era pagina de rpeguntas
   /*var elem = document.getElementById('div_1');
   elem.style.display = 'block';
