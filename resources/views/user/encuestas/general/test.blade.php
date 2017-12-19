@@ -42,7 +42,7 @@
                 @if (!$pregs == null)
                   @foreach ($pregs as $preguntas) 
                     {{-- enlace del paginador --}} 
-                    <a class="tablinks" onclick="openTab(event, 'tab{{ $loop->iteration }}')">pagina {{ $loop->iteration }}</a>
+                    <a class="anchorclass" {{-- onclick="openTab(event, 'tab{{ $loop->iteration }}')" --}} href="#" id="tab{{ $loop->iteration }}">pagina {{ $loop->iteration }} </a>
                     {{-- div paginador --}}                
                     <div {{-- aqui es donde deja de funcionar el submit --}} id="tab{{ $loop->iteration }}" class="tabcontent"> 
                       {{-- Segundo ciclo --}}
@@ -144,7 +144,14 @@
   <input type="hidden" id="min" name="min" value="{{ $encuesta->category->minutes }}">
   <input type="hidden" id="seg" name="seg" value="{{ $encuesta->category->seconds }}">
 </div>
-
+  <script>
+   /* $('a.anchorclass').click(yourfunction);
+    
+    function yourfunction(){
+      console.log("a, id: " + $(this).id);
+    }*/
+    
+  </script>
 
 
 <script src="{{ asset('admin/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
@@ -155,12 +162,17 @@ $(function () {
   
   console.log("regitrar encuestas con $ each 2"); 
   console.log("hay tiempo " + {{ $timer }} ); 
-  
+   /*$('a.anchorclass').click(yourfunction);
+    
+    function yourfunction(){
+      console.log("a, id: " + $(this).attr('id') );
+    }*/
+    
   //Mostramos la 1era pagina de rpeguntas
-  var elem = document.getElementById('div_1');
+  /*var elem = document.getElementById('div_1');
   elem.style.display = 'block';
   $( "#1" ).css( "color", "green" )
-  $("input:submit").click(function() { return false; });
+  $("input:submit").click(function() { return false; });*/
   
   var poll_id = {{ $encuesta->id }};
   //var respuestas = [];
@@ -218,6 +230,9 @@ $(function () {
   {
     console.log("Encuesta sin tiempo ");     
   }
+
+  
+
 
 
 });      

@@ -1,18 +1,35 @@
 jQuery(document).ready(function($) {
   
   console.log("archivo anexo de scripts");
-  function openTab(evt, cityName) {
-      var i, tabcontent, tablinks;
-      tabcontent = document.getElementsByClassName("tabcontent");
-      for (i = 0; i < tabcontent.length; i++) {
-          tabcontent[i].style.display = "none";
+
+  $('a.anchorclass').click(yourfunction);
+  
+  function yourfunction(){
+    console.log("a, id: " + $(this).attr('id') );
+    openTab($(this).attr('id'));
+    //openTab($(this).hide());
+  }
+
+  function openTab(tab) {
+    console.log("tab: " + tab );
+    //$('.tabcontent').css('style', 'display', 'none');
+    
+    $( ".tabcontent" ).each(function( index, element ) {
+      // element == this
+      $( element ).css( "display", "none" );
+      //$( element ).css( "backgroundColor", "yellow" );
+      if ( $( this ).is( "#stop" ) ) {
+        $( "span" ).text( "Stopped at div index #" + index );
+        return false;
       }
-      tablinks = document.getElementsByClassName("tablinks");
-      for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
-      }
-      document.getElementById(cityName).style.display = "block";
-      evt.currentTarget.className += " active";
+    });
+
+    $(".tabcontent").each(function(){
+      
+      console.log("element " + $(this).find(".tabcontent") );
+      $(this).find(".tabcontent").hide();
+   
+    });
   }
 
   $("#evaluar").click(function(){
@@ -51,6 +68,8 @@ jQuery(document).ready(function($) {
   $('.question').click(function(){
     console.log("se clickeo un elemento de pregunta");
   });
+  
+
   
 
 });
