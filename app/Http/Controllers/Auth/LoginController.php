@@ -24,21 +24,12 @@ class LoginController extends Controller
     }
 
     public function getSocialCallback( $account ){
-      /*
-        Grabs the user who authenticated via social account.
-      */
+      
       $socialUser = Socialite::with( $account )->user();
-      /*
-            Gets the user in our database where the provider ID
-            returned matches a user we have stored.
-        */
-        $user = User::where( 'provider_id', '=', $socialUser->id )
-                  ->where( 'provider', '=', $account )
-                          ->first();
-      /*
-        Checks to see if a user exists. If not we need to create the
-        user in the database before logging them in.
-      */
+      $user = User::where( 'provider_id', '=', $socialUser->id )
+        ->where( 'provider', '=', $account )
+        ->first();
+      
       if( $user == null ){
         $newUser = new User();
         $newUser->name        = $socialUser->getName();
@@ -50,11 +41,7 @@ class LoginController extends Controller
         $newUser->save();
         $user = $newUser;
       }
-      /*
-        Log in the user
-      */
       Auth::login( $user );
-     
       return redirect('/');
     }
    

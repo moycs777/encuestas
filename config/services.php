@@ -19,6 +19,12 @@ return [
         'redirect' => env('FACEBOOK_REDIRECT'),
     ],
 
+    'google' => [
+      'client_id' => env('GOOGLE_APP_ID'),
+      'client_secret' => env('GOOGLE_APP_SECRET'),
+      'redirect' => env('GOOGLE_REDIRECT')
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),
@@ -39,5 +45,11 @@ return [
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+
+    'twitter' => [
+        'client_id' => env('TWITTER_APP_ID'),
+        'client_secret' => env('TWITTER_APP_SECRET'),
+        'redirect' => env('TWITTER_REDIRECT')
+    ]
 
 ];

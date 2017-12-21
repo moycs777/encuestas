@@ -85,7 +85,11 @@
                                     </a>
                                     
                                     <a href="/login/twitter" class="btn btn-social btn-twitter" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
-                                        <span class="fa fa-facebook"></span>Inicio con Twitter
+                                        <span class="fa fa-twitter"></span>Inicio con Twitter
+                                    </a>
+                                    
+                                    <a href="/login/google" class="btn btn-social btn-google" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
+                                        <span class="fa fa-google"></span>Inicio con google
                                     </a>
         
                                         
