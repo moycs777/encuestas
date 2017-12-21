@@ -31,6 +31,8 @@
         <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
 		<!-- Main Stylesheet -->
         <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/bootstrap-social.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/docs.css') }}">
 
 		<!-- Modernizer Script for old Browsers -->
         <script src="{{ asset('js/modernizr-2.6.2.min.js') }}"></script>

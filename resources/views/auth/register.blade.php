@@ -67,6 +67,18 @@
                                         <button type="submit" class="btn btn-primary">
                                             Guardar
                                         </button>
+
+                                         <a href="/login/facebook" class="btn btn-primary">
+                                            Registro con Facebook
+                                        </a><br>
+
+
+                                    </div>
+                                    <div class="col-md-6 col-md-offset-4">
+                                    
+                                        <a href="/login/twitter" class="btn btn-primary">
+                                            Registro con Twitter
+                                        </a>
                                     </div>
                                 </div>
                             </form>

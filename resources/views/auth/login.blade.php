@@ -54,25 +54,32 @@
                                 <div class="form-group">
                                     <div class="col-md-8 col-md-offset-4">
                                         <button type="submit" class="btn btn-primary">
-                                            Login
+                                            Iniciar
                                         </button>
-                                        
-                                        {{--  <button type="submit" class="btn btn-primary">
-                                            Login
-                                        </button>  --}}
-                                         <a href="/login/facebook" class="btn btn-primary">
-                                            Log In With Facebook
-                                        </a>
-
-                                        <a href="/login/twitter" class="btn btn-primary">
-                                            Log In With Twitter
-                                        </a>
+                                       
+                                       
 
                                         <a class="btn btn-link" href="{{ route('password.request') }}">
                                             Olvide mi clave
                                         </a>
                                     </div>
                                 </div>
+                                
+                                <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-4">
+                                
+                                        <a href="/login/facebook" class="btn btn-social btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
+                                            <span class="fa fa-facebook"></span>Inicio con Facebook
+                                        </a>
+                                        
+                                        <a href="/login/twitter" class="btn btn-social btn-twitter" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
+                                            <span class="fa fa-facebook"></span>Inicio con Twitter
+                                        </a>
+            
+                                        
+                                    </div>
+                                </div>
+
                             </form>
                         </div>
                     </div>
