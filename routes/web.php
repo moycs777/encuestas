@@ -35,6 +35,12 @@ Route::group(['namespace' => 'User'],function(){
 	
 });
 Auth::routes();
+// Socialite
+Route::get( '/login/{social}', 'Auth\LoginController@getSocialRedirect' )
+  ->middleware('guest');
+
+Route::get( '/login/{social}/callback', 'Auth\LoginController@getSocialCallback' )
+  ->middleware('guest');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -44,4 +50,5 @@ Route::prefix('admin')->group(function() {
 	Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
 	Route::get('logout/', 'Auth\AdminLoginController@logout')->name('admin.logout');
 	//Route::get('/home', 'Admin\AdminController@index')->name('admin.dashboard');
+
 }); 

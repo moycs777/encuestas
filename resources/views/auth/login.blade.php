@@ -56,6 +56,17 @@
                                         <button type="submit" class="btn btn-primary">
                                             Login
                                         </button>
+                                        
+                                        {{--  <button type="submit" class="btn btn-primary">
+                                            Login
+                                        </button>  --}}
+                                         <a href="/login/facebook" class="btn btn-primary">
+                                            Log In With Facebook
+                                        </a>
+
+                                        <a href="/login/twitter" class="btn btn-primary">
+                                            Log In With Twitter
+                                        </a>
 
                                         <a class="btn btn-link" href="{{ route('password.request') }}">
                                             Olvide mi clave

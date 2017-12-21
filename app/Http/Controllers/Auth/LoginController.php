@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Socialite;
 
 class LoginController extends Controller
 {
@@ -27,11 +28,19 @@ class LoginController extends Controller
      */
     protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    public function getSocialRedirect($account){
+        try{
+            return Socialite::with( $account )->redirect();
+        }catch ( \InvalidArgumentException $e ){
+            return redirect('/login');
+        }
+    }
+
+    public function getSocialCallback( $account ){
+
+    }
+
+   
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
