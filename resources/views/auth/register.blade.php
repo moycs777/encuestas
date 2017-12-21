@@ -68,19 +68,30 @@
                                             Guardar
                                         </button>
 
-                                         <a href="/login/facebook" class="btn btn-primary">
-                                            Registro con Facebook
-                                        </a><br>
-
+                                        
 
                                     </div>
                                     <div class="col-md-6 col-md-offset-4">
                                     
-                                        <a href="/login/twitter" class="btn btn-primary">
-                                            Registro con Twitter
-                                        </a>
+                                       
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-4">
+                            
+                                    <a href="/login/facebook" class="btn btn-social btn-facebook" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
+                                        <span class="fa fa-facebook"></span>Inicio con Facebook
+                                    </a>
+                                    
+                                    <a href="/login/twitter" class="btn btn-social btn-twitter" onclick="_gaq.push(['_trackEvent', 'btn-social', 'click', 'btn-facebook']);">
+                                        <span class="fa fa-facebook"></span>Inicio con Twitter
+                                    </a>
+        
+                                        
+                                    </div>
+                                </div>
+
                             </form>
                         </div>
                     </div>

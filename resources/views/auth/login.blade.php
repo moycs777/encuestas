@@ -56,8 +56,6 @@
                                         <button type="submit" class="btn btn-primary">
                                             Iniciar
                                         </button>
-                                       
-                                       
 
                                         <a class="btn btn-link" href="{{ route('password.request') }}">
                                             Olvide mi clave
