@@ -50,7 +50,8 @@
                   <form action="{{ route('questions.index') }}" method="get" style="display:inline">
                       {{ csrf_field() }}
                       <input type="hidden" name="poll_id" value="{{$poll->id}}">
-                      <i class="fa fa-dashboard"><input type="submit" value="Atras" class="btn btn-success" ></i>
+                      {{-- <i class="fa fa-dashboard"><input type="submit" value="Atras" class="btn btn-success" ></i> --}}
+                      <a href="{{ url()->previous() }}" class="btn btn-danger">Regresar</a>
                   </form>
                 </div>
 
