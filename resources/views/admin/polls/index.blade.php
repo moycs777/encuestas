@@ -24,7 +24,7 @@
           <div class="box-header">
             <p>{{-- categoria  {{ $encuesta->category }} --}}
               @if(session()->has('message'))
-                <div class="alert alert-danger">
+                <div class="alert alert-info">
                     {{ session()->get('message') }}
                 </div>
               @endif
