@@ -10,6 +10,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Category;
+use App\AplicationPoll;
+use App\Poll;
+use App\Range;
+use App\Resume;
+use App\MasterAplication;
 
 class CategoryController extends Controller
 {
@@ -56,9 +61,17 @@ class CategoryController extends Controller
     
     public function edit($id)
     {
+        //en caso de no poder editar y/o eliminar
+        $encuestas = Poll::where('category_id', '=', $id)->get();
+        //dd($encuestas);
+        foreach ($encuestas as $encuesta) {
+            $encuestas_aplicadas = AplicationPoll::where('poll_id', '=', $encuesta->id)->first();
+            if (! $encuestas_aplicadas == null) {
+                return redirect()->back()->with('message', 'Debido a que hay encuestas pendientes relacionadas a esta categoria, no puedes editar o eliminar!');
+            }
+        }
         $category = Category::findOrFail($id);
         return view('admin.categories.edit',compact('category'));
-
 
     }
 
@@ -66,6 +79,16 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         //dd($request->all());
+        //en caso de no poder editar y/o eliminar
+        $encuestas = Poll::where('category_id', '=', $request->id)->get();
+        //dd($encuestas);
+        foreach ($encuestas as $encuesta) {
+            $encuestas_aplicadas = AplicationPoll::where('poll_id', '=', $encuesta->id)->first();
+            if (! $encuestas_aplicadas == null) {
+                return redirect()->back()->with('message', 'Debido a que hay encuestas pendientes relacionadas a esta categoria, no puedes editar!');
+            }
+        }
+       
         $this->validate($request, ['name' => 'required', 'pausable' => 'required' ]);
 
         $categories = Category::findOrFail($id);
@@ -81,6 +104,15 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         $categories = Category::findOrFail($id);
+        //en caso de no poder editar y/o eliminar
+        $encuestas = Poll::where('category_id', '=', $id)->get();
+        //dd($encuestas);
+        foreach ($encuestas as $encuesta) {
+            $encuestas_aplicadas = AplicationPoll::where('poll_id', '=', $encuesta->id)->first();
+            if (! $encuestas_aplicadas == null) {
+                return redirect()->back()->with('message', 'Debido a que hay encuestas pendientes relacionadas a esta categoria, no puedes editar o eliminar!');
+            }
+        }
 
         $categories->delete();
 

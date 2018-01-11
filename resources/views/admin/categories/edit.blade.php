@@ -21,13 +21,21 @@
 	        <!-- general form elements -->
 	        <div class="box box-primary">
 	          <div class="box-header with-border">
+							<p>{{-- categoria  {{ $encuesta->category }} --}}
+								@if(session()->has('message'))
+									<div class="alert alert-danger">
+											{{ session()->get('message') }}
+									</div>
+								@endif
+							</p>
 	          </div>
 	    	@include('includes.messages')      
 	          <!-- /.box-header -->
 	          <!-- form start -->
 	          <form role="form" action="{{ route('categories.update', $category->id) }}" method="post">
 	          {{ csrf_field() }}
-              {{ method_field('PUT') }}
+							{{ method_field('PUT') }}
+							<input type="hidden" name="id" value="{{ $category->id }}">
 
 
 	            <div class="box-body">

@@ -9,7 +9,7 @@
             {{ session()->get('message') }}
         </div>
       @endif
-     </p>
+    </p>
         <input  type="hidden" id="seconds" value="{{ $encuesta->category->seconds }}" >
         <form action="{{ route('encuestas.store') }}" method="post" id="formid"> 
             {{ csrf_field()  }} 

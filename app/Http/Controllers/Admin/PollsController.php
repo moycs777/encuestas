@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Poll;
 use App\Category;
+use App\AplicationPoll;
+
 
 class PollsController extends Controller
 {
@@ -78,6 +80,13 @@ class PollsController extends Controller
     public function destroy($id)
     {
         $polls = Poll::findOrFail($id);
+        //en caso de no poder editar y/o eliminar
+        //dd($polls);
+        $encuestas_aplicadas = AplicationPoll::where('poll_id', '=', $polls->id)->get();
+        $encuestas_aplicadas = AplicationPoll::where('poll_id', '=', $polls->id)->first();
+        if (! $encuestas_aplicadas == null) {
+            return redirect()->back()->with('message', 'Debido a que hay encuestasaplicadas, no puedes editar o eliminar!');
+        }
 
         $polls->delete();
 

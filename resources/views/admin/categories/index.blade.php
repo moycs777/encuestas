@@ -22,6 +22,13 @@
       <div class="box-body">
         <div class="box">
           <div class="box-header">
+            <p>{{-- categoria  {{ $encuesta->category }} --}}
+              @if(session()->has('message'))
+                <div class="alert alert-danger">
+                    {{ session()->get('message') }}
+                </div>
+              @endif
+            </p>
             <h1> <a href="{{ url('admin/categories/create') }}" class="btn btn-primary pull-right btn-sm">Crear Categoria</a></h1>
           </div>
           <!-- /.box-header -->
