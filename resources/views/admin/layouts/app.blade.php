@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 	@include('admin.layouts.head')
+	@stack('css')
 </head>
 <body class="hold-transition skin-purple sidebar-mini">
 <div class="wrapper">
@@ -10,6 +11,7 @@
 	@section('main-content')
 		@show
 	@include('admin.layouts.footer')
+	@stack('js')	
 </div>
 </body>
 </html>

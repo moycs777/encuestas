@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Category;
 use App\Poll;
 use App\Question;
 use App\Answer;
@@ -102,6 +103,7 @@ class QuestionController extends Controller
     
     public function destroy($id)
     {
+        $categories = Category::all();
         $question = Question::findOrFail($id);
         $poll = Poll::find($question->poll_id);
 
@@ -110,30 +112,12 @@ class QuestionController extends Controller
         Session::flash('message', 'question deleted!');
         Session::flash('status', 'success');
 
-        $questions = Question::where('poll_id', '=', $poll->id)
-             ->get();
-        return view('admin.questions.index',compact('poll', 'questions'));
+        $questions = Question::where('poll_id', '=', $poll->id)->get();
+
+        return redirect('admin/polls/'.$poll->id.'/edit');
+
+        //return view('admin.polls'.$poll->id.'/edit', compact('poll', 'questions'));
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public function showquestions($id)
     {
@@ -221,5 +205,41 @@ class QuestionController extends Controller
         return $request->all();
     }
 
-    
+
+    //NUEVOS METODOS
+    public function buscar(Request $request, $id)
+    {
+        $questions = Question::select('multiple_answers', 'name', 'id', 'poll_id')->where('id', '=', $id)->first();
+        
+        exit(json_encode([
+            's'         => 's', 
+            'questions' => $questions
+        ]));
+    }
+
+    public function guardar(Request $request, $id)
+    {
+        $this->validate($request, ['name' => 'required' ]);
+
+        $question = Question::create($request->all());
+
+        exit(json_encode([
+            's'         => 's', 
+            'msj'       => 'Pregunta agregada satisfactoriamente'
+        ]));
+    }
+
+
+    public function actualizar(Request $request, $id)
+    {
+        $this->validate($request, ['name' => 'required' ]);
+
+        $question = Question::findOrFail($id);
+        $question->update($request->all());
+
+        exit(json_encode([
+            's'         => 's', 
+            'msj'       => 'Pregunta actualizada satisfactoriamente'
+        ]));
+    }
 }

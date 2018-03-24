@@ -74,3 +74,11 @@
 	</div>
 	<!-- /.content-wrapper -->
 @endsection
+
+@push('js')
+<script type="text/javascript">
+	$(function(){
+
+	});
+</script>
+@endpush
