@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Poll;
 use App\Category;
+use App\AplicationPoll;
+use App\Question;
+use App\Answer;
+
 
 class PollsController extends Controller
 {
@@ -22,7 +26,9 @@ class PollsController extends Controller
     public function index()
     {
         $polls = Poll::all();
-        return view('admin.polls.index',compact('polls'));
+        $cantidadEncuestas = Poll::all()->count();
+        
+        return view('admin.polls.index', compact('polls', 'cantidadEncuestas'));
     }
 
     
@@ -57,7 +63,9 @@ class PollsController extends Controller
     {
         $categories = Category::all();
         $poll = Poll::findOrFail($id);
-        return view('admin.polls.edit',compact('poll', 'categories'));
+        $questions = Question::where('poll_id', '=', $id)->get();
+        
+        return view('admin.polls.edit',compact('poll', 'categories', 'questions'));
     }
 
     
@@ -77,7 +85,13 @@ class PollsController extends Controller
     
     public function destroy($id)
     {
+        dd("-->" . $id);/*
         $polls = Poll::findOrFail($id);
+
+        $encuestas_aplicadas = AplicationPoll::where('poll_id', '=', $polls->id)->get();
+        if (! $encuestas_aplicadas == null) {
+            return redirect()->back()->with('message', 'Debido a que hay encuestas aplicadas, no puedes editar o eliminar!');
+        }
 
         $polls->delete();
 
@@ -85,5 +99,27 @@ class PollsController extends Controller
         Session::flash('status', 'success');
 
         return redirect('admin/polls');
+        */
+    }
+    public function eliminar(Request $request, $id)
+    {
+        //dd($request->all());
+        $polls = Poll::findOrFail($request->poll_id);
+
+        $encuestas_aplicadas = AplicationPoll::where('question_id', '=', $id)->count();
+        $salida = array("s" => "n", "msj" => "No se ha podido eliminar");
+        if ($encuestas_aplicadas > 0) {
+            $salida = array("s" => "n", "msj" => "Debido a que hay encuestas aplicadas, no puedes editar o eliminar!");
+            exit(json_encode($salida));
+        }
+
+        if(Question::where('id', $request->question_id)->delete()){
+            $Answer = Answer::where('question_id', $id)->count();
+            if ($Answer > 0){
+                $resp = Answer::where('question_id', $id)->delete();
+            }
+            $salida = array("s" => "s", "msj" => "Pregunta Eliminada Satisfactoriamente");
+        }
+        exit(json_encode($salida));
     }
 }

@@ -2,7 +2,7 @@
 
 @section('main-content')
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="background: #fff">
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
@@ -93,27 +93,7 @@
   
   <script>
       $(function() {
-        $('#hour').hide();
-        $('#minutes').hide();
-        $('#seconds').hide();
-
-      console.log( "crear preguntas 1.0" );   
-      $('#type').on('change',function () {
-          var var_type = $('#type').val();
-          console.log(var_type);  
-          if (var_type == 2 || var_type == 3) {
-            $('#hour').show();
-            $('#minutes').show();
-            $('#seconds').show();
-          }
-
-          if (var_type == 1) {
-            $('#hour').hide();
-        $('#minutes').hide();
-        $('#seconds').hide();
-          }       
-        
-      });  
+         
 
     });
   </script>

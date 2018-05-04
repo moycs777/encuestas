@@ -14,10 +14,7 @@
         <form action="{{ route('encuestas.individual') }}" method="post" id="formid"> 
             {{ csrf_field()  }} 
             <input type="hidden" name="poll_id" value="{{ $encuesta->id }}">
-            <div class="myform">
-                {{-- <input type="hidden" name="respuesta_id[]" value="">     --}} 
-                <input type="hidden" id="numero_preguntas" value="{{ $numero_preguntas }}">           
-            </div>
+
             <div class="col-md-12 col-xs-12">
                 <div >
                     <h1 class="text-center" style="color: #999999;">{{ $encuesta->name }}</h1><br>
@@ -45,7 +42,7 @@
                                       @if (!empty($pregunta->answers))
                                         @foreach($pregunta->answers as $answer)
                                           @if ($pregunta->multiple_answers == 1)
-                                              <div style="float: left;padding: 6px;margin-bottom: 8px;border: 1px solid #bad3e8;border-radius: 10px; width: 100%;     font-weight: bold !important;">
+                                              <div style="float: left;padding: 6px;margin-bottom: 8px; width: 100%;     font-weight: bold !important;">
                                                 <input type="checkbox" 
                                                 name="respuestas" 
                                                 value="{{ $answer->id }}" 
@@ -62,7 +59,7 @@
                                                 {{ $answer->name }}
                                               </div>
                                           @else
-                                            <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
+                                            <div style="float: left;padding: 6px; margin-bottom: 8px;width: 100%;     font-weight: bold !important;">
                                               <input type="radio" 
                                               name="respuestas{{$pregunta->id}}" 
                                               value="{{ $answer->id }}" 
@@ -87,26 +84,33 @@
                                     </div>
                                   </div>
                                 </div>
-                                  <div>
-                                    <a class="" href="#carousel-example-generic"  role="button" data-slide="next" id="next">
-                                      <button class="btn btn-primary" id="right.carousel-control">siguiente pregunta</button>
-                                    </a>
-                                  </div>
-                                </div>
-                              @endforeach                                
+                              </div>
+                              @endforeach 
+
+                              <div id="controles_carousel">
+                                @if($encuesta->category->pausable == 1)
+                                    <a class="" href="#carousel-example-generic" role="button" data-slide="prev" id="anterior" style="display: none;">
+                                    <button class="btn btn-warning" id="right.carousel-control"> Anterior </button>
+                                  </a>
+                                @endif
+
+                                <a id="next" href="#carousel-example-generic"  role="button" data-slide="next" >
+                                  <button class="btn btn-primary" id="right.carousel-control"> Siguiente </button>
+                                </a>
+                              </div>
+
                             </div>                           
                         </div>
                     </div> 
                 <br>    
                 <br>
                 <div class="col-md-4 col-xs-4"">
-                  <button id="evaluar" class="btn btn-danger block">Terminar encuesta</button>
-                  @if($encuesta->category->pausable == 0)
-                      <input type="hidden" name="pausable" value="0">                    
-                  @else
-                      <button id="pausar" class="btn btn-success block">pausar encuesta</button>
-                      <input type="hidden" name="pausable" value="1">                    
+                  <button id="terminar_encuesta" class="btn btn-danger block pull-right">Finalizar</button>
+                  
+                  @if($encuesta->category->pausable == 1)
+                      <button id="pausar" class="btn btn-success block pull-right">Pausar</button>
                   @endif
+
                   <input type="text" id="arreglo" class="form-control" name="arreglo[]">
                 </div>                     
             </div>
@@ -114,160 +118,105 @@
         </form>
     </div>
     @php
+      $timer = 0;
       if ($encuesta->category->hour > 0 || $encuesta->category->minutes > 0 || $encuesta->category->seconds > 0) 
-      {
         $timer = 1;
-      } else {
-        $timer = 0;
-      }      
     @endphp
 </div>
-<div>
-  <input type="hidden" id="hour" name="hour" value="{{ $encuesta->category->hour }}">
-  <input type="hidden" id="min" name="min" value="{{ $encuesta->category->minutes }}">
-  <input type="hidden" id="seg" name="seg" value="{{ $encuesta->category->seconds }}">
-</div><script src="{{ asset('admin/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+
+<script src="{{ asset('admin/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
+
 <script>  
-
-console.log("no ha iniciado jq 2");
-$(function () {
+  var $pausable = "{{ $encuesta->category->pausable }}";
+  var $horas_categoria = "{{ $encuesta->category->hour }}";
+  var $mins_categoria = "{{ $encuesta->category->minutes }}";
+  var $segs_categoria = "{{ $encuesta->category->seconds }}";
+  var poll_id = {{ $encuesta->id }};
+  var $numero_preguntas = {{ $numero_preguntas }};
   var inicio = 0;
-
-  if (inicio == 1) {
-      //alert("Has finalizado la encuesta, has click en el boton finalizar");
-  }
-
-  function asd(){
-    console.log("ultima funcion" );
-      $('#next').hide();
-      inicio = 1;
-  }
-
+  var $preguntaActual = 1;
+$(function () {
   $('.carousel').carousel({
-    interval: 100000, 
-    pause: true, 
-    wrap: false
+    wrap: false,
+    autoPlay : false
   });
 
-  function desabilitar(){
-    console.log("ultimo elemento  y funcion desabilitar" );
-      $('#next').hide();
-      asd();
-  };
-
-
-  // execute function after sliding:
   $('.carousel').on('slid.bs.carousel', function (e) {
       var carouselData = $(this).data('bs.carousel');
-      // get current index of active element
       var currentIndex = carouselData.getItemIndex(carouselData.$element.find('.item.active'));
-      // hide carousel controls at begin and end of slides
       $(this).children('.carousel-control').show();
-      
-      if(currentIndex == 0){
-          $(this).children('.left.carousel-control').fadeOut();
-          e.preventDefault();
-          console.log("primera slide");
-          alert("has finalizado la encuesta, has clcick en finalizar para guardar los resultados");
-          $('.carousel').carousel('pause');
-          return false; // stay on this slide
-          //alert('primero');
-      }else if(currentIndex+1  == carouselData.$items.length){
-          //alert('ultimo');
-      }
-      console.log('elemento actual: '+currentIndex);
-      console.log('numero de preguntas'+$('#numero_preguntas').val());
-      //currentIndex+=1;
-      if (currentIndex == $('#numero_preguntas').val() -1 ) 
-      {
-          desabilitar();
-      }
-      if (currentIndex == 0 && inicio == 1 ) 
-      {
-        //alert("Has finalizado la encuesta, has click en el boton finalizar");
-      }
   });
 
-  console.log("regitrar encuestas con $ each 2"); 
-  console.log("hay tiempo " + {{ $timer }} ); 
+  $("#next").click(function(){
+    $preguntaActual++;
+    
+    $("#anterior").fadeIn();
+
+    if($preguntaActual == $numero_preguntas){
+      $(this).fadeOut();
+    }
+  });
+
+  $("#anterior").click(function(){
+    $preguntaActual--;
+
+    $("#next").fadeIn();
+
+    if($preguntaActual <= 1){
+      $(this).fadeOut();
+    }
+  });
+
   $("input:submit").click(function() { return false; });
   
-  var poll_id = {{ $encuesta->id }};
-  //var respuestas = [];
-  
-  $('.question').click(function(){
-    console.log("se clickeo un elemento de pregunta");
-  });
-
-  //Encuesta por tiempo
-  if ( {{ $timer }} == 1) 
-  {
+  if ( {{ $timer }} == 1){
     var n = 0;
     var nn = 0;
-    var hour = $('input[name=hour]').val();
-    var min = $('input[name=min]').val();
-    var seg = $('input[name=seg]').val();
 
-    if ( hour == null) {hour=0; }
-    if ( min == null) {min=0; }
-    if ( seg == null) {seg=0; }
+    if ( $horas_categoria == null) {$horas_categoria=0; }
+    if ( $mins_categoria == null) {$mins_categoria=0; }
+    if ( $segs_categoria == null) {$segs_categoria=0; }
     
-    console.log("Encuesta por tiempo "); 
-    console.log("minutos: " + min + " " + "segundos: " + seg);
-
-    function reloj() {
-      if (seg > 0) {
-           seg = seg - 1;
-        }
-      if ((min > 0)  && (seg == 0)){
-            min = min - 1;
-            seg = 60;
-        }
-        if ((min == 0) && (seg == 0)){
-          document.getElementById('displayReloj').innerHTML = min + " : " + seg;
-          alert("Fin : " + nn);
-        exit();
-        }
-        document.getElementById('displayReloj').innerHTML = min + " : " + seg;
-        var t = setTimeout(function(){reloj()},1000);
-    }
     reloj();
   }
 
-  //Encuesta sin tiempo
-  if ( {{ $timer }} == 0) 
-  {
-    console.log("Encuesta sin tiempo "); 
-  }
-
-  $("#evaluar").click(function(){
+  $("#terminar_encuesta").click(function(){
       var preguntas_input = $(":input");      
-      //var preguntas_input = $("[name=respuestas]");
+
       var i = 0;
       preguntas_input.each(function(index , valor){
-          //alert("id: " + $(this).attr('id') + " , esrtado: " + $(this).tagName + " valor: " + valor + ": " + $( this ).text() );
-        if ( $(this).prop( "checked" ) ) {
-         // alert("esta checked, " + $(this).attr('id') );
-          //arreglo[index] = $(this).attr('id');
-          //$('[name=arreglo]').val(this.value);
+        if ($(this).prop( "checked")) {
           id = $(this).attr('id');
           nombre = 'id_respuestas['+i+']';
-          //alert("nombre: " + nombre);
-          //alert("id: " + id);
+
           $('<input>').attr({
               type: 'hidden',
               id: 'foo',
               name: nombre,
               value: id
           }).appendTo('form');
+
           i += 1;
         }
-
       });
   });
-
-//fin del evento de jquery
 });
+
+function reloj() {
+  if ($segs_categoria > 0)
+    $segs_categoria = $segs_categoria - 1;
+
+  if (($mins_categoria > 0)  && ($segs_categoria == 0)){
+    $mins_categoria = $mins_categoria - 1;
+    $segs_categoria = 60;
+  }
+    
+  if (($mins_categoria == 0) && ($segs_categoria == 0))
+    document.getElementById('displayReloj').innerHTML = $mins_categoria + " : " + $segs_categoria;
+
+  document.getElementById('displayReloj').innerHTML = $mins_categoria + " : " + $segs_categoria;
+  var t = setTimeout(function(){reloj()},1000);
+}
 </script>
 @endsection
 
