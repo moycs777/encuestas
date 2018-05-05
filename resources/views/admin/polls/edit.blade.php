@@ -1,13 +1,7 @@
 @extends('admin.layouts.app')
 
 @section('main-content')
-	<div class="content-wrapper">
-	  	<section class="content-header">
-		    <ol class="breadcrumb" style="font-size: 20px">
-		      <li><a href="{{ route('polls.index') }}"> Inicio </a> / <a href="{{ route('polls.index') }}"></a>Encuestas </li>
-		    </ol>
-	  	</section>
-
+	<div class="content-wrapper" style="background: #fff">
 	  	<section class="content" style="background: #fff;">
 		    <div class="row">
 	            <fieldset>
@@ -21,6 +15,7 @@
 	                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 	                                <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12">
 	                                    <label for="categoria">Categoria</label><br>
+
 	                                    <select name="category_id" id="" class="form-control">
 	                                        @foreach ($categories as $item)
 	                                            <option value="{{$item->id}}">{{$item->name}}</option>
@@ -56,7 +51,7 @@
 										<tr >
 											<td ><strong>DESCRIPCION</strong></td>
 											<td>
-												<button id="addPregunta" class="btn btn-default" data-toggle="modal" data-target="#modalPreguntas" style="float: right;" style="background-color: #f4f4f4 !important; color: #000 #000 !important;" poll_id="{{$poll->id}}">
+												<button id="addPregunta" class="btn btn-primary" data-toggle="modal" data-target="#modalPreguntas" style="float: right;"  poll_id="{{$poll->id}}">
 		    										<i class="fa fa-plus" aria-hidden="true" class="pull-right" ></i> Agregar Pregunta
 		    									</button>
 		    								</td>
@@ -208,6 +203,8 @@
 @push('js')
 	<script type="text/javascript">
 		$(function(){
+			var categoria = "{{$poll->category_id}}";
+			$("select[name='category_id']").val(categoria);
 			$("#addPregunta").click(function(){
 				limpiarModal("modalPreguntas");
 				$("input[name='poll_id']", "#fPregunta").val($(this).attr('poll_id'));
@@ -265,6 +262,9 @@
 						if(r.s == 's'){
 							agregarRespuestaTabla(r.respuesta.question_id, r.respuesta);
 							$("#modalRespuestas").modal("hide");
+						}else{
+							alert(r.msj);
+						    $("#modalRespuestas").modal("show");
 						}
 					}
 				});
@@ -285,8 +285,8 @@
 						}
 					}
 				});
-				
 			});
+
 			$(".eliminarPregunta").click(function(){
 				if(!confirm("¿Realmente desea eliminar esta pregunta?"))
 					return false;
@@ -341,6 +341,23 @@
 
 		function agregarRespuestaTabla($question_id, $info){
 			$(".tblPregunta[question_id='"+ $question_id +"']").append("<tr class='answer'><td>-</td><td answer_id='"+ $info.id +"'> "+ $info.name +" </td> <td class='text-center'> <span class='btn btn-danger btn-xs btnEliminarRespuesta'> <i class='fa fa-remove'></i> </span> </td>	 <td><span class='badge bg-light-blue'> " + $info.value + " </span></td></tr>");
+
+			$(".btnEliminarRespuesta").click(function(){
+				if(!confirm("¿Realmente desea eliminar esta respuesta?"))
+					return false;
+				$btn = $(this);
+				$.ajax({
+					url 	 : '{{ url('admin/answers/eliminar') }}/' + $(this).attr('answer_id'),
+					dataType :'json',
+					type 	 :'GET',
+					success  :function(r){
+						alert(r.msj);
+						if(r.s == 's'){
+							$btn.parents("tr").detach();
+						}
+					}
+				});
+			});
 		}
 	</script>
 @endpush

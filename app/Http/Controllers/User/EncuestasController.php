@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\AplicationPoll;
 use App\Answer;
 use App\Category;
+use App\GeneralDefinitions;
 use App\Poll;
 use App\Range;
 use App\Resume;
@@ -28,7 +29,11 @@ class EncuestasController extends Controller
    
     public function index()
     {
-        $polls = Poll::all();
+        /*$polls = Poll::all();
+        return view('user.encuestas.index', compact('polls'));*/
+        $respuestas = Answer::where('id', '>', 0)->distinct('poll_id')->pluck('poll_id');
+        $polls = Poll::find($respuestas);
+        
         return view('user.encuestas.index', compact('polls'));
     }
   
@@ -80,8 +85,17 @@ class EncuestasController extends Controller
         $resume = new \stdClass();
         $resume->text = null;
         $ranges = Range::where('poll_id', '=', $request->poll_id)->get();
+        $rangos = array();
+        $rango_usuario = array();
+
         if(count($ranges) > 0)
             foreach ($ranges as $key => $value) {
+                $rangos[] = array(
+                    'name'      => $value->text,
+                    'y'         => $value->to,
+                    'drilldown' => $value->text
+                );
+
                 if ( $total >= $value->from && $total <= $value->to) {
                     $range = $value;
                     $resume = new Resume();
@@ -92,10 +106,20 @@ class EncuestasController extends Controller
                     $resume->to = $value->to;
                     $resume->text = $value->text;
                     $resume->save();
-                    //return $resume;
+
+                    $rango_usuario = array(
+                        'name'      => 'Su rango',
+                        'y'         => $value->to,
+                        'drilldown' => 'Su rango'
+                    );
                 }
             }
-        return view('user.encuestas.resultados.resultado', compact('resume', 'total', 'encuesta'));
+
+        $rangos[] = $rango_usuario;
+
+        $rangos = json_encode($rangos);
+
+        return view('user.encuestas.resultados.resultado', compact('resume', 'total', 'encuesta', 'rangos'));
     }
 
     public function individualStore(Request $request)
@@ -138,13 +162,18 @@ class EncuestasController extends Controller
                 $aplication_poll->save();
             }
 
-        //determinar el rango
-
         $resume = new \stdClass();
         $resume->text = null;
         $ranges = Range::where('poll_id', '=', $request->poll_id)->get();
-
+        $rangos = array();
+        $rango_usuario = array();
         foreach ($ranges as $key => $value) {
+            $rangos[] = array(
+                'name'      => $value->text,
+                'y'         => $value->to,
+                'drilldown' => $value->text
+            );
+            
             if ( $total >= $value->from && $total <= $value->to) {
                 $range = $value;
                 $resume = new Resume();
@@ -155,14 +184,25 @@ class EncuestasController extends Controller
                 $resume->to = $value->to;
                 $resume->text = $value->text;
                 $resume->save();
+
+                $rango_usuario = array(
+                    'name'      => 'Su rango',
+                    'y'         => $value->to,
+                    'drilldown' => 'Su rango'
+                );
             }
         }
-        return view('user.encuestas.resultados.resultado', compact('resume', 'total', 'encuesta'));
+        $rangos[] = $rango_usuario;
+
+        $rangos = json_encode($rangos);
+
+        return view('user.encuestas.resultados.resultado', compact('resume', 'total', 'encuesta', 'rangos'));
     }
    
     public function show($id)
     {
         $contestadas = null;
+        $generaldefinitions = GeneralDefinitions::where('id', '>',0)->first();
 
         $master_aplication = MasterAplication::where('poll_id', '=', $id)
             ->where('user_id', '=', Auth::user()->id)
@@ -182,19 +222,21 @@ class EncuestasController extends Controller
         //return $encuesta->category->timer_type;
         if($encuesta->category->timer_type == 2){ // Cuando es tiempo por pregunta
             if ($encuesta->category->show_all_questions == 0) 
-                return view('user.encuestas.individual.tiempo_pregunta_individual', compact('encuesta', 'preguntas', 'contestadas', 'numero_preguntas'));
+                //return $generaldefinitions;
+                return view('user.encuestas.individual.tiempo_pregunta_individual', compact('encuesta', 'preguntas', 'contestadas', 'numero_preguntas', 'generaldefinitions'));
             
-            return view('user.encuestas.general.tiempo_pregunta', compact('encuesta', 'preguntas', 'detail_aplication', 'contestadas'));
+            return view('user.encuestas.general.tiempo_pregunta', compact('encuesta', 'preguntas', 'detail_aplication', 'contestadas', 'generaldefinitions'));
         }else{
             if ($encuesta->category->show_all_questions == 0) // tiempo por pregunta y mostrar una sola pregunta
-                return view('user.encuestas.individual.ajax', compact('encuesta', 'preguntas', 'contestadas', 'numero_preguntas'));
+                return view('user.encuestas.individual.ajax', compact('encuesta', 'preguntas', 'contestadas', 'numero_preguntas', 'generaldefinitions'));
 
-            return view('user.encuestas.general.show', compact('encuesta', 'preguntas', 'detail_aplication', 'contestadas'));
+            return view('user.encuestas.general.show', compact('encuesta', 'preguntas', 'detail_aplication', 'contestadas', 'generaldefinitions'));
         }
     }
 
     public function reanudar($id){
         //dd($id);
+        $generaldefinitions = GeneralDefinitions::where('id', '>',0)->first();
         $contestadas = AplicationPoll::where('poll_id', '=', $id)
             //->where('user_id', '=', Auth::user()->id)
             ->get();
@@ -203,7 +245,7 @@ class EncuestasController extends Controller
 
         $preguntas = Question::where('poll_id', '=', $encuesta->id)
             ->get();
-        return view('user.encuestas.general.show', compact('encuesta', 'preguntas', 'contestadas'));
+        return view('user.encuestas.general.show', compact('encuesta', 'preguntas', 'contestadas', 'generaldefinitions'));
 
     }
     

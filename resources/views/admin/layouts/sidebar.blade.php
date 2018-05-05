@@ -14,12 +14,12 @@
       </div>
     
       <ul class="sidebar-menu tree" data-widget="tree">
-              <li class="header">Opciones {{Auth::user()->name}} </li>
+              <li class="header">Opciones Administrador </li>
                <li class="header"></li>
                 <li class="active treeview menu-open">
-                  <a href="{{ route('admins.index') }}">
-                    <i class="fa fa-users"></i> 
-                    <span>Administradores</span>
+                  <a href="{{ route('user.index') }}">
+                      <i class="fa fa-circle-o"></i>
+                      <span>index</span>
                   </a>
                   <a href="{{ route('categories.index') }}">
                     <i class="fa fa-folder"></i> 
@@ -33,10 +33,21 @@
                     <i class="fa fa-calendar"></i>        
                     <span>Establecer Rangos</span>  
                   </a>
-                  <a href="{{ route('user.index') }}">
-                      <i class="fa fa-circle-o"></i> 
-                      <span>index</span>
+                  <a href="{{ route('polls_users.index') }}">
+                    <i class="fa fa-calendar"></i>
+                    <span>Asignar Encuestas</span>
                   </a>
+                  <a href="{{ route('general_definitions.index') }}">
+                      <i class="fa fa-circle-o"></i>
+                      <span>Definiciones Generales</span>
+                  </a>
+                  @if (Auth::user()->level < 2)
+                    <a href="{{ route('admins.index') }}">
+                      <i class="fa fa-calendar"></i>
+                      <span>Usuarios</span>
+                    </a>
+                  @endif
+                  
                   <a href="{{ route('admin.logout') }}" onclick="event.preventDefault();
                                    document.getElementById('logout-form').submit();">
                       <i class="fa fa-sign-out"></i><span>Salir</span></a></li> 

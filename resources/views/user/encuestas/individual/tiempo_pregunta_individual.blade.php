@@ -12,6 +12,18 @@
   </style>
   <br><br><br><br>
     <div class="row">
+
+       <div id="mensaje">
+           <h1 style="text-align: center;font-weight:bolder;color:blue;"> 
+              {{ $generaldefinitions->description }}
+           </h1>
+      </div>
+      
+      @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+      @endif
         
         <form action="{{ route('encuestas.individual') }}" method="post" id="formid"> 
             {{ csrf_field()  }} 
@@ -47,7 +59,7 @@
                                 <div class="radio">
                                   @if (!empty($pregunta->answers))
                                     @foreach($pregunta->answers as $answer)
-                                      <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
+                                      <div style="float: left;padding: 6px; margin-bottom: 8px; width: 100%;     font-weight: bold !important;">
                                           <input type="radio" name="respuestas{{$pregunta->id}}" value="{{ $answer->id }}" class="rad" id="{{ $answer->id }}" style="margin-left: 0px !important; "/>                                              
                                           <label style="font-weight: bold;"> {{ $answer->name }} </label> 
                                         </div>
@@ -62,10 +74,10 @@
                 <br>    
                 <br>
                 <div class="col-md-2 col-xs-4 pull-right">
-                  <button id="terminar_encuesta" class="btn btn-danger block">Terminar encuesta</button>
+                  <button id="terminar_encuesta" class="btn btn-danger block pull-right">Finalizar</button>
                   
                   @if($encuesta->category->pausable == 1)
-                      <button id="pausar" class="btn btn-success block">pausar encuesta</button>
+                      <button id="pausar" class="btn btn-success block pull-right">Pausar</button>
                   @endif
                 </div>                     
             </div>
@@ -98,6 +110,9 @@ $(function () {
       wrap: false,
       autoPlay : false
   });*/
+
+  $("#mensaje").fadeOut(15000);
+    console.log("tiempo pregunta individual");
 
 
   $("#owl-demo").owlCarousel({

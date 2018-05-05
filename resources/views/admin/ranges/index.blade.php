@@ -5,7 +5,7 @@
 @endsection
 
 @section('main-content')
-<div class="content-wrapper">
+<div class="content-wrapper" style="background: #fff">
     <section class="content">
         <div class="row">
             <fieldset>
@@ -24,17 +24,29 @@
                     <table id="example1" class="table table-striped table-hover table-bordered dataTable">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Nombre de la encuesta</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @if (!empty($polls))
                                 @foreach ($polls as $item)
                                     <tr>
-                                        <td>{{ $item->id }}</td>
                                         <td>
                                             <a href="{{ url('admin/ranges', $item->id ) }}">{{ $item->name }}</a>{{ $item->nif_cif }}
+                                        </td>
+                                        <td>
+                                            <a href="{{ url('admin/ranges', $item->id )}}" class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></a> 
+                                            <form action="{{ route('ranges.destroy',  $item->id) }}" method="post" style="display:inline">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                            
+                                             <button type="submit" alt="Eliminar"  class="btn btn-danger btn-xs" onclick="return confirm('Esta seguro de eliminar?');">
+                                              <i class="fa fa-minus"></i>
+                                            </button>
+                                        </form>
+                                          
+                                             
                                         </td>
                                     </tr>
                                 @endforeach

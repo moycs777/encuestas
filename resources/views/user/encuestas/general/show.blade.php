@@ -26,6 +26,14 @@
   <br><br><br><br>
     <div class="row">
     <p>{{-- categoria  {{ $encuesta->category }} --}}
+      <div id="mensaje">
+           <h1 style="text-align: center;font-weight:bolder;color:blue;"> 
+              <h1 style="text-align: center;font-weight:bolder;color:blue;"> 
+                  {{ $generaldefinitions->description }}
+              </h1>
+           </h1>
+      </div>
+      
       @if(session()->has('message'))
         <div class="alert alert-success">
             {{ session()->get('message') }}
@@ -90,7 +98,7 @@
                                                 {{ $answer->name }}
                                               </div>
                                           @else
-                                            <div style="float: left;padding: 6px; margin-bottom: 8px; border: 1px solid #bad3e8; border-radius: 10px;width: 100%;     font-weight: bold !important;">
+                                            <div style="float: left;padding: 6px; margin-bottom: 8px;width: 100%;     font-weight: bold !important;">
                                               <input type="radio" 
                                               name="respuestas{{$pregunta->id}}" 
                                               value="{{ $answer->id }}" 
@@ -121,11 +129,11 @@
                   @endif
                 </div>
                 <!-- <input type="submit"   value="Registrar encuesta" > --> 
-                <button id="evaluar" class="btn btn-danger">Terminar encuesta</button>
+                <button id="evaluar" class="btn btn-danger pull-right">Finalizar</button>
                 @if($encuesta->category->pausable == 0)
                     <input type="hidden" name="pausable" value="0">                    
                 @else
-                    <button id="pausar" class="btn btn-success">pausar encuesta</button>
+                    <button id="pausar" class="btn btn-success pull-right">Pausar</button>
                     <input type="hidden" name="pausable" value="1">                    
                 @endif
                 <input type="text" id="arreglo" class="form-control" placeholder="" name="arreglo[]">
@@ -139,6 +147,7 @@
         $timer = 1;
     @endphp
 </div>
+
 <script src="{{ asset('admin/plugins/jQuery/jquery-2.2.3.min.js') }}"></script>
 <script>
 var hour, min, seg;
@@ -153,6 +162,7 @@ var avanzarFilaReloj = false;
 var $filaActiva = 1;
 var cantidadPreguntas = 0;
 var temporizador;
+
 $(function () {  
   cantidadPreguntas = $(".panelPregunta", ".contenedorRows").length;
 
@@ -200,9 +210,9 @@ $(function () {
       }).appendTo($divRadio);
     }
 
-     if($(".panelPregunta").length == nroFila){
-          alert("esta es la ultima pregunta");
-     }
+    if($(".panelPregunta").length == nroFila){
+      alert("esta es la ultima pregunta");
+    }
   });
 
   //Encuesta por tiempo
@@ -220,7 +230,14 @@ $(function () {
     reloj();
     //reloj_pregunta();
   }
-});
+  
+  // Coloca texto de Bienvenida a la encuesta
+  console.log("inicio");
+  
+  $("#mensaje").fadeOut(15000);
+    console.log("mensaje");
+    alert("Bienvenido");      
+  
 
 function enviarDatos(){
   document.getElementById('evaluar').click();
@@ -285,6 +302,7 @@ function deshabilitarFilaActiva(){
 
      $filaActiva++;
 }
+
 </script>
 
 @endsection

@@ -2,15 +2,13 @@
 
 @section('main-content')
 	<!-- Content Wrapper. Contains page content -->
-	<div class="content-wrapper">
+	<div class="content-wrapper" style="background: #fff">
 	  <!-- Content Header (Page header) -->
 	  <section class="content-header">
 	    <h1>
 	      Crear Encuesta
 	    </h1>
-	    <ol class="breadcrumb">
-	      <li><a href="{{ route('polls.index') }}"><i class="fa fa-dashboard"></i> Index</a></li>
-	    </ol>
+	    
 	  </section>
 
 	  <!-- Main content -->
@@ -39,7 +37,7 @@
 	              </div>
 	              
 	              <div class="form-group">
-	                <label for="name">Nombre de la encuesta</label>
+	                <label for="name">Título de la encuesta</label>
 	                <input type="text" class="form-control" id="name" name="name" placeholder="Nombre de la encuesta">
 	              </div>
 	              

@@ -9,6 +9,7 @@ use App\Question;
 use App\Answer;
 use App\AplicationPoll;
 use Session;
+use DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 
@@ -80,6 +81,25 @@ class AnswerController extends Controller
 
     public function guardar(Request $request, $id)
     {
+        //validar que los valores del rango no sean <=0
+        if (intval($request->value) <= 0){
+            exit(json_encode([
+                's'         => 'n', 
+                'msj'       => 'Valor no pueder ser cero (0)  o menor que cero (0)'
+            ]));
+        }
+
+        $valor_anterior = 0;
+        $valor_anterior = DB::table('answers')->max('Value');
+                   
+        // El valor debe ser mayor al ultimo id de las preguntas de la encuesta (Answers)
+        /* if (intval($request->value) <= $valor_anterior) {
+           exit(json_encode([
+              's'         => 'n', 
+              'msj'       => 'Valor de la pregunta debe ser mayor que el valor anterior de la ultima respuesta...'
+           ]));
+        } */
+
         $this->validate($request, ['name' => 'required' ]);
 
         $answer = Answer::create($request->all());

@@ -5,7 +5,7 @@
 @endsection
 
 @section('main-content')
-<div class="content-wrapper">
+<div class="content-wrapper" style="background: #fff">
     <section class="content">
         <div class="row">
             <fieldset>
@@ -25,7 +25,6 @@
                     <table id="example1" class="table table-striped table-hover table-bordered dataTable">
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Nombre de la encuesta</th>
                                 <th>Mostrar todas las preguntas?</th>
                                 <th>Categoria</th>
@@ -36,7 +35,6 @@
                             @if (!empty($polls))
                                 @foreach ($polls as $item)
                                     <tr>
-                                        <td>{{ $item->id }}</td>
                                         <td>
                                             <a href="{{ url('admin/polls/' . $item->id . '/edit') }}">{{ $item->name }}</a>
                                         </td>
@@ -52,7 +50,7 @@
 
                                         <td>
                                             <a href="{{ url('admin/polls/' . $item->id . '/edit') }}" class="btn btn-primary btn-xs">
-                                            <i class="fa fa-eye"></i>
+                                            <i class="fa fa-pencil"></i>
                                             </a>                            
                                             <form action="{{ route('polls.destroy',  $item->id) }}" method="post" style="display:inline">
                                             {{ csrf_field() }}

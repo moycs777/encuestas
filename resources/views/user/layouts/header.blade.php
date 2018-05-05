@@ -1,4 +1,4 @@
-<!--
+    <!--
         Fixed Navigation
         ==================================== -->
         <header id="navigation" class="navbar-inverse navbar-fixed-top animated-header">
@@ -13,10 +13,7 @@
                     </button>
 					<!-- /responsive nav button -->
 					
-					<!-- logo -->
-					<h1 class="navbar-brand">
-						<a href="{{ url('/') }}">Inicio</a>
-					</h1>
+					
 					<!-- /logo -->
                 </div>
 
