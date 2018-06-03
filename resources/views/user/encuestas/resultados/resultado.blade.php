@@ -25,14 +25,12 @@
                                 <h3> <b> Puntaje </b> <br> {{ $total }} </h3>
                                 <br>
                                 <h3> <b> Calificación </b> <br>
-                                        @if (!$resume->text == null)
-                                            {{ $resume->text }}
-                                        @endif
+                                    {{ $resume->text }} ad
                                 </h3>
                             </div>
-                            <div class="col-md-8">
+                            {{--  <div class="col-md-8">
                                 <div id="container" style="min-width: 310px; max-width: 800px; height: 400px; margin: 0 auto"></div>
-                            </div>
+                            </div>  --}}
                         </div>
                     </div>
                 </div>                
