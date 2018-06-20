@@ -35,13 +35,15 @@ class EncuestasController extends Controller
         //$polls = Poll::find($respuestas);
         $aprobadas =  DB::table('poll__users')->where('user_id', '=',  Auth::user()->id)
             ->get();
+        //obtenemos los ids de las encuestas que tienen preguntas
         $respuestas = Answer::where('id', '>', 0)
             ->distinct('poll_id')
             //->where('')
             ->pluck('poll_id');
-        $polls2 = Poll::find($respuestas);
+        //dd($respuestas);
+        $encuestas_con_preguntas = Poll::find($respuestas);
         $polls = [];
-        foreach ($polls2 as $encuesta) {
+        foreach ($encuestas_con_preguntas as $encuesta) {
             foreach ($aprobadas as  $key => $apro) {
                 if ($encuesta->id == $apro->poll_id) {
                     //dd($apro);
@@ -59,6 +61,8 @@ class EncuestasController extends Controller
     }
     
     public function store(Request $request){
+        //return " store";
+        
         $st = Session::get('start_date');
 
         MasterAplication::where('user_id', '=', Auth::user()->id)
@@ -134,19 +138,16 @@ class EncuestasController extends Controller
         $rangos[] = $rango_usuario;
 
         $rangos = json_encode($rangos);
+
         //desvincular encuesta de usuario para que no la vuelva a aplicar
-        
-        $poll__users =  DB::table('poll__users')
-            ->where('user_id', '=',  Auth::user()->id)
-            ->where('poll_id', '=',  $request->poll_id)
-            ->delete();
+        $this->desvincular(Auth::user()->id, $request->poll_id);
 
         return view('user.encuestas.resultados.resultado', compact('resume', 'total', 'encuesta', 'rangos'));
     }
 
     public function individualStore(Request $request)
     {
-
+        return "individual store";
         $encuesta = Poll::find($request->poll_id);
 
         if($request->id_respuestas == null) {
@@ -218,18 +219,19 @@ class EncuestasController extends Controller
 
         $rangos = json_encode($rangos);
 
-        //desvincular encuesta de usuario para que no la vuelva a aplicar
-        
-        $poll__users =  DB::table('poll__users')
-            ->where('user_id', '=',  Auth::user()->id)
-            ->where('poll_id', '=',  $request->poll_id)
-            ->delete();
+        $this->desvincular(Auth::user()->id, $request->poll_id);
 
         return view('user.encuestas.resultados.resultado', compact('resume', 'total', 'encuesta', 'rangos'));
     }
    
     public function show($id)
     {
+
+        //validar que la encuesta tengas sus rangos
+        /*
+        select a.poll_id,count(*) from answers a, ranges b 
+	        where a.poll_id = b.poll_id and b.`from` > 0 and b.`to` > 0
+        */
         $contestadas = null;
         $generaldefinitions = GeneralDefinitions::where('id', '>',0)->first();
 
@@ -256,10 +258,12 @@ class EncuestasController extends Controller
             
             return view('user.encuestas.general.tiempo_pregunta', compact('encuesta', 'preguntas', 'detail_aplication', 'contestadas', 'generaldefinitions'));
         }else{
-            if ($encuesta->category->show_all_questions == 0) // tiempo por pregunta y mostrar una sola pregunta
+            // tiempo por pregunta y mostrar una sola pregunta
+            if ($encuesta->category->show_all_questions == 0) 
+                //return $generaldefinitions;
                 return view('user.encuestas.individual.ajax', compact('encuesta', 'preguntas', 'contestadas', 'numero_preguntas', 'generaldefinitions'));
-
-            return view('user.encuestas.general.show', compact('encuesta', 'preguntas', 'detail_aplication', 'contestadas', 'generaldefinitions'));
+            //tiempo general
+            return view('user.encuestas.general.respaldo_show', compact('encuesta', 'preguntas', 'detail_aplication', 'contestadas', 'generaldefinitions'));
         }
     }
 
@@ -291,5 +295,17 @@ class EncuestasController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    public function desvincular($id, $poll_id)
+    {
+        //desvincular encuesta de usuario para que no la vuelva a aplicar
+        return;
+        $poll__users =  DB::table('poll__users')
+            ->where('user_id', '=',  $id)
+            ->where('poll_id', '=',  $poll_id)
+            ->delete();
+        
+        return;
     }
 }
